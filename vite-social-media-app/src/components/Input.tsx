@@ -10,13 +10,18 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     ...props
     }, ref) => {
 
-
-
-
-
   return (
     <input 
-    className={twMerge('', className)}
+    className={twMerge(`
+    px-4
+    py-4
+    border
+    shadow
+    rounded-md
+    focus:outline-black
+    w-full
+    
+    `, className)}
     {...props}
     ref={ref}
     />
