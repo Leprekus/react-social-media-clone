@@ -1,17 +1,25 @@
 import Layout from './Layout'
 import NotFound from './components/NotFound'
+import { useRouter } from './hooks/useRouter'
+
 import routes from './lib/routes'
 
 export default function Router() {
 
-    const path = window.location.pathname
+    const router = useRouter()
+    const path = router.pathname
+    console.log({ path })
+
+    const Page = () => {
+      const match = routes.find(route => route.path === path)
+      return match?.component ? match?.component : <NotFound/>
+    }
     
-    const match = routes.find(route => route.path === path)
-    const Page = match?.component ? match?.component : <NotFound/>
+ 
 
   return (
     <Layout>
-      { Page }
+      <Page/>
     </Layout>
   )
 }
