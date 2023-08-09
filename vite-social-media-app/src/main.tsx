@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Router from './Router.tsx'
+import App from './App.tsx'
 import './global.css'
 import RouterProvider from './providers/RouterProvider.tsx'
 
@@ -8,7 +8,7 @@ import RouterProvider from './providers/RouterProvider.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider>
-      <Router/>
+      <App/>
     </RouterProvider>
   </React.StrictMode>,
 )
