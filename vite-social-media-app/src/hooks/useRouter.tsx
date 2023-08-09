@@ -11,7 +11,7 @@ type RouterContextType  = {
 export const RouterContext = createContext<RouterContextType | undefined>( undefined )
 
 
-export const MyContextProvider = ({ children }: { children: ReactNode }) => {
+export const MyRouterContextProvider = ({ children }: { children: ReactNode }) => {
    
     const [currentPath, setCurrentPath] = useState(window.location.pathname);
 

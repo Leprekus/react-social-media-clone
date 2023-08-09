@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react'
-import { MyContextProvider } from '../hooks/useRouter'
+import { MyRouterContextProvider } from '../hooks/useRouter'
 
 interface RouterProviderProps { children: ReactNode }
 export default function RouterProvider({ children }: RouterProviderProps) {
   return (
-    <MyContextProvider>
+    <MyRouterContextProvider>
         { children }
-    </MyContextProvider>
+    </MyRouterContextProvider>
   )
 }
