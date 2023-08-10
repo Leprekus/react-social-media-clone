@@ -3,14 +3,20 @@ import Box from '../Box'
 
 
 export default function PostModal() {
-  const { isOpen, Close } = usePostModal()
+  const postModal = usePostModal()
+  if(!postModal.isOpen) return null
   
-  if(!isOpen) return null
+  //TODO: fetch post info with id
+  const handleClose = () => {
+    postModal.removeId()
+    postModal.Close()
+  }
 
   return (
     <Box
-      onClick={Close}
+      onClick={handleClose}
     >
+      <p>{ postModal.id }</p>
     </Box>
   )
 }

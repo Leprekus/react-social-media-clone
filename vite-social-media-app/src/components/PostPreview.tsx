@@ -9,8 +9,8 @@ export default function PostPreview({ post }: PostProps) {
 
   const postModal = usePostModal()
   const handleClick = () => {
-    if(!postModal.isOpen) {
-      
+    if(!postModal.isOpen && postModal.id === null) {
+      postModal.setId(post.id)
       postModal.Open()
     }
   }
