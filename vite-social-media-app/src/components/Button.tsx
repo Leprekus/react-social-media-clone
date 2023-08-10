@@ -1,8 +1,9 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge'
+import { cva, VariantProps } from 'class-variance-authority'
 
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
+const button = cva()
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof button> {}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ({ 

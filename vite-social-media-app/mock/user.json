@@ -3,5 +3,9 @@
     "name": "John Doe",
     "username": "JohnDeer",
     "password": "qwerty",
-    "bio": "Living Life."
+    "bio": "Living Life.",
+    "followers": 865,
+    "following": 396,
+    "posts": 153,
+    "avatar": "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 }
