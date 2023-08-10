@@ -7,6 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {}
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ({ 
     className, 
+    disabled,
     ...props
     }, ref) => {
 
@@ -23,7 +24,9 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     text-white
     w-full
     
-    `, className)}
+    `, 
+    disabled && 'cursor-not-allowed bg-gray-400 animate-pulse',
+    className)}
     {...props}
     ref={ref}
     />
