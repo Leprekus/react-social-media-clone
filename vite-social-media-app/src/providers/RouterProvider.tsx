@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { MyRouterContextProvider } from '../hooks/useRouter'
 
 interface RouterProviderProps { children: ReactNode }

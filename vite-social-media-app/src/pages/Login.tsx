@@ -1,4 +1,3 @@
-import React from 'react'
 import Layout from '../Layout'
 import Input from '../components/Input'
 import Button from '../components/Button'
@@ -25,7 +24,7 @@ export default function Login() {
             
             />
 
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Names</label>
           <Input 
             placeholder='name'
             type='text'
