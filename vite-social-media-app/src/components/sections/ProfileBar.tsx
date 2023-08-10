@@ -26,6 +26,7 @@ export default function ProfileBar() {
                         bg-gray-400/20
                         transition
                         hover:bg-gray-400/10
+                        active:bg-gray-400/0
                     '
                 >Edit Profile</Button>
             </div>
@@ -39,6 +40,7 @@ export default function ProfileBar() {
                     bg-gray-400/20
                     transition
                     hover:bg-gray-400/10
+                    active:bg-gray-400/0
                 '
                 ><span className='font-semibold'>{user.followers}</span> followers
             </Button>
@@ -51,6 +53,7 @@ export default function ProfileBar() {
                     bg-gray-400/20
                     transition
                     hover:bg-gray-400/10
+                    active:bg-gray-400/0
                 '
                 ><span className='font-semibold'>{user.following}</span> following
             </Button>
