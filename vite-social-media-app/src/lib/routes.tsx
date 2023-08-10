@@ -8,5 +8,7 @@ import Home from '../pages/auth/Home';
 export default [
     { path: '/', component: <Home/> },
     { path: '/login', component: <Login/> },
+    { path: '/search', component: <Login/> },
+    { path: '/messages', component: <Login/> },
     { path: '/:username', component: <Profile/> },
   ]
