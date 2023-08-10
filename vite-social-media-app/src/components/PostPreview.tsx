@@ -1,12 +1,23 @@
 import { FaComment } from 'react-icons/fa'
 import { AiFillHeart } from 'react-icons/ai'
 import type { Post } from '../../typings'
+import usePostModal from '../hooks/usePostModal'
 interface PostProps  {
     post: Post
 }
 export default function PostPreview({ post }: PostProps) {
+
+  const postModal = usePostModal()
+  const handleClick = () => {
+    if(!postModal.isOpen) {
+      
+      postModal.Open()
+    }
+  }
   return (
-    <div className='
+    <div 
+    onClick={handleClick}
+    className='
     w-full 
     aspect-square
    bg-red-400 

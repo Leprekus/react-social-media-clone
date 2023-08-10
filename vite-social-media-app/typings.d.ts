@@ -4,4 +4,5 @@ export interface Post {
     likes: string[];
     comments: string[];
     image: string;
+    id: string;
 }
