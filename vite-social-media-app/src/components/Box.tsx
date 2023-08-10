@@ -5,6 +5,7 @@ interface BoxProps {
     onClick: () => void
 }
 export default function Box({ children, onClick }: BoxProps) {
+  
   return (
     <div className='
     backdrop-blur-lg 
@@ -13,7 +14,7 @@ export default function Box({ children, onClick }: BoxProps) {
     min-w-full 
     top-0 
     left-0 
-    z-10
+    z-50
     bg-black/30
     overflow-y-hidden
     '>

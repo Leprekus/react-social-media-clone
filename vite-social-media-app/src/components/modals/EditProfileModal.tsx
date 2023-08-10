@@ -6,7 +6,7 @@ export default function EditProfileModal() {
   const { isOpen, Close } = useEditProfileModal()
   
   if(!isOpen) return null
-
+  // TODO: connect form to db to persist changes
   return (
     <Box
       onClick={Close}

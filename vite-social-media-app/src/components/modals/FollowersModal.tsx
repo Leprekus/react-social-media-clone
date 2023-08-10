@@ -7,6 +7,7 @@ export default function FollowersModal() {
   
   if(!isOpen) return null
 
+  //TODO: handle followers data fetching
   return (
     <Box
       onClick={Close}

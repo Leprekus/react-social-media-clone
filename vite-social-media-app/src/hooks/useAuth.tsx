@@ -9,7 +9,7 @@ type AuthContextType  = {
 export const AuthContext = createContext<AuthContextType | undefined>( undefined )
 
 export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
-    //TODO: add logic
+    //TODO: add logic to handle auth
     const values = {
         accessToken: '',
         user: {},
