@@ -1,4 +1,3 @@
-import React from 'react'
 import user from '../../../mock/user.json'
 import PostPreview from '../PostPreview'
 export default function PostGrid() {

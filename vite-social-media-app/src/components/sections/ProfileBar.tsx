@@ -1,7 +1,14 @@
 import user from '../../../mock/user.json'
+import useEditProfileModal from '../../hooks/useEditProfileModal'
+import useFollowersModal from '../../hooks/useFollowersModal'
+import useFollowingModal from '../../hooks/useFollowingModal'
 import Button from '../Button'
 
 export default function ProfileBar() {
+
+    const followersModal = useFollowersModal()
+    const followingModal = useFollowingModal()
+    const editProfileModal = useEditProfileModal()
   return (
     <div className='flex gap-4 p-8'>
         <div className='
@@ -19,6 +26,7 @@ export default function ProfileBar() {
             <div className='flex gap-4 items-center'>
                 <p className='text-lg md:text-base'>{ user.username }</p>
                 <Button
+                    onClick={editProfileModal.Open}
                     className='
                         text-lg md:text-base
                         w-fit
@@ -32,6 +40,7 @@ export default function ProfileBar() {
             </div>
             <div className='flex gap-4 items-center flex-wrap'>
             <Button
+                onClick={followersModal.Open}
                 className='
                     text-lg
                     md:text-base
@@ -45,6 +54,7 @@ export default function ProfileBar() {
                 ><span className='font-semibold'>{user.followers}</span> followers
             </Button>
             <Button
+                onClick={followingModal.Open}
                 className='
                     text-lg
                     md:text-base

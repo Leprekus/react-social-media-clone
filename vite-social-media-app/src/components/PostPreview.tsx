@@ -18,8 +18,9 @@ export default function PostPreview({ post }: PostProps) {
     md:flex-row
     group
     relative
+    cursor-pointer
     '>
-      <div className='absolute top-0 bottom-0 left-0 right-0 group-hover:bg-black/40'>
+      <div className='absolute top-0 bottom-0 left-0 right-0 group-hover:bg-black/40 group-active:bg-black/60'>
         <div className='
         text-lg
         md:text-sm
