@@ -1,6 +1,9 @@
+import Login from '../pages/Login';
+import Profile from '../pages/Profile';
 import Home from '../pages/auth/Home';
 
 export default [
     { path: '/', component: <Home/> },
-    { path: '/raul', component: <div>Raul</div> },
+    { path: '/:username', component: <Profile/> },
+    { path: '/login', component: <Login/> },
   ]

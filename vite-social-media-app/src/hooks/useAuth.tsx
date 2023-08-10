@@ -4,7 +4,7 @@ type AuthContextType  = {
     accessToken: string;
     user: object;
     isLoading: boolean;
-    isAuth: boolean;
+    isAuthed: boolean;
 }
 export const AuthContext = createContext<AuthContextType | undefined>( undefined )
 
@@ -14,7 +14,7 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
         accessToken: '',
         user: {},
         isLoading: false,
-        isAuth: false
+        isAuthed: true
     }
 
     return (
