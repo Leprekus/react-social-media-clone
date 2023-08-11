@@ -1,14 +1,13 @@
 import React from 'react'
-import FollowersModal from '../components/modals/FollowersModal'
-import FollowingModal from '../components/modals/FollowingModal'
 import EditProfileModal from '../components/modals/EditProfileModal'
 import PostModal from '../components/modals/PostModal'
+import UserListModal from '../components/modals/UserListModal'
 
 export default function ModalProvider() {
   return (
     <>
-        <FollowersModal/>
-        <FollowingModal/>
+        <UserListModal/>
+      
         <EditProfileModal/>
         <PostModal/>
     </>
