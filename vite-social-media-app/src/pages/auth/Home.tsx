@@ -1,10 +1,10 @@
-import Link from '../../components/Link'
+
+import Post from '../../components/Post'
 
 export default function Home() {
   return (
     <div>
-      Home
-      <Link href='login'>Sign In</Link>
+      <Post/>
     </div>
   )
 }
