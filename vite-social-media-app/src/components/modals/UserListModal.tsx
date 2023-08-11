@@ -3,7 +3,7 @@ import Box from '../Box'
 
 
 export default function UserListModal() {
-  const { isOpen, Close } = useUserListModal()
+  const { isOpen, Close, ids } = useUserListModal()
   
   if(!isOpen) return null
 
@@ -12,6 +12,13 @@ export default function UserListModal() {
     <Box
       onClick={Close}
     >
+      {
+        ids?.map(id => (
+          <ul>
+            <li>{ id }</li>
+          </ul>
+        ))
+      }
     </Box>
   )
 }

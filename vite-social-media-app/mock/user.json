@@ -4,8 +4,8 @@
     "username": "JohnDeer",
     "password": "qwerty",
     "bio": "Living Life.",
-    "followers": 865,
-    "following": 396,
+    "followers": ["uid_1", "uid_2", "uid_3", "uid_4", "uid_5"],
+    "following": ["uid_6", "uid_7", "uid_8", "uid_9", "uid_10"],
     "posts": 153,
     "avatar": "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
 }

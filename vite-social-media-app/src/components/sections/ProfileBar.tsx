@@ -8,9 +8,19 @@ export default function ProfileBar() {
     const userListModal = useUserListModal()
     const editProfileModal = useEditProfileModal()
     const handleFollowersList = () => {
-        
+        if(!userListModal.isOpen)  {
+            userListModal.setIds(user.followers)
+            userListModal.Open()
+        }
     }
-    const handleFollowingList = () => {}
+
+    const handleFollowingList = () => {
+        if(!userListModal.isOpen) {
+            userListModal.setIds(user.following)
+            userListModal.Open()
+        }
+            
+    }
   return (
     <div className='flex gap-4 p-8'>
         <div className='
@@ -53,7 +63,7 @@ export default function ProfileBar() {
                     hover:bg-gray-400/10
                     active:bg-gray-400/0
                 '
-                ><span className='font-semibold'>{user.followers}</span> followers
+                ><span className='font-semibold'>{user.followers.length}</span> followers
             </Button>
             <Button
                 onClick={handleFollowingList}
@@ -67,7 +77,7 @@ export default function ProfileBar() {
                     hover:bg-gray-400/10
                     active:bg-gray-400/0
                 '
-                ><span className='font-semibold'>{user.following}</span> following
+                ><span className='font-semibold'>{user.following.length}</span> following
             </Button>
             <p className='w-fit py-1.5 hidden'>
                 <span className='font-semibold'>
