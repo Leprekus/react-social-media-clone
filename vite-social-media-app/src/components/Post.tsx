@@ -2,7 +2,7 @@ import { type Post } from '../../typings'
 import PostFooter from './PostFooter'
 export default function Post() {
 
-    const handleLike = (id: string) => {}
+ 
     const handleLoadComments = (id: string) => {}
     const handleSharePost = (id: string) => {}
     
@@ -30,7 +30,6 @@ export default function Post() {
         </div>
         <div className='w-full h-[388px] bg-red-500' content='post image'/>
         <PostFooter
-            handleLike={handleLike}
             handleLoadComments={handleLoadComments}
             handleSharePost={handleSharePost}
             post={samplePost}
