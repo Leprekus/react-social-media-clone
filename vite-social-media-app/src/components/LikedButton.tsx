@@ -19,6 +19,7 @@ export default function LikedButton({ postId }: LikedButtonProps) {
 }, [user.getLiked().length])
     const handleLike = async () => {
         const res = await user.like(postId)
+        //TODO: handle like
     }
   return (
     <button onClick={handleLike}>
