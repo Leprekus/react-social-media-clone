@@ -4,7 +4,7 @@ import { HiUser, HiOutlineUser } from 'react-icons/hi'
 import { BiSolidSearch, BiSearch } from 'react-icons/bi'
 import { TbMessageCircle2Filled, TbMessageCircle2 } from 'react-icons/tb'
 import { IoIosClose } from 'react-icons/io'
-import { GiHamburgerMenu } from 'react-icons/gi'
+import { HiMenuAlt4 } from 'react-icons/hi'
 import { useRouter } from '../hooks/useRouter'
 import routes from '../lib/routes'
 import Link from './Link'
@@ -25,7 +25,7 @@ export default function Navbar({ children }: NavbarProps) {
   const User = isUserActive ? HiUser : HiOutlineUser
   const Search = isSearchActive ? BiSolidSearch : BiSearch
   const Message = isMessagesActive ? TbMessageCircle2Filled : TbMessageCircle2
-  const HamburgerMenu = isOpen ? IoIosClose : GiHamburgerMenu
+  const HamburgerMenu = isOpen ? IoIosClose : HiMenuAlt4
 
   const activeClassName = 'text-violet-400 bg-violet-400/30'
   const linkClassName = `
@@ -51,14 +51,12 @@ export default function Navbar({ children }: NavbarProps) {
   `
 
   return (
-    <div>
-        <div className='pl-20'>
-          { children }
-        </div>
-        
+    <>
+        { children }
         <nav className={`
         fixed
         bottom-0 
+        left-0
         bg-[#1d1f25]  
         h-15 
         w-full
@@ -73,6 +71,7 @@ export default function Navbar({ children }: NavbarProps) {
         sm:justify-start 
         sm:gap-4
         sm:pt-14
+        
          `}
          >
           <button 
@@ -134,6 +133,6 @@ export default function Navbar({ children }: NavbarProps) {
               <span className={isOpen ? 'visible' : 'hidden'}>profile</span>
             </Link>
         </nav>
-    </div>
+    </>
   )
 }
