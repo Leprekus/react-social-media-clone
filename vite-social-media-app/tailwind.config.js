@@ -4,7 +4,11 @@ export default {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        midnight: '#1d1f25'
+      }
+    },
   },
   plugins: [],
 }

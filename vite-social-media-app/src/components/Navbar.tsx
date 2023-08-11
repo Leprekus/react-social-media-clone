@@ -57,7 +57,7 @@ export default function Navbar({ children }: NavbarProps) {
         fixed
         bottom-0 
         left-0
-        bg-[#1d1f25]  
+        bg-[#1d1f25]
         h-15 
         w-full
         flex
