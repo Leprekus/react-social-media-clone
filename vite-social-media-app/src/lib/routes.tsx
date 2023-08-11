@@ -11,6 +11,7 @@ export default [
     { path: '/', component: <Home/> },
     { path: '/login', component: <Login/> },
     { path: '/search', component: <Search/> },
+    { path: '/search/:query', component: <div>my query</div> },
     { path: '/messages', component: <Messages/> },
     { path: '/:username', component: <Profile/> },
   ]
