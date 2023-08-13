@@ -22,7 +22,6 @@ export default function CreateAccount() {
       setCurrentPage(currentPage + 1);
       return
     }
-    console.log({ formData })
   };
 
   const handlePreviousPage = () => {
@@ -35,14 +34,28 @@ export default function CreateAccount() {
     setFormData(prevData => ({ ...prevData, [fieldName]: value }));
   };
 
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log({ totalPages, currentPage, selectedImg})
     if (currentPage === totalPages) {
       //TODO:Handle form submission
-      console.log(formData);
+      
       try {
         setIsLoading(true)
+        setFormData((prev) => ({
+          ...prev,
+          profileImage: selectedImg
+        }))
+        const res = await fetch(`${import.meta.env['VITE_BACKEND_URL']}api/POST/create-account`, {
+          method: 'POST',
+          headers:{ 'Content-Type': 'application/json'},
+          body: JSON.stringify(formData)
+        })
+
+        const data = await res.json()
+        console.log({ data })
+      
+       
       } catch(error) {
         console.log(error)
       } finally{

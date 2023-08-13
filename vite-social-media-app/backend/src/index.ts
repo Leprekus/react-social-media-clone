@@ -1,14 +1,18 @@
 import express from 'express'
 import cors from 'cors'
 import path from 'path'
+import body from './utils/parse-body'
 const PORT = 4321
 const app = express()
 
 
 app.use(cors())
-app.get('/api', async (req: express.Request, res:express.Response) => {
+
+app.use(body)
+
+app.post('/api/POST/*', async (req: express.Request, res:express.Response) => {
     
-    const filePath = path.join(__dirname, '/sdf', req.path)
+    const filePath = path.join(__dirname, req.path)
    
     try {
 

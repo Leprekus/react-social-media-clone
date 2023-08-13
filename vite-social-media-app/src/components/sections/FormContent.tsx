@@ -65,6 +65,7 @@ export default function FormContent({
             <Input
               value={formData.email}
               placeholder="email"
+              name='email'
               type="email"
               onChange={e => handleFormChange('email', e.target.value)}
             />
@@ -73,6 +74,7 @@ export default function FormContent({
             <Input
               value={formData.name}
               placeholder="name"
+              name='name'
               type="text"
               onChange={e => handleFormChange('name', e.target.value)}
             />
@@ -81,6 +83,7 @@ export default function FormContent({
             <Input
               value={formData.password}
               placeholder="password"
+              name='password'
               type="password"
               onChange={e => handleFormChange('password', e.target.value)}
             />
@@ -123,6 +126,7 @@ export default function FormContent({
               <input
               className="w-24 h-24 bg-gray-200 rounded-full absolute hover:cursor-pointer opacity-0"
               type='file'
+              name='profileImage'
               accept='image/*'
               onChange={handleImageChange}
               />
@@ -136,6 +140,7 @@ export default function FormContent({
               <Input
                 value={formData.username}
                 placeholder="username"
+                name='username'
                 type="text"
                 onChange={e => handleFormChange('username', e.target.value)}
               />
@@ -143,6 +148,7 @@ export default function FormContent({
             <Input
               value={formData.bio}
               placeholder="bio"
+              name='bio'
               type="text"
               onChange={e => handleFormChange('password', e.target.value)}
             />
