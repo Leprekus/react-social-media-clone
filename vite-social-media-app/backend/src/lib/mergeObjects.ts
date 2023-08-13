@@ -1,4 +1,5 @@
-export default function mergeObjects(a, b) {
+
+export default function mergeObjects(a: any, b: any) {
     if(a === null || typeof a !== 'object') return b;
     if(b === null || typeof b !== 'object') return b;
     
