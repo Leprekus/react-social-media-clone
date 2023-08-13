@@ -1,20 +1,26 @@
 import { ReactNode, createContext, useContext } from 'react';
+import { Session } from '../../typings';
 
 type AuthContextType  = {
-    accessToken: string;
-    user: object;
-    isLoading: boolean;
-    isAuthed: boolean;
+    session: Session | null
 }
 export const AuthContext = createContext<AuthContextType | undefined>( undefined )
 
 export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
     //TODO: add logic to handle auth
     const values = {
-        accessToken: '',
-        user: {},
-        isLoading: false,
-        isAuthed: true
+        session: {
+            createdAt: '',
+            expiresAt: '',
+            refreshToken: '',
+            accessToken: '',
+            user: {
+                id: '',
+                username: '',
+                email: '',
+                bio: '',
+            },
+        }
     }
 
     return (

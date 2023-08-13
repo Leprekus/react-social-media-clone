@@ -7,3 +7,22 @@ export interface Post {
     id: string;
     description: string;
 }
+
+
+export type User = {
+    id: string;
+    username: string;
+    email: string;
+    bio: string;
+    // Add other user properties as needed
+  };
+  
+  
+export type Session = {
+    createdAt: string;
+    expiresAt: string;
+    refreshToken: string;
+    accessToken: string;
+    user: User
+  };
+  
