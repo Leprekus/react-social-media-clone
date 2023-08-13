@@ -1,4 +1,17 @@
-import { Comparator } from '../../typings';
+//import { Comparator } from '../../typings'
+
+export enum Comparator {
+    Equals,
+    NotEqual,
+    In,
+    Between,
+    GreaterThan,
+    LessThan,
+    GreaterOrEqual,
+    LessOrEqual,
+    Matches,
+  }
+
 
 export default function where<T, R>(
     collector: (
@@ -11,7 +24,8 @@ export default function where<T, R>(
     return (key: keyof T | string) => {
 
         const chain = {
-            where: where<T, R>(collector, runner)
+            where: where<T, R>(collector, runner),
+            run: runner
         }
 
         return {

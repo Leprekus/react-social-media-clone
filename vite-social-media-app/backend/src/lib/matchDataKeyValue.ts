@@ -1,13 +1,24 @@
-import { Comparator, Matcher, ObjectLiteral } from '../../typings';
+import {  Matcher, ObjectLiteral } from '../../typings';
 import getKeyChainValue from './getKeyChainValue';
-
+//import {  Comparator } from '../../typings';
+export enum Comparator {
+    Equals,
+    NotEqual,
+    In,
+    Between,
+    GreaterThan,
+    LessThan,
+    GreaterOrEqual,
+    LessOrEqual,
+    Matches,
+  }
 export default function matchDataKeyValue<T>(
     data: T,
     { comparator, key, value }: Matcher<T>
 ) {
     const val = getKeyChainValue(key as string, data as ObjectLiteral)
 
-    switch (comparator) {
+    switch (comparator as Comparator) {
         case Comparator.Equals:
             return val === value;
         case Comparator.NotEqual:

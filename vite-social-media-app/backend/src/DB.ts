@@ -13,7 +13,7 @@ export class JSONDB<T extends object> {
     private readonly  filePath: string;
 
     constructor(private filename: string) {
-        this.filePath = path.join(__dirname, `${filename}.json`)
+        this.filePath = path.join(__dirname, 'data', `${filename}.json`)
         if(!fs.existsSync(this.filePath)) {
             fs.writeFileSync(this.filePath, '[]', 'utf-8')
         }
@@ -159,6 +159,7 @@ export class JSONDB<T extends object> {
         })
     }
     async drop() {
+        console.log({path :this.filePath})
         await unlink(this.filePath)
     }
 

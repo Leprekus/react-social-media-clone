@@ -19,7 +19,7 @@ app.post('/api/POST/*', async (req: express.Request, res:express.Response) => {
         const module = await import(filePath)
 
         const handler = await module.default || await module.handler
-        
+
         const response: Response = await handler(req, res)
 
         return response
@@ -27,7 +27,9 @@ app.post('/api/POST/*', async (req: express.Request, res:express.Response) => {
 
     } catch(Error) {
 
-        return res.status(500).json({ Error })
+        console.log({ Error })
+        
+        return res.status(500).json({ Error: 'Internal server error '})
 
     }
 

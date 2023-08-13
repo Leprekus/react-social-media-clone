@@ -19,7 +19,17 @@ export type ObjectLiteral = {
     LessOrEqual,
     Matches,
   }
-
+  // export const Comparator = {
+  //   Equals: 0,
+  //   NotEqual: 1,
+  //   In: 2,
+  //   Between: 3,
+  //   GreaterThan: 4,
+  //   LessThan: 5,
+  //   GreaterOrEqual: 6,
+  //   LessOrEqual: 7,
+  //   Matches: 8,
+  // };
 interface Collector<T> {
   collector: (
   key: keyof T | string, 

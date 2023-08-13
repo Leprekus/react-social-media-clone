@@ -9,13 +9,19 @@ export interface Post {
 }
 
 
-export type User = {
+export interface User {
+    email: string;
+    name: string;
     id: string;
     username: string;
-    email: string;
     bio: string;
+    profileImage: string
     // Add other user properties as needed
-  };
+  }
+
+export interface NewAccount extends User {
+    password: string,
+}
   
   
 export type Session = {
