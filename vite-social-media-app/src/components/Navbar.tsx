@@ -50,6 +50,7 @@ export default function Navbar({ children }: NavbarProps) {
   ${!isOpen && 'sm:w-20'}
   `
 
+  if(pathname === '/login')  return children
   return (
     <>
         { children }
