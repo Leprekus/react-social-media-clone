@@ -9,14 +9,15 @@ export default function CreateAccount() {
   const [formData, setFormData] = useState({
     email: user.email,
     name: user.name,
-    username: user.username,
     password: user.password,
-    bio: user.bio
+    username: user.username,
+    bio: user.bio,
+    profileImage: selectedImg
   });
 
   const totalPages = 2;
 
-  const handleNextOrCreate = () => {
+  const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
       return
@@ -72,7 +73,7 @@ export default function CreateAccount() {
         handleFormChange={handleFormChange}
         handleImageChange={handleImageChange}
         handlePreviousPage={handlePreviousPage}
-        handleNextOrCreate={handleNextOrCreate}
+        handleNextPage={handleNextPage}
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         totalPages={totalPages}
