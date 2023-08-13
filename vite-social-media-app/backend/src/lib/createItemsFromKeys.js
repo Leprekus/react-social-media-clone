@@ -1,20 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function createItemFromKeys(keys, data) {
-    var partialItem = {};
+    const partialItem = {};
     //loops over key chains
     //until there are no more keys / children left
-    keys.forEach(function (keyChain) {
-        var target = partialItem;
-        var source = data;
+    keys.forEach((keyChain) => {
+        let target = partialItem;
+        let source = data;
         String(keyChain)
             .split('.')
-            .forEach(function (key, index, parts) {
+            .forEach((key, index, parts) => {
             var _a;
-            var value = source[key];
+            const value = source[key];
             if (value === undefined)
-                throw new Error("Key ".concat(key, " does not exist in ").concat(JSON.stringify(source)));
-            var isLastKey = index == parts.length - 1;
+                throw new Error(`Key ${key} does not exist in ${JSON.stringify(source)}`);
+            const isLastKey = index == parts.length - 1;
             target[key] =
                 //if last key returns value
                 //else returns array if array else object

@@ -1,10 +1,12 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-var typings_1 = require("../typings");
-var getKeyChainValue_1 = require("./getKeyChainValue");
-function matchDataKeyValue(data, _a) {
-    var comparator = _a.comparator, key = _a.key, value = _a.value;
-    var val = (0, getKeyChainValue_1.default)(key, data);
+const typings_1 = require("../../typings");
+const getKeyChainValue_1 = __importDefault(require("./getKeyChainValue"));
+function matchDataKeyValue(data, { comparator, key, value }) {
+    const val = (0, getKeyChainValue_1.default)(key, data);
     switch (comparator) {
         case typings_1.Comparator.Equals:
             return val === value;
@@ -25,8 +27,8 @@ function matchDataKeyValue(data, _a) {
             return Number(val) < Number(value);
         case typings_1.Comparator.Matches:
             return typeof value === 'string'
-                ? new RegExp(value).test("".concat(val))
-                : value.test("".concat(val));
+                ? new RegExp(value).test(`${val}`)
+                : value.test(`${val}`);
         default:
             return false;
     }

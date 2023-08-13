@@ -1,4 +1,4 @@
-import { ObjectLiteral } from '../typings';
+import { ObjectLiteral } from '../../typings';
 
 export default function getKeyChainValue(
     keyChain: string,

@@ -1,4 +1,4 @@
-import { Comparator, Matcher, ObjectLiteral } from '../typings';
+import { Comparator, Matcher, ObjectLiteral } from '../../typings';
 import getKeyChainValue from './getKeyChainValue';
 
 export default function matchDataKeyValue<T>(

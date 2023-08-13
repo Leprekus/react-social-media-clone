@@ -1,4 +1,4 @@
-import { Comparator } from '../typings';
+import { Comparator } from '../../typings';
 
 export default function where<T, R>(
     collector: (

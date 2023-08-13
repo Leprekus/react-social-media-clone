@@ -1,40 +1,40 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var typings_1 = require("../typings");
+const typings_1 = require("../../typings");
 function where(collector, runner) {
-    return function (key) {
-        var chain = {
+    return (key) => {
+        const chain = {
             where: where(collector, runner)
         };
         return {
-            matches: function (val) {
+            matches(val) {
                 collector(key, typings_1.Comparator.Matches, val);
                 return chain;
             },
-            equals: function (val) {
+            equals(val) {
                 collector(key, typings_1.Comparator.Matches, val);
                 return chain;
             },
-            notEqual: function (val) {
+            notEqual(val) {
                 collector(key, typings_1.Comparator.NotEqual, val);
                 return chain;
             },
-            in: function (val) {
+            in(val) {
                 collector(key, typings_1.Comparator.In, val);
                 return chain;
             },
-            between: function (val) {
+            between(val) {
                 collector(key, typings_1.Comparator.Between, val);
                 return chain;
             },
-            lessOrEqual: function (val) {
+            lessOrEqual(val) {
                 collector(key, typings_1.Comparator.LessThan, val);
             },
-            greaterThan: function (val) {
+            greaterThan(val) {
                 collector(key, typings_1.Comparator.GreaterThan, val);
                 return chain;
             },
-            greaterOrEqual: function (val) {
+            greaterOrEqual(val) {
                 collector(key, typings_1.Comparator.GreaterOrEqual, val);
                 return chain;
             }

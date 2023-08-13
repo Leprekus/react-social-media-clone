@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function getKeyChainValue(keyChain, data) {
-    var parts = String(keyChain).split('.');
-    var key = parts.shift();
-    var value = data[key];
+    const parts = String(keyChain).split('.');
+    const key = parts.shift();
+    const value = data[key];
     if (parts.length) {
         if (value && typeof value === 'object') {
             return getKeyChainValue(parts.join('.'), value);
         }
-        throw new Error("Cannot get ".concat(parts.join('.'), " of ").concat(value));
+        throw new Error(`Cannot get ${parts.join('.')} of ${value}`);
     }
     return value;
 }

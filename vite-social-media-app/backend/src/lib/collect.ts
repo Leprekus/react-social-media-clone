@@ -1,4 +1,4 @@
-import { Matcher } from '../typings';
+import { Matcher } from '../../typings';
 import where from './where';
 
 export default function collect<T, R>(done: (res: Matcher<T>[]) => R) {

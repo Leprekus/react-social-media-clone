@@ -2,7 +2,7 @@ import path from 'path'
 import fs from 'fs'
 import { writeFile, readFile, unlink } from 'fs/promises'
 import collect from './lib/collect';
-import { Matcher, ObjectLiteral } from './typings';
+import { Matcher, ObjectLiteral } from '../typings';
 import matchDataKeyValue from './lib/matchDataKeyValue';
 import createItemFromKeys from './lib/createItemsFromKeys';
 import mergeObjects from './lib/mergeObjects';
