@@ -9,9 +9,10 @@ import Login from './pages/Login'
 export default function Router() {
 
     const router = useRouter()
-    const { isAuthed } = useAuth()
+    const { session } = useAuth()
 
-    if(!isAuthed) {
+    console.log({ session })
+    if(!session) {
       
       router.replace('/login')
       return <Login/>

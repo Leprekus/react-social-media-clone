@@ -19,8 +19,8 @@ export type User = {
   
   
 export type Session = {
-    createdAt: string;
-    expiresAt: string;
+    createdAt: number;
+    expiresAt: number;
     refreshToken: string;
     accessToken: string;
     user: User
