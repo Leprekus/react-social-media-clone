@@ -16,10 +16,12 @@ export default function CreateAccount() {
 
   const totalPages = 2;
 
-  const handleNextPage = () => {
+  const handleNextOrCreate = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      return
     }
+    console.log({ formData })
   };
 
   const handlePreviousPage = () => {
@@ -70,7 +72,7 @@ export default function CreateAccount() {
         handleFormChange={handleFormChange}
         handleImageChange={handleImageChange}
         handlePreviousPage={handlePreviousPage}
-        handleNextPage={handleNextPage}
+        handleNextOrCreate={handleNextOrCreate}
         handleSubmit={handleSubmit}
         isLoading={isLoading}
         totalPages={totalPages}

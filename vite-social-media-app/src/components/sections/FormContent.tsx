@@ -17,7 +17,7 @@ interface FormContentProps {
   handleFormChange: (fieldName: string, value: string) => void;
   handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handlePreviousPage: () => void;
-  handleNextPage: () => void;
+  handleNextOrCreate: () => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   isLoading: boolean;
   totalPages: number;
@@ -30,7 +30,7 @@ export default function FormContent({
   handleFormChange,
   handleImageChange,
   handlePreviousPage,
-  handleNextPage,
+  handleNextOrCreate,
   handleSubmit,
   isLoading,
   totalPages,
@@ -154,7 +154,7 @@ export default function FormContent({
           <div className={`w-3 h-3 rounded-full ${currentPage === 2 ? 'bg-blue-600' : 'bg-gray-500'} transition`}/>
         </div>
         <Button 
-        onClick={handleNextPage} 
+        onClick={handleNextOrCreate}
         type={currentPage === 2 ? 'submit' : 'button'} 
         disabled={isLoading}>
           {currentPage === totalPages ? 'Create' : 'Next'}

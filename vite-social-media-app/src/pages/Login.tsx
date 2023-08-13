@@ -1,6 +1,7 @@
 import { useState, lazy, Suspense } from 'react';
 import Layout from '../Layout';
 import Button from '../components/Button';
+import Loading from '../components/Loading';
 
 
 
@@ -11,7 +12,7 @@ export default function Login() {
   return(
     <>
       {createAccount ?
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading/>}>
           <CreateAccount/>
         </Suspense> :
         <Layout>
