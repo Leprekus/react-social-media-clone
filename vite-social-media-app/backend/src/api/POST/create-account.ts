@@ -29,10 +29,14 @@ export default async function handler(req: Request, res: Response) {
 
     console.log(user)
     const UsersTable = new JSONDB<User>('users')
-    //await Users.insert(user)
-   
+  
+    const email = await UsersTable.getOne().where('email').equals(user.email).run()
+    const username = await UsersTable.getOne().where('username').equals(user.username).run()
+    console.log({ email, username })
+    if(email || username) 
+        return res.status(409).json({ message: 'usernmae or password already exists'})
 
-    
+    UsersTable.insert(user)
     
     return res.status(200).json({ message: 'account created successfully' })
 }
