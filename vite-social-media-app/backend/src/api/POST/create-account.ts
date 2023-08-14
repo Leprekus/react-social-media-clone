@@ -1,9 +1,9 @@
 import { type Request, type Response } from 'express'
-import { NewAccount, User } from '../../../../typings'
+import { NewAccount } from '../../../../typings'
 import { z } from 'zod'
 import { v4 as uuid } from 'uuid'
-import { JSONDB } from '../../DB'
 import { config } from 'dotenv'
+import { UserTable } from '../../Tables'
 config()
 
 export default async function handler(req: Request, res: Response) {
@@ -38,20 +38,15 @@ export default async function handler(req: Request, res: Response) {
     user = {
         ...user,
         id: uuid()
-    }
-
-    const UsersTable = new JSONDB<User>('users')
-    
+    }    
   
-    const email = await UsersTable.getOne().where('email').equals(user.email).run()
-    const username = await UsersTable.getOne().where('username').equals(user.username).run()
+    const email = await UserTable.getOne().where('email').equals(user.email).run()
+    const username = await UserTable.getOne().where('username').equals(user.username).run()
     
     if(email || username) 
-        return res.status(409).json({ message: 'usernmae or password already exists'})
+        return res.status(409).json({ message: 'username or password already exists'})
 
-    UsersTable.insert(user)
-
-    console.log({ user })
+    await UserTable.insert(user)
     
-    return res.status(200).json({ message: 'account created successfully' })
+    return res.status(200)
 }

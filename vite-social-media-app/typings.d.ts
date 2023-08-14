@@ -20,15 +20,18 @@ export interface User {
   }
 
 export interface NewAccount extends User {
-    password: string,
+    password?: string,
 }
   
   
-export type Session = {
+export interface Token {
     createdAt: number;
-    expiresAt: number;
+    expiresAt?: number;
     refreshToken: string;
     accessToken: string;
+}
+
+export interface Session extends Token {
     user: User
-  };
+  }
   

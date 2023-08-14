@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import user from '../../mock/user.json'
 import Layout from '../Layout';
 import FormContent from './sections/FormContent';
+import { useAuth } from '../hooks/useAuth';
+
 export default function CreateAccount() {
     const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,6 +18,7 @@ export default function CreateAccount() {
   });
 
   const totalPages = 2;
+  const { signIn } = useAuth()
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
@@ -56,9 +59,8 @@ export default function CreateAccount() {
           body: JSON.stringify(formData)
         })
 
-        const data = await res.json()
-        console.log({ data })
-      
+        if(res.ok)
+          signIn(formData.username, formData.password)
        
       } catch(error) {
         console.log(error)
