@@ -46,9 +46,13 @@ export default function CreateAccount() {
           ...prev,
           profileImage: selectedImg
         }))
+        const credentials = btoa(`${import.meta.env.VITE_CLIENT_ID}:${import.meta.env.VITE_CLIENT_SECRET}`)
         const res = await fetch(`${import.meta.env['VITE_BACKEND_URL']}api/POST/create-account`, {
           method: 'POST',
-          headers:{ 'Content-Type': 'application/json'},
+          headers:{ 
+            'Content-Type': 'application/json',
+            'Authorization': `${credentials}`
+          },
           body: JSON.stringify(formData)
         })
 
