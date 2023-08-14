@@ -41,6 +41,7 @@ export default async function handler(req: Request, res: Response) {
     }
 
     const UsersTable = new JSONDB<User>('users')
+    
   
     const email = await UsersTable.getOne().where('email').equals(user.email).run()
     const username = await UsersTable.getOne().where('username').equals(user.username).run()
@@ -49,6 +50,8 @@ export default async function handler(req: Request, res: Response) {
         return res.status(409).json({ message: 'usernmae or password already exists'})
 
     UsersTable.insert(user)
+
+    console.log({ user })
     
     return res.status(200).json({ message: 'account created successfully' })
 }
