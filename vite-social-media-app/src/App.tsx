@@ -13,7 +13,7 @@ export default function Router() {
 
     console.log({ session })
     if(!session) {
-      
+
       router.replace('/login')
       return <Login/>
       
