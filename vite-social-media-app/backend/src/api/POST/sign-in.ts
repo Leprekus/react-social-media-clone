@@ -1,4 +1,4 @@
-import { type Request, type Response } from 'express'
+import { NextFunction, type Request, type Response } from 'express'
 import { config } from 'dotenv'
 import { UserTable } from '../../Tables'
 import { Session, User } from '../../../../typings'
@@ -6,7 +6,7 @@ import generateSession from '../../utils/generateSession'
 
 config()
 
-export default async function handler(req: Request, res: Response) {
+export default async function handler(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers.authorization
     if(!authHeader) return res.status(409).json({ message: 'No client credentials provided' })
 
@@ -29,8 +29,8 @@ export default async function handler(req: Request, res: Response) {
     delete storedUser?.password
 
     if(storedUser) {
-        const session: Session = await generateSession((storedUser as User)!)
-        
+        const session: Session = await generateSession((storedUser as User)!, res)
+
         return res.status(200).json({ session })
     }
     return res.status(401).json({ message: 'invald credentials'})

@@ -1,14 +1,24 @@
 import { Session, User } from '../../../typings';
 import { SessionTable } from '../Tables';
 import { v4 as uid } from 'uuid';
-export default async function generateSession (user: User): Promise<Session> {
+import type { Response } from 'express';
+
+function generateToken (uid: string) {
     const CHARACTERS = 'acbdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
+    const uidCharacters = uid.split('')
     let token = ''
 
     for(let i = 0 ; i < 64; i++) {
-        const index = Math.floor(Math.random() * CHARACTERS.length)
-        token += CHARACTERS[index]
+        const charsIndex = Math.floor(Math.random() * CHARACTERS.length)
+        const uidIndex = Math.floor(Math.random() * uidCharacters.length)
+        token += i % 2 === 0 ? CHARACTERS[charsIndex] : uidCharacters[uidIndex]
     }
+    return token
+}
+
+export default async function generateSession (user: User, res: Response): Promise<Session> {
+    
+    const token = generateToken(uid())
 
     const session = {
         createdAt: Date.now(),
@@ -19,10 +29,19 @@ export default async function generateSession (user: User): Promise<Session> {
 
     await SessionTable.insert(session)
 
-    return {
-        ...session,
-        expiresAt: session.createdAt + (3600 * 1000)
+   const expires = new Date()
+   expires.setDate(expires.getDate() + 7)
+   const sessionCookie = {
+    ...session,
+    expiresAt: session.createdAt + (3600 * 1000)
+}
+   
+   res.cookie('session', JSON.stringify(sessionCookie), { 
+    httpOnly: true, 
+    maxAge: 900000, 
+    expires 
+})
 
-    }
+    return sessionCookie
     
 }

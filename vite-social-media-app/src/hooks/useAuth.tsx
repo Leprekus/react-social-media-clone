@@ -1,7 +1,8 @@
 import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 import { Session } from '../../typings';
 import { useRouter } from './useRouter';
-import { tryCatchPost } from '../lib/fetch-helpers';
+import { tryCatchGet, tryCatchPost } from '../lib/fetch-helpers';
+import { useCookies } from 'react-cookie'
 
 
 type AuthContextType  = {
@@ -35,7 +36,7 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
 
     const refreshToken = async () => {
         const endpoint = `${import.meta.env['VITE_BACKEND_URL']}api/POST/refresh-token`
-        const payload = session?.refreshToken as string
+        const payload = { refreshToken : session?.refreshToken as string }
         
         const [data, error] = await tryCatchPost<SessionData>({ endpoint, payload })
 
@@ -45,19 +46,27 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
         setSession(data.session)
     }
 
-    const newLogin = session && (session?.expiresAt && session.expiresAt > Date.now()) && pathname === '/login'
-    const expiredSession = session && session?.expiresAt && session.expiresAt < Date.now()
-    useEffect(() => {
-        if(newLogin) 
-            return router.push('/')
-        
-        if(expiredSession) 
-            refreshToken()  
-        
-        else (!session) 
-            router.push('/login')
+    const getSession = async () => {
 
-    },[session, pathname, newLogin, expiredSession])
+        const [data, error] = await tryCatchGet<SessionData>({ endpoint: `${import.meta.env['VITE_BACKEND_URL']}api/GET/session`})
+
+        if(!error && data?.session) {
+            setSession(data?.session)
+            console.log({ getSessionRes: data?.session })
+        }
+
+    }
+
+
+    const validSession = session && session?.expiresAt && session.expiresAt > Date.now()
+    useEffect(() => {
+        getSession()
+
+        if(validSession && pathname ==='/login') router.push('/')
+        
+        else if (!validSession) router.push('/login')
+
+    },[validSession, session])
     const values = {
         session, 
         signIn

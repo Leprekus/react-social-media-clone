@@ -1,6 +1,9 @@
 import type { Request, Response, NextFunction } from 'express'
 export default function body(req: Request, res: Response, next: NextFunction) {
 
+    if(req.method !== 'POST' || req.method !== 'POST')
+        return next()
+
     let data = ''
     req.on('data', (chunk) => {
         data += chunk

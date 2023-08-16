@@ -1,16 +1,21 @@
-import express from 'express'
+import express, { NextFunction } from 'express'
 import cors from 'cors'
 import path from 'path'
 import body from './utils/parse-body'
+import cookieParser from 'cookie-parser'
 const PORT = 4321
 const app = express()
 
+app.use(cookieParser())
 
-app.use(cors())
+app.use(cors({
+    origin:'http://localhost:5173',
+    credentials: true
+}))
 
 app.use(body)
 
-app.post('/api/POST/*', async (req: express.Request, res:express.Response) => {
+app.post('/api/POST/*', async (req: express.Request, res:express.Response, next: NextFunction) => {
     
     const filePath = path.join(__dirname, req.path)
    
@@ -20,7 +25,34 @@ app.post('/api/POST/*', async (req: express.Request, res:express.Response) => {
 
         const handler = await module.default || await module.handler
 
-        const response: Response = await handler(req, res)
+        const response: Response = await handler(req, res, next)
+
+        return response
+
+
+    } catch(Error) {
+
+        console.log({ Error })
+        
+        return res.status(500).json({ Error: 'Internal server error '})
+
+    }
+
+
+    
+})
+app.get('/api/GET/*', async (req: express.Request, res:express.Response, next: NextFunction) => {
+    
+    const filePath = path.join(__dirname, req.path)
+   
+    console.log({ filePath })
+    try {
+
+        const module = await import(filePath)
+
+        const handler = await module.default || await module.handler
+
+        const response: Response = await handler(req, res, next)
 
         return response
 
