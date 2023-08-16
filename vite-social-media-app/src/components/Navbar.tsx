@@ -12,7 +12,11 @@ interface NavbarProps { children: ReactNode }
 export default function Navbar({ children }: NavbarProps) {
 
   const pathname = useRouter().pathname
-  const [ home, login, search, messages, user ] = routes
+  const home = routes[0]
+  const search = routes[2]
+  const messages = routes[4]
+  const user = routes[5]
+  
   const [isOpen, setIsOpen] = useState(false)
 
   const isUserActive = pathname === user.path
