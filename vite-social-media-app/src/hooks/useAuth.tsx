@@ -38,7 +38,7 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
         const payload = { refreshToken : session?.refreshToken as string }
         
         const [data, error] = await tryCatchPost<SessionData>({ endpoint, payload })
-
+        console.log({ data })
         if(error || !data?.session)
             return setSession(null)
 
