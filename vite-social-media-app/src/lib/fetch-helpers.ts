@@ -8,7 +8,7 @@ interface TryCatchPostProps {
 }
 
 
-export async function tryCatchPost<T>({ endpoint, payload, token }: TryCatchPostProps): Promise<Result<T, any>> {
+export async function tryCatchPost<T>({ endpoint, payload, token }: TryCatchPostProps): Promise<Result<{ json: T | null, res: Response }, any>> {
 
     const credentials = btoa(`${import.meta.env.VITE_CLIENT_ID}:${import.meta.env.VITE_CLIENT_SECRET}`)
     const headers = { 
@@ -16,23 +16,27 @@ export async function tryCatchPost<T>({ endpoint, payload, token }: TryCatchPost
         'Authorization': token ? `Bearer: ${token}` : `${credentials}`
       }
 
+
     try {
-        
         const res = await fetch(endpoint, { 
             method: 'POST', 
             headers,
             credentials: 'include',
             body: JSON.stringify(payload) 
         })
-        const json = (await res.json() as T)
-        if(json)
-            return [json , null]
-        return [json, { error: 'no json'}]
+        const contentType = res.headers.get('content-type');
+        const isJson = contentType && contentType.indexOf('application/json') !== -1;
+    
+        if(isJson) {
+            const json = (await res.json() as T)
+            return [ {json, res } , null ]
+        }
+        return [ { json: null, res }, null ]
 
     } catch(error) {
 
         console.log({ error })
-        return [null, error]
+        return [ null, error ]
     }
 }
 

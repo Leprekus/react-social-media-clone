@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
+import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from 'react-icons/io'
 
 interface CarouselProps {
     images: string[]
@@ -14,10 +15,9 @@ export default function Carousel({ images }: CarouselProps) {
     const prevSlide = () => {
       setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
     };
-  
-    console.log(images)
+
     return (
-      <div className="w-full h-[388px] bg-red-500 relative group">
+      <div className="w-full h-[388px] bg-red-500 relative group flex items-center justify-center">
         <div className={`
                 absolute 
                 opacity-0 
@@ -29,8 +29,8 @@ export default function Carousel({ images }: CarouselProps) {
                 px-4
                 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
                 `}>
-            <button className="carousel-button" onClick={prevSlide}>&lt;</button>
-            <button className="carousel-button" onClick={nextSlide}>&gt;</button>
+            <button className="carousel-button" onClick={prevSlide}><IoIosArrowDropleftCircle size={30}/></button>
+            <button className="carousel-button" onClick={nextSlide}><IoIosArrowDroprightCircle size={30}/></button>
         </div>
         <img src={images[currentIndex]} alt={`Slide ${currentIndex}`} className="carousel-image" />
       </div>

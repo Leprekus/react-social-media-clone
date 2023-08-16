@@ -36,7 +36,7 @@ export default async function handler(req: Request, res: Response) {
         return res.status(422).json({ error: 'Form validation failed' })
 
     user = {
-        ...user,
+        ...result.data,
         id: uuid()
     }    
   

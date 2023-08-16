@@ -1,3 +1,5 @@
+import { User } from '../typings';
+
 export type ObjectLiteral = {
     [key: string]: any;
   };
@@ -36,4 +38,14 @@ interface Collector<T> {
   comparator: Comparator, 
   value: unknown
   ) => void
+}
+
+export interface Token {
+  createdAt: number;
+  refreshToken: string;
+  accessToken: string;
+}
+
+export interface ServerSession extends Token {
+  user: User
 }

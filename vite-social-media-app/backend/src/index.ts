@@ -32,7 +32,7 @@ app.post('/api/POST/*', async (req: express.Request, res:express.Response, next:
 
     } catch(Error) {
 
-        console.log({ Error })
+        console.log(`Error at handler: ${req.path} Error: ${Error}`)
         
         return res.status(500).json({ Error: 'Internal server error '})
 
@@ -45,7 +45,6 @@ app.get('/api/GET/*', async (req: express.Request, res:express.Response, next: N
     
     const filePath = path.join(__dirname, req.path)
    
-    console.log({ filePath })
     try {
 
         const module = await import(filePath)
