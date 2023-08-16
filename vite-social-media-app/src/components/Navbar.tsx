@@ -3,12 +3,14 @@ import { AiFillHome, AiOutlineHome } from 'react-icons/ai'
 import { HiUser, HiOutlineUser } from 'react-icons/hi'
 import { BiSolidSearch, BiSearch } from 'react-icons/bi'
 import { TbMessageCircle2Filled, TbMessageCircle2 } from 'react-icons/tb'
+import { BsPlusSquareFill, BsPlusSquareDotted } from 'react-icons/bs'
 import { IoIosClose } from 'react-icons/io'
 import { HiMenuAlt4 } from 'react-icons/hi'
 import { useRouter } from '../hooks/useRouter'
 import routes from '../lib/routes'
 import Link from './Link'
 import { useAuth } from '../hooks/useAuth'
+import useCreatePostModal from '../hooks/useCreatePostModal'
 interface NavbarProps { children: ReactNode }
 export default function Navbar({ children }: NavbarProps) {
 
@@ -20,18 +22,20 @@ export default function Navbar({ children }: NavbarProps) {
   const user = { path: `/${session?.user.username}`, component: routes[5].component }
   
   const [isOpen, setIsOpen] = useState(false)
+  const createPostModal = useCreatePostModal()
 
   const isUserActive = pathname === user.path
   const isSearchActive = pathname === search.path
   const isHomeActive = pathname === home.path
   const isMessagesActive = pathname === messages.path
-  
+  const isCreatePostActive = createPostModal.isOpen
 
   const Home = isHomeActive ? AiFillHome : AiOutlineHome
   const User = isUserActive ? HiUser : HiOutlineUser
   const Search = isSearchActive ? BiSolidSearch : BiSearch
   const Message = isMessagesActive ? TbMessageCircle2Filled : TbMessageCircle2
   const HamburgerMenu = isOpen ? IoIosClose : HiMenuAlt4
+  const CreatePost = isCreatePostActive ? BsPlusSquareFill : BsPlusSquareDotted
 
   const activeClassName = 'text-violet-400 bg-violet-400/30'
   const linkClassName = `
@@ -118,6 +122,19 @@ export default function Navbar({ children }: NavbarProps) {
               size={24}
               />
               <span  className={isOpen ? 'visible' : 'hidden'}>search</span>
+            </Link>
+            <Link 
+            href='/'
+            onClick={createPostModal.Open}
+            className={`
+            ${linkClassName} 
+            ${isCreatePostActive && activeClassName}`
+            }
+            >
+              <CreatePost 
+              size={24}
+              />
+              <span  className={isOpen ? 'visible' : 'hidden'}>Create Post</span>
             </Link>
             <Link 
             className={`

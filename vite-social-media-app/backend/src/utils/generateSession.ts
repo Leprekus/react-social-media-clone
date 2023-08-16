@@ -38,7 +38,7 @@ export default async function generateSession (user: User, res: Response): Promi
    
    res.cookie('session', JSON.stringify(sessionCookie), { 
     httpOnly: true, 
-    maxAge: 900000, 
+    maxAge: 604800000, //7 days in miliseconds
     expires 
 })
 
