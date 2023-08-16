@@ -1,8 +1,8 @@
 import React from 'react'
-import Input from '../Input';
 import { BsArrowLeftSquareFill } from 'react-icons/bs'
 import { BiSolidUser } from 'react-icons/bi'
 import Button from '../ui/Button';
+import Input from '../ui/Input';
 
 interface FormContentProps {
   currentPage: number;
