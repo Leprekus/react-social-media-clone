@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-interface PostModalStore {
+interface ViewPostModalStore {
     isOpen: boolean;
     Open: () => void;
     Close: () => void;
@@ -11,7 +11,7 @@ interface PostModalStore {
 
 }
 
-const usePostModal = create<PostModalStore>((set) => ({
+const useViewPostModal = create<ViewPostModalStore>((set) => ({
     isOpen: false,
     Open: () => set({ isOpen: true }),
     Close: () => set({ isOpen: false }),
@@ -20,4 +20,4 @@ const usePostModal = create<PostModalStore>((set) => ({
     removeId: () => set({ id: null })
 
 }))
-export default usePostModal
+export default useViewPostModal

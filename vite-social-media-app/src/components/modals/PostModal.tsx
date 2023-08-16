@@ -1,4 +1,4 @@
-import usePostModal from '../../hooks/usePostModal'
+import usePostModal from '../../hooks/useViewPostModal'
 import Box from '../Box'
 
 

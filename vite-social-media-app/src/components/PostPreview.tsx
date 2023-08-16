@@ -1,7 +1,7 @@
 import { FaComment } from 'react-icons/fa'
 import { AiFillHeart } from 'react-icons/ai'
 import type { Post } from '../../typings'
-import useViewPostModal from '../hooks/usePostModal'
+import useViewPostModal from '../hooks/useViewPostModal'
 interface PostProps  {
     post: Post
 }
