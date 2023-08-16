@@ -10,7 +10,6 @@ import { useRouter } from '../hooks/useRouter'
 import routes from '../lib/routes'
 import Link from './Link'
 import { useAuth } from '../hooks/useAuth'
-import useCreatePostModal from '../hooks/useCreatePostModal'
 interface NavbarProps { children: ReactNode }
 export default function Navbar({ children }: NavbarProps) {
 

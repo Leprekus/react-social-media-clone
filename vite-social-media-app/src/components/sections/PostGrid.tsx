@@ -1,6 +1,5 @@
 
 import { Post } from '../../../typings'
-import Button from '../Button'
 import Link from '../Link'
 
 import PostPreview from '../PostPreview'
