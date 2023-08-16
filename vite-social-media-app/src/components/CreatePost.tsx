@@ -4,24 +4,28 @@ import Input from './ui/Input'
 import Button from './ui/Button'
 import type { IPost } from '../../typings'
 import Post from './Post'
-
+import { useAuth } from '../hooks/useAuth'
+import placeholder from '../assets/placeholder-image.png'
 export default function CreatePost() {
+  const { session } = useAuth()
   const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>(null)
-  const [caption, setCaption] = useState('')
+  
   const [post, setPost] = useState<IPost>({
+    author: session?.user.username as string,
+    author_image: '',
     like_count: 934,
     comment_count: 234,
     likes: [''],
     comments: [''],
-    image: '',
-    id: '',
+    image: placeholder,
+    id: 'some-id',
     description: '',
   })
   const handleImageChange = () => {
 
   }
   return (
-    <div>
+    <div className='p-10 flex flex-wrap gap-4 justify-center'>
       <div className='w-96'>
         {selectedImg ? 
               <img 
@@ -51,8 +55,8 @@ export default function CreatePost() {
               </span>
         }
         <Input 
-        onChange={(e) => setCaption(e.target.value)}
-        value={caption}
+        onChange={ (e) => setPost((post) =>({ ...post, description: e.target.value })) }
+        value={post.description}
         placeholder='Caption'/>
         <Button>Create</Button>
       </div>

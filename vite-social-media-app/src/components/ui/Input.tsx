@@ -20,6 +20,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     rounded-md
     focus:outline-black
     w-full
+    text-gray-700
     
     `, className)}
     {...props}

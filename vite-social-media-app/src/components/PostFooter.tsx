@@ -14,7 +14,7 @@ export default function PostFooter({
     handleSharePost,
     post,
 }: PostFooterProps) {
-
+console.log({ id: post.id})
 
   return (
     <div className='flex flex-col'>

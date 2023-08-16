@@ -10,15 +10,15 @@ export default function Post({ post }:PostProps) {
     const handleLoadComments = (id: string) => {}
     const handleSharePost = (id: string) => {}
     
-    const samplePost:IPost = {
-        comment_count: 356,
-        comments: Array(356).fill('the comment'),
-        like_count: 954,
-        likes: Array(954).fill('user_id'),
-        image: '',
-        id: Math.floor(Math.random() * 9999).toString(),
-        description: 'The quick brown fox jumped over the lazy dog.'
-    }
+    // const samplePost:IPost = {
+    //     comment_count: 356,
+    //     comments: Array(356).fill('the comment'),
+    //     like_count: 954,
+    //     likes: Array(954).fill('user_id'),
+    //     image: '',
+    //     id: Math.floor(Math.random() * 9999).toString(),
+    //     description: 'The quick brown fox jumped over the lazy dog.'
+    // }
 
   return (
     <div className='
@@ -30,13 +30,15 @@ export default function Post({ post }:PostProps) {
     '>
         <div className='flex gap-4 items-center py-2 px-4 h-14'>
             <div className='h-10 w-10 rounded-full bg-red-500'/>
-            <p className='font-semibold'>profile username</p>
+            <p className='font-semibold'>{post.author}</p>
         </div>
-        <div className='w-full h-[388px] bg-red-500' content='post image'/>
+        <div className='w-full h-[388px] bg-red-500' content='post image'>
+            <img src={post.image}/>
+        </div>
         <PostFooter
             handleLoadComments={handleLoadComments}
             handleSharePost={handleSharePost}
-            post={samplePost}
+            post={post}
         />
     </div>
   )
