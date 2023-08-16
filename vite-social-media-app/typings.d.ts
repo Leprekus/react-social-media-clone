@@ -3,7 +3,7 @@ export interface IPost {
     comment_count: number;
     likes: string[];
     comments: string[];
-    image: string;
+    image: string[];
     id: string;
     description: string;
 

@@ -6,10 +6,9 @@ import type { IPost } from '../../typings'
 import Post from './Post'
 import { useAuth } from '../hooks/useAuth'
 import placeholder from '../assets/placeholder-image.png'
-import Carousel from './ui/Carousel'
 export default function CreatePost() {
   const { session } = useAuth()
-  const [selectedImgs, setSelectedImgs] = useState<string[] | ArrayBuffer | null>(null)
+  //const [selectedImgs, setSelectedImgs] = useState<string[]>([ placeholder ])
   
   const [post, setPost] = useState<IPost>({
     author: session?.user.username as string,
@@ -18,7 +17,7 @@ export default function CreatePost() {
     comment_count: 234,
     likes: [''],
     comments: [''],
-    image: placeholder,
+    image: [ placeholder ],
     id: 'some-id',
     description: '',
   })
@@ -29,8 +28,22 @@ export default function CreatePost() {
     
       const reader = new FileReader();
       reader.onload = () => {
-        console.log({ res  : reader.result })
-        setSelectedImgs(prev => [...(prev as string[]), (reader.result as string)]);
+        setPost(prev => {
+          if(prev.image.includes(placeholder)){ 
+            const images = prev.image.filter(img => img !== placeholder)
+            return {
+          ...prev,
+          image: [...images, (reader.result as string)]
+            }
+          }
+
+          return {
+            ...prev,
+            image: [...prev.image, (reader.result as string)]
+
+          } 
+        });
+        console.log(post.image)
       };
       reader.readAsDataURL(file);
 
@@ -39,16 +52,7 @@ export default function CreatePost() {
   return (
     <div className='p-10 flex flex-wrap gap-4 justify-center'>
       <div className='w-96'>
-        {selectedImgs ? 
-              <>
-              <img 
-              className="w-24 h-24 bg-gray-200 rounded-full mx-auto object-cover shadow-md" 
-              src={(selectedImgs as string)}
-              />
-              {/* <Carousel 
-              images={selectedImgs as string[]}/> */}
-              </>
-              :<span className='
+        <span className='
               mx-auto 
               relative 
               w-24 h-24 
@@ -68,8 +72,8 @@ export default function CreatePost() {
                 accept='image/*'
                 onChange={handleImageChange}
                 />
-              </span>
-        }
+          </span>
+        
         <Input 
         onChange={ (e) => setPost((post) =>({ ...post, description: e.target.value })) }
         value={post.description}

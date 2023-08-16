@@ -1,5 +1,6 @@
 import { type IPost } from '../../typings'
 import PostFooter from './PostFooter'
+import Carousel from './ui/Carousel'
 
 interface PostProps {
     post: IPost
@@ -32,9 +33,7 @@ export default function Post({ post }:PostProps) {
             <div className='h-10 w-10 rounded-full bg-red-500'/>
             <p className='font-semibold'>{post.author}</p>
         </div>
-        <div className='w-full h-[388px] bg-red-500' content='post image'>
-            <img src={post.image}/>
-        </div>
+        <Carousel images={post.image}/>
         <PostFooter
             handleLoadComments={handleLoadComments}
             handleSharePost={handleSharePost}
