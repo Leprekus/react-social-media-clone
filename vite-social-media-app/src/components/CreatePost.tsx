@@ -6,9 +6,10 @@ import type { IPost } from '../../typings'
 import Post from './Post'
 import { useAuth } from '../hooks/useAuth'
 import placeholder from '../assets/placeholder-image.png'
+import Carousel from './ui/Carousel'
 export default function CreatePost() {
   const { session } = useAuth()
-  const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>(null)
+  const [selectedImgs, setSelectedImgs] = useState<string[] | ArrayBuffer | null>(null)
   
   const [post, setPost] = useState<IPost>({
     author: session?.user.username as string,
@@ -21,17 +22,32 @@ export default function CreatePost() {
     id: 'some-id',
     description: '',
   })
-  const handleImageChange = () => {
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(event?.target?.files) {
+      
+      const [ file ] = event.target.files
+    
+      const reader = new FileReader();
+      reader.onload = () => {
+        console.log({ res  : reader.result })
+        setSelectedImgs(prev => [...(prev as string[]), (reader.result as string)]);
+      };
+      reader.readAsDataURL(file);
 
+    } 
   }
   return (
     <div className='p-10 flex flex-wrap gap-4 justify-center'>
       <div className='w-96'>
-        {selectedImg ? 
+        {selectedImgs ? 
+              <>
               <img 
               className="w-24 h-24 bg-gray-200 rounded-full mx-auto object-cover shadow-md" 
-              src={(selectedImg as string)}
+              src={(selectedImgs as string)}
               />
+              {/* <Carousel 
+              images={selectedImgs as string[]}/> */}
+              </>
               :<span className='
               mx-auto 
               relative 
