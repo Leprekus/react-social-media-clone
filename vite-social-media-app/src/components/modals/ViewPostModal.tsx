@@ -1,5 +1,5 @@
 import usePostModal from '../../hooks/useViewPostModal'
-import Box from '../Box'
+import Box from '../ui/Box'
 
 
 export default function PostModal() {

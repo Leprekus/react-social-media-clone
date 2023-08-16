@@ -1,5 +1,5 @@
 import useUserListModal from '../../hooks/useUserListModal'
-import Box from '../Box'
+import Box from '../ui/Box'
 
 
 export default function UserListModal() {

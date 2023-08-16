@@ -2,7 +2,7 @@ import React from 'react'
 import Input from '../Input';
 import { BsArrowLeftSquareFill } from 'react-icons/bs'
 import { BiSolidUser } from 'react-icons/bi'
-import Button from '../Button';
+import Button from '../ui/Button';
 
 interface FormContentProps {
   currentPage: number;

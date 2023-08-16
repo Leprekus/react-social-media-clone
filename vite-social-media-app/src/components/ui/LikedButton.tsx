@@ -1,6 +1,6 @@
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import React, { useEffect, useState } from 'react'
-import userUser from './useUser';
+import userUser from '../useUser';
 
 interface LikedButtonProps {
     postId: string;

@@ -1,6 +1,6 @@
 import { useState, lazy, Suspense } from 'react';
 import Layout from '../Layout';
-import Button from '../components/Button';
+import Button from '../components/ui/Button';
 import Loading from '../components/Loading';
 import SignInContent from '../components/SignInContent';
 

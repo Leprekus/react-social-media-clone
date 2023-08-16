@@ -2,7 +2,7 @@
 import { TbMessageCircle2 as Comment } from 'react-icons/tb'
 import { BiPaperPlane as Share } from 'react-icons/bi'
 import { Post } from '../../typings';
-import LikedButton from './LikedButton';
+import LikedButton from './ui/LikedButton';
 
 interface PostFooterProps {
     handleLoadComments: (id: string) => void;

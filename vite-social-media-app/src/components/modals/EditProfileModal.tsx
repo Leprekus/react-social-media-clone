@@ -1,5 +1,5 @@
 import useEditProfileModal from '../../hooks/useEditProfileModal'
-import Box from '../Box'
+import Box from '../ui/Box'
 
 
 export default function EditProfileModal() {

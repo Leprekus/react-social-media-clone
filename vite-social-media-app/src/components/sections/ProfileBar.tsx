@@ -1,6 +1,6 @@
 import user from '../../../mock/user.json'
 import useEditProfileModal from '../../hooks/useEditProfileModal'
-import Button from '../Button'
+import Button from '../ui/Button'
 import useUserListModal from '../../hooks/useUserListModal'
 
 export default function ProfileBar() {
