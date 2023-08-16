@@ -1,13 +1,35 @@
 
+import { useEffect, useState } from 'react'
 import { IPost } from '../../../typings'
 import Link from '../Link'
 
 import PostPreview from '../PostPreview'
+import { tryCatchGet } from '../../lib/fetch-helpers'
+import { useAuth } from '../../hooks/useAuth'
+import toast from 'react-hot-toast'
 
+interface IPostData {
+    posts: IPost[]
+}
 export default function PostGrid() {
-    const Posts:IPost | []  = []
+    const { session } = useAuth()
+    const [posts, setPosts] = useState<IPost[] | []>([])
+    const fetchPosts = async () =>{
+        const [data, error] = 
+            await tryCatchGet<IPostData>({ 
+                endpoint: `${import.meta.env.VITE_BACKEND_URL}/api/GET/user-posts`, 
+                token: session?.accessToken
+            })
 
-    if(Posts.length < 1) 
+            if(error) toast.error('Failed to fetch posts')
+
+            if(data?.json?.posts) setPosts(data.json.posts)
+    }
+    useEffect(() => {
+        fetchPosts()
+    }, [])
+
+    if(posts.length < 1) 
         return <div className='p-8 flex flex-col items-center gap-4'>
             <p className='font-semibold text-gray-400 text-lg'>Share your thoughts and moments with the community!</p>
             <Link 

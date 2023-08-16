@@ -45,7 +45,7 @@ interface TryCatchGetProps {
     token?: string; 
 }
 
-export async function tryCatchGet<T>({ endpoint, token }: TryCatchGetProps): Promise<Result<T, any>> {
+export async function tryCatchGet<T>({ endpoint, token }: TryCatchGetProps): Promise<Result<{ json: T | null, res: Response }, any>> {
     try {
         const headers = { authorization: token ? `Bearer ${(token as string)}` : '' } 
         const res = await fetch(endpoint, { 
@@ -53,10 +53,14 @@ export async function tryCatchGet<T>({ endpoint, token }: TryCatchGetProps): Pro
             headers,
             credentials: 'include',
         })
-        const json = (await res.json() as T)
-        if(json)
-            return [json , null]
-        return [json, { error: 'no json' }]
+        const contentType = res.headers.get('content-type');
+        const isJson = contentType && contentType.indexOf('application/json') !== -1;
+    
+        if(isJson) {
+            const json = (await res.json() as T)
+            return [ {json, res } , null ]
+        }
+        return [ { json: null, res }, null ]
 
     } catch(error) {
 

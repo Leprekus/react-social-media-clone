@@ -34,7 +34,7 @@ export default async function handler(req: Request, res: Response) {
         return res.status(422).json({ error: 'Form validation failed' })
     
     //const binaryData = result.data.image.map(img => atob(img))
-    
+    //TODO: turn images to binary to reduce space
     const newPost:IPost = {
         ...result.data,
         //image: binaryData,
