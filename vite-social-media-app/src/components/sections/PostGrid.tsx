@@ -7,6 +7,7 @@ import PostPreview from '../PostPreview'
 import { tryCatchGet } from '../../lib/fetch-helpers'
 import { useAuth } from '../../hooks/useAuth'
 import toast from 'react-hot-toast'
+import Loading from '../Loading'
 
 interface IPostData {
     posts: IPost[]
@@ -14,6 +15,7 @@ interface IPostData {
 export default function PostGrid() {
     const { session } = useAuth()
     const [posts, setPosts] = useState<IPost[] | []>([])
+    const [isLoading, setIsLoading] = useState(true)
     const fetchPosts = async () =>{
         const [data, error] = 
             await tryCatchGet<IPostData>({ 
@@ -24,10 +26,14 @@ export default function PostGrid() {
             if(error) toast.error('Failed to fetch posts')
 
             if(data?.json?.posts) setPosts(data.json.posts)
+
+            setIsLoading(false)
     }
     useEffect(() => {
         fetchPosts()
     }, [])
+
+    if(isLoading) return <Loading/>
 
     if(posts.length < 1) 
         return <div className='p-8 flex flex-col items-center gap-4'>
