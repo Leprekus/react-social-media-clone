@@ -1,4 +1,4 @@
-import { NextFunction, type Request, type Response } from 'express'
+import { type Request, type Response } from 'express'
 import { config } from 'dotenv'
 import { UserTable } from '../../Tables'
 import { Session, User } from '../../../../typings'
@@ -6,7 +6,7 @@ import generateSession from '../../utils/generateSession'
 
 config()
 
-export default async function handler(req: Request, res: Response, next: NextFunction) {
+export default async function handler(req: Request, res: Response) {
     const authHeader = req.headers.authorization
     if(!authHeader) return res.status(409).json({ message: 'No client credentials provided' })
 

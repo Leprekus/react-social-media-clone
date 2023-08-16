@@ -24,9 +24,11 @@ export default function Router() {
 
     const Page = () =>  router.renderRoute(routes, <NotFound/>)
 
+    const refresh = useAuth().refreshToken
   return (
     <Layout>
       <Page/>
+      <button onClick={refresh}>refresh token</button>
     </Layout>
   )
 }

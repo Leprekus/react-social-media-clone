@@ -2,7 +2,6 @@ import { ReactNode, createContext, useContext, useEffect, useState } from 'react
 import { Session } from '../../typings';
 import { useRouter } from './useRouter';
 import { tryCatchGet, tryCatchPost } from '../lib/fetch-helpers';
-import { useCookies } from 'react-cookie'
 
 
 type AuthContextType  = {
@@ -51,25 +50,35 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
         const [data, error] = await tryCatchGet<SessionData>({ endpoint: `${import.meta.env['VITE_BACKEND_URL']}api/GET/session`})
 
         if(!error && data?.session) {
-            setSession(data?.session)
-            console.log({ getSessionRes: data?.session })
+            return setSession(data?.session)
         }
 
+        return setSession(null)
     }
 
-
-    const validSession = session && session?.expiresAt && session.expiresAt > Date.now()
+    
     useEffect(() => {
+        
         getSession()
 
-        if(validSession && pathname ==='/login') router.push('/')
-        
-        else if (!validSession) router.push('/login')
+        // const validSession = session && session?.expiresAt && session.expiresAt > Date.now()
 
-    },[validSession, session])
+        // if(validSession && pathname ==='/login') router.push('/')
+
+        // if (session && session?.expiresAt) {
+        //     const refreshThreshold =  session?.expiresAt - 5 * 60 * 1000 // 5 minutes in milliseconds
+        //     //handles about to expire / expired tokens
+        //     if(session.expiresAt < Date.now() || refreshThreshold <= Date.now())
+        //         refreshToken()
+        // }
+        
+        // else if (!validSession) router.push('/login')
+        
+
+    },[ session?.expiresAt])
     const values = {
         session, 
-        signIn
+        signIn, refreshToken
     }
 
     return (
