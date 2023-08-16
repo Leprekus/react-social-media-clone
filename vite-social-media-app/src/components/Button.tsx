@@ -18,11 +18,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     px-4
     py-4
     rounded-md
-    focus:outline-blue-500
-    bg-blue-500
-    active:bg-blue-600
+    focus:outline-violet-950
+    focus-visible:outline-black
+    bg-violet-950
+    text-violet-400
+    active:bg-violet-950/70
     transition
-    text-white
     w-full
     
     `, 
