@@ -33,7 +33,15 @@ console.log({ id: post.id})
             transition
           hover:text-blue-500 
             uppercase 
-            text-xs'>
+            text-xs
+            border
+            border-blue-900
+            px-4
+            py-2
+            rounded-md
+            bg-blue-950
+            active:bg-blue-950/50
+            '>
                 Show More
             </button>
             <button>
