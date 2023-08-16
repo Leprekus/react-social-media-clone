@@ -1,17 +1,17 @@
 import { FaComment } from 'react-icons/fa'
 import { AiFillHeart } from 'react-icons/ai'
 import type { Post } from '../../typings'
-import usePostModal from '../hooks/usePostModal'
+import useViewPostModal from '../hooks/usePostModal'
 interface PostProps  {
     post: Post
 }
 export default function PostPreview({ post }: PostProps) {
 
-  const postModal = usePostModal()
+  const viewPostModal = useViewPostModal()
   const handleClick = () => {
-    if(!postModal.isOpen && postModal.id === null) {
-      postModal.setId(post.id)
-      postModal.Open()
+    if(!viewPostModal.isOpen && viewPostModal.id === null) {
+      viewPostModal.setId(post.id)
+      viewPostModal.Open()
     }
   }
   return (
