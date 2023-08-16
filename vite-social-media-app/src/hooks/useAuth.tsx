@@ -26,11 +26,11 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
             const [data , error] = await tryCatchPost<SessionData>({ endpoint, payload })
     
 
-            if(error || !data?.session)
+            if(error || !data?.json?.session)
                 return setSession(null)
                 //TODO: Handle error message
             
-            setSession(data?.session)
+            setSession(data?.json?.session)
     }
 
     const refreshToken = async () => {
@@ -38,19 +38,19 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
         const payload = { refreshToken : session?.refreshToken as string }
         
         const [data, error] = await tryCatchPost<SessionData>({ endpoint, payload })
-        console.log({ data })
-        if(error || !data?.session)
+        
+        if(error || !data?.json?.session)
             return setSession(null)
 
-        setSession(data.session)
+        setSession(data.json.session)
     }
 
     const getSession = async () => {
 
         const [data, error] = await tryCatchGet<SessionData>({ endpoint: `${import.meta.env['VITE_BACKEND_URL']}api/GET/session`})
 
-        if(!error && data?.session) {
-            return setSession(data?.session)
+        if(!error && data?.json?.session) {
+            return setSession(data.json.session)
         }
 
         return setSession(null)
