@@ -27,6 +27,7 @@ export default function CreatePost() {
     image: [ placeholder ],
     id: '',
     description: '',
+    created_at: 0,
   })
   const isFormEnabled = post.image.filter(img => img !== placeholder).length > 0;
 

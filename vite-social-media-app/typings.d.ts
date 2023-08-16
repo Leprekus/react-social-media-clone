@@ -6,6 +6,7 @@ export interface IPost {
     image: string[];
     id: string;
     description: string;
+    created_at: number;
 
     author: string;
     author_image: string;

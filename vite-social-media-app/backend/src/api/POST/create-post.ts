@@ -37,12 +37,13 @@ export default async function handler(req: Request, res: Response) {
     //TODO: turn images to binary to reduce space
     const newPost:IPost = {
         ...result.data,
+        created_at: Date.now(),
         //image: binaryData,
         id: uid()
     }      
     
     await UserPosts(verifiedUser.username).insert(newPost)
     
-    return res.status(200).json({ message: 'success' })
+    return res.status(200).json({ message: 'account created successfully' })
   
 }

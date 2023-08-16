@@ -17,7 +17,7 @@ export default function PostGrid() {
     const fetchPosts = async () =>{
         const [data, error] = 
             await tryCatchGet<IPostData>({ 
-                endpoint: `${import.meta.env.VITE_BACKEND_URL}/api/GET/user-posts`, 
+                endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/user-posts`, 
                 token: session?.accessToken
             })
 
@@ -50,7 +50,7 @@ export default function PostGrid() {
         
   return (
     <div className='grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-0.5'>
-        {Posts.map((post, i) => 
+        {posts.map((post, i) => 
             <PostPreview
                 post={post}
                 key={i}
