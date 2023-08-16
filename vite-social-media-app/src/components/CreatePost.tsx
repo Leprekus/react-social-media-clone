@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiFillCamera } from 'react-icons/ai'
 import Input from './ui/Input'
 import Button from './ui/Button'
@@ -16,6 +16,18 @@ interface ResponseData {
 export default function CreatePost() {
   const { session } = useAuth()
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault()
+      e.returnValue = ''
+    }
+    if(isLoading)
+      window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+
+      
+  }, [isLoading])
   
   const [post, setPost] = useState<IPost>({
     author: session?.user.username as string,
