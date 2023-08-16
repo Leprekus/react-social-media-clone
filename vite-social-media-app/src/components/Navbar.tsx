@@ -8,14 +8,16 @@ import { HiMenuAlt4 } from 'react-icons/hi'
 import { useRouter } from '../hooks/useRouter'
 import routes from '../lib/routes'
 import Link from './Link'
+import { useAuth } from '../hooks/useAuth'
 interface NavbarProps { children: ReactNode }
 export default function Navbar({ children }: NavbarProps) {
 
+  const session = useAuth().session
   const pathname = useRouter().pathname
   const home = routes[0]
   const search = routes[2]
   const messages = routes[4]
-  const user = routes[5]
+  const user = { path: `/${session?.user.username}`, component: routes[5].component }
   
   const [isOpen, setIsOpen] = useState(false)
 

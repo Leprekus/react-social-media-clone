@@ -19,7 +19,7 @@ export const MyRouterContextProvider = ({ children }: { children: ReactNode }) =
     useEffect(()=> {
 
         const pathListener = () => {
-            setCurrentPath(window.location.pathname)
+            setCurrentPath(`/${window.location.pathname}`)
             return currentPath
         }
 
