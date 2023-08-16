@@ -14,7 +14,7 @@ interface IPostData {
 }
 export default function PostGrid() {
     const { session } = useAuth()
-    const [posts, setPosts] = useState<IPost[] | []>([])
+    const [posts, setPosts] = useState<IPost[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const fetchPosts = async () =>{
         const [data, error] = 

@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
 import { z } from 'zod'
 import { v4 as uid } from 'uuid'
-import { UserPosts } from '../../Tables'
+import { PostsBucket, UserPosts } from '../../Tables'
 import { IPost } from '../../../../typings'
 import verifyToken from '../../utils/verifyToken'
 
@@ -41,9 +41,33 @@ export default async function handler(req: Request, res: Response) {
         //image: binaryData,
         id: uid()
     }      
-    
+
+    const postsBucket = await PostsBucket
+                                .getOne().where(`${verifiedUser.username}.id`)
+                                .equals(verifiedUser.username).run()
+    if(postsBucket){
+        
+        const posts = postsBucket[verifiedUser.username]?.postIds as string[]
+        posts.push(newPost.id)
+
+        await PostsBucket.updateOne({
+            [verifiedUser.username] : {
+                id: verifiedUser.username,
+                postIds: posts
+            }
+        }).where(`${verifiedUser.username}.id`)
+          .equals(verifiedUser.username)
+          .run()
+    }
+    else 
+    PostsBucket.insert({
+        [verifiedUser.username] : {
+            id: verifiedUser.username,
+            postIds: [ newPost.id ]
+        }
+    })
+
     await UserPosts(verifiedUser.username).insert(newPost)
-    
-    return res.status(200).json({ message: 'account created successfully' })
+    return res.status(200).json({ message: 'post created successfully' })
   
 }
