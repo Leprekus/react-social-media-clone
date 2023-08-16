@@ -18,14 +18,14 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     px-4
     py-4
     rounded-md
-    focus:outline-violet-950
-    focus-visible:outline-black
-    bg-violet-950
+    border
+    border-violet-900
+    focus:outline-violet-900
+    bg-violet-950/70
     text-violet-400
-    active:bg-violet-950/70
+    active:bg-violet-950/50
     transition
     w-full
-    
     `, 
     disabled && 'cursor-not-allowed bg-gray-400 animate-pulse',
     className)}
