@@ -19,16 +19,17 @@ export default function Navbar({ children }: NavbarProps) {
   const home = routes[0]
   const search = routes[2]
   const messages = routes[4]
+  const post = routes[5]
   const user = { path: `/${session?.user.username}`, component: routes[5].component }
   
   const [isOpen, setIsOpen] = useState(false)
-  const createPostModal = useCreatePostModal()
+
 
   const isUserActive = pathname === user.path
   const isSearchActive = pathname === search.path
   const isHomeActive = pathname === home.path
   const isMessagesActive = pathname === messages.path
-  const isCreatePostActive = createPostModal.isOpen
+  const isCreatePostActive = pathname === post.path
 
   const Home = isHomeActive ? AiFillHome : AiOutlineHome
   const User = isUserActive ? HiUser : HiOutlineUser
@@ -124,8 +125,7 @@ export default function Navbar({ children }: NavbarProps) {
               <span  className={isOpen ? 'visible' : 'hidden'}>search</span>
             </Link>
             <Link 
-            href='/'
-            onClick={createPostModal.Open}
+            href='/create-post'
             className={`
             ${linkClassName} 
             ${isCreatePostActive && activeClassName}`

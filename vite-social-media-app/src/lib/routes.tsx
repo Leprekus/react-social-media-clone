@@ -3,6 +3,7 @@ import Messages from '../pages/auth/Messages';
 import Profile from '../pages/auth/Profile';
 import Home from '../pages/auth/Home';
 import Search from '../pages/auth/Search';
+import CreatePost from '../components/CreatePost';
 
 //dynamic routes
 //need to go at the end of 
@@ -13,5 +14,6 @@ export default [
     { path: '/search', component: <Search/> },
     { path: '/search/:query', component: <div>my query</div> },
     { path: '/messages', component: <Messages/> },
+    { path: '/create-post', component: <CreatePost/> },
     { path: '/:username', component: <Profile/> },
   ]
