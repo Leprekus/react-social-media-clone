@@ -1,4 +1,4 @@
-export interface Post {
+export interface IPost {
     like_count: number;
     comment_count: number;
     likes: string[];

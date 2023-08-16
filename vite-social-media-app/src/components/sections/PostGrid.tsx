@@ -1,11 +1,11 @@
 
-import { Post } from '../../../typings'
+import { IPost } from '../../../typings'
 import Link from '../Link'
 
 import PostPreview from '../PostPreview'
 
 export default function PostGrid() {
-    const Posts:Post | []  = []
+    const Posts:IPost | []  = []
 
     if(Posts.length < 1) 
         return <div className='p-8 flex flex-col items-center gap-4'>

@@ -1,9 +1,9 @@
 import { FaComment } from 'react-icons/fa'
 import { AiFillHeart } from 'react-icons/ai'
-import type { Post } from '../../typings'
+import type { IPost } from '../../typings'
 import useViewPostModal from '../hooks/useViewPostModal'
 interface PostProps  {
-    post: Post
+    post: IPost
 }
 export default function PostPreview({ post }: PostProps) {
 

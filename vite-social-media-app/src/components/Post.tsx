@@ -1,12 +1,16 @@
-import { type Post } from '../../typings'
+import { type IPost } from '../../typings'
 import PostFooter from './PostFooter'
-export default function Post() {
+
+interface PostProps {
+    post: IPost
+}
+export default function Post({ post }:PostProps) {
 
  
     const handleLoadComments = (id: string) => {}
     const handleSharePost = (id: string) => {}
     
-    const samplePost:Post = {
+    const samplePost:IPost = {
         comment_count: 356,
         comments: Array(356).fill('the comment'),
         like_count: 954,
