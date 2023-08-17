@@ -9,11 +9,11 @@ export default function Carousel({ images }: CarouselProps) {
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const nextSlide = () => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images?.length);
     };
   
     const prevSlide = () => {
-      setCurrentIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length);
+      setCurrentIndex((prevIndex) => (prevIndex - 1 + images?.length) % images?.length);
     };
 
     return (
@@ -21,7 +21,7 @@ export default function Carousel({ images }: CarouselProps) {
         <div className={`
                 absolute 
                 opacity-0 
-                ${images.length > 1 ? 'group-hover:opacity-100' : ''} 
+                ${images?.length > 1 ? 'group-hover:opacity-100' : ''} 
                 transition 
                 min-w-full
                 flex

@@ -67,7 +67,7 @@ export default function PostPreview({ post }: PostProps) {
         <span>{ post.comment_count }</span>
       </div>
       </div>
-      <img src={post.image} className='object-fill aspect-square'/>
+      <img src={post.image[0]} className='object-fill aspect-square'/>
     </div>
   )
 }

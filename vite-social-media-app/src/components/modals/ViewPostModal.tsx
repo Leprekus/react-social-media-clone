@@ -11,10 +11,13 @@ interface IPostData {
 
 }
 export default function PostModal() {
+
   const postModal = usePostModal()
-  const [post, setPost] = useState({})
+  const [post, setPost] = useState<IPost | object>({})
+
   useEffect(() => {
     const fetchPost = async () => {
+  
       const query = new URLSearchParams({ id: postModal.id as string})
       console.log({ query: query.toString() })
       const [data, error] = await tryCatchGet<IPostData>({ 
@@ -24,15 +27,19 @@ export default function PostModal() {
         return toast.error('Failed to load post')
 
       setPost(data?.json?.post as IPost)
+
     }
     if(postModal.id)
       fetchPost()
 
   }, [postModal.id])
 
+  
   if(!postModal.isOpen) return null
   
-  //TODO: fetch post info with id
+  //TODO: set ids after fetching post 
+  //desktop horizontal carousel with vertical scroll
+  //mobile vertical carousel
   const handleClose = () => {
     postModal.removeId()
     postModal.Close()

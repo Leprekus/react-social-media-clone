@@ -11,8 +11,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <RouterProvider>
       <Toaster/>
-      <ModalProvider/>
       <AuthProvider>
+        <ModalProvider/>
         <App/>
       </AuthProvider>
     </RouterProvider>

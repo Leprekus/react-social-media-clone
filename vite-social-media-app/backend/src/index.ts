@@ -43,13 +43,7 @@ app.post('/api/POST/*', async (req: express.Request, res:express.Response, next:
 })
 app.get('/api/GET/*', async (req: express.Request, res:express.Response, next: NextFunction) => {
     
-    const split = req.path.split('?')
-    const reqPath = split[0] 
-    const queryString = split.slice(1, split.length)
-    const fileName = reqPath.split('/')
-    req.query = { [fileName[fileName.length - 1]]: queryString }
-
-    const filePath = path.join(__dirname, reqPath)
+    const filePath = path.join(__dirname, req.path)
     try {
 
         const module = await import(filePath)
