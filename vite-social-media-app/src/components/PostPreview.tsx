@@ -1,13 +1,13 @@
 import { FaComment } from 'react-icons/fa'
 import { AiFillHeart } from 'react-icons/ai'
 import type { IPost } from '../../typings'
-import useViewPostModal from '../hooks/useViewPostModal'
+import useLoadComments from '../hooks/useLoadComments'
 interface PostProps  {
     post: IPost
 }
 export default function PostPreview({ post }: PostProps) {
 
-  const viewPostModal = useViewPostModal()
+  const viewPostModal = useLoadComments()
   const handleClick = () => {
     if(!viewPostModal.isOpen && viewPostModal.id === null) {
       viewPostModal.setId(post.id)

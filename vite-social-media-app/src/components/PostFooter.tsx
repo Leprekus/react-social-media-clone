@@ -3,6 +3,7 @@ import { TbMessageCircle2 as Comment } from 'react-icons/tb'
 import { BiPaperPlane as Share } from 'react-icons/bi'
 import { IPost } from '../../typings';
 import LikedButton from './ui/LikedButton';
+import { CommentsTrigger } from './Comments';
 
 interface PostFooterProps {
     handleLoadComments: (id: string) => void;
@@ -22,9 +23,11 @@ export default function PostFooter({
         <div className='flex justify justify-between gap-4 items-center py-2 px-4 h-14'>
             <div className='flex gap-3'>
                 <LikedButton postId={post.id} likes={post.likes}/>
-                <button onClick={() => handleLoadComments(post.id)}>
-                    <Comment size={22} className='hover:text-gray-400 transition'/>
-                </button>
+                <CommentsTrigger>
+                    <button onClick={() => handleLoadComments(post.id)}>
+                        <Comment size={22} className='hover:text-gray-400 transition'/>
+                    </button>
+                </CommentsTrigger>
                 <button onClick={() => handleSharePost(post.id)}>
                     <Share size={22} className='hover:text-gray-400 transition'/>
                 </button>

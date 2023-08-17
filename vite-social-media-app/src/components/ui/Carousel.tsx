@@ -17,7 +17,7 @@ export default function Carousel({ images }: CarouselProps) {
     };
 
     return (
-      <div className="w-full h-[388px] bg-red-500 relative group flex items-center justify-center">
+      <div className="w-full h-[388px] bg-red-500 relative group flex items-center justify-center overflow-hidden">
         <div className={`
                 absolute 
                 opacity-0 

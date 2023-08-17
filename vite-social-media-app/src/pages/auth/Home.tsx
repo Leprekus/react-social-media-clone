@@ -12,7 +12,6 @@ interface IPostData {
 }
 
 export default function Home() {
-  
     const [posts, setPosts] = useState<IPost[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const fetchPosts = async () =>{
