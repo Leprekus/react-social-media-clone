@@ -1,13 +1,25 @@
+import { tryCatchPost } from '../lib/fetch-helpers'
+
 const userUser = () => {
 
-
-    const getLiked = () => []
-    const unlike = (id: string) => []
-    const like = (id: string) => []
+    // const getLiked = () => []
+    // const unlike = (id: string) => []
+    const like = async (
+        id: string, 
+        token: string,
+        payload: boolean
+        ) => {
+        const queryString = new URLSearchParams({ id })
+        const vote = tryCatchPost({ 
+            endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/vote?${queryString}`,  
+            payload: '',
+            token: token
+        })
+    }
 
     return {
-        getLiked,
-        unlike,
+        // getLiked,
+        // unlike,
         like
     }
 

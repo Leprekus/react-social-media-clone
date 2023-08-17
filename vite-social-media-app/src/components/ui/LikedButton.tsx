@@ -1,6 +1,7 @@
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import React, { useEffect, useState } from 'react'
 import userUser from '../useUser';
+import { useAuth } from '../../hooks/useAuth';
 
 interface LikedButtonProps {
     postId: string;
@@ -8,18 +9,24 @@ interface LikedButtonProps {
 }
 
 export default function LikedButton({ postId }: LikedButtonProps) {
+    const { session } = useAuth()
     const user = userUser()
     const [isLiked, setIsLiked] = useState(false)
     const Heart = isLiked ? AiFillHeart : AiOutlineHeart
     useEffect(() => {
 
-        const match = user.getLiked().find(id => id === postId)
-        if(match) setIsLiked(true)
+        
 
-}, [user.getLiked().length])
+}, [])
     const handleLike = async () => {
-        const res = await user.like(postId)
+        const res = await user.like(
+            postId, 
+            session?.accessToken as string,
+            !isLiked
+            )
         //TODO: handle like
+        const vote = true
+        setIsLiked(vote)
     }
   return (
     <button onClick={handleLike}>

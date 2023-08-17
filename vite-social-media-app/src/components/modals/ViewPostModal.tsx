@@ -18,7 +18,7 @@ export default function PostModal() {
       const query = new URLSearchParams({ id: postModal.id as string})
       console.log({ query: query.toString() })
       const [data, error] = await tryCatchGet<IPostData>({ 
-        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/post&${query}` 
+        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/post?${query}` 
       })
       if(error) 
         return toast.error('Failed to load post')
