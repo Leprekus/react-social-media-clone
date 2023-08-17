@@ -22,10 +22,10 @@ console.log({ id: post.id})
             <div className='flex gap-3'>
                 <LikedButton postId={post.id}/>
                 <button onClick={() => handleLoadComments(post.id)}>
-                    <Comment size={22}/>
+                    <Comment size={22} className='hover:text-gray-400 transition'/>
                 </button>
                 <button onClick={() => handleSharePost(post.id)}>
-                    <Share size={22}/>
+                    <Share size={22} className='hover:text-gray-400 transition'/>
                 </button>
             </div>
             <button className='

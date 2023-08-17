@@ -38,8 +38,6 @@ export default function PostModal() {
     postModal.Close()
   }
 
-
-  console.log(post)
   return (
     <Box
       onClick={handleClose}
