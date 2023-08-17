@@ -29,6 +29,8 @@ export default async function handler(req: Request, res: Response) {
         username: z.string(),
         bio: z.string(),
         profileImage: z.string(),
+     
+
     })
 
     const result = User.safeParse(user)
@@ -42,11 +44,11 @@ export default async function handler(req: Request, res: Response) {
   
     const email = await UserTable.getOne().where('email').equals(user.email).run()
     const username = await UserTable.getOne().where('username').equals(user.username).run()
-    
+
     if(email || username) 
         return res.status(409).json({ message: 'username or password already exists'})
 
     await UserTable.insert(user)
     
-    return res.status(200)
+    return res.status(200).json({ message: 'account created successfully' })
 }

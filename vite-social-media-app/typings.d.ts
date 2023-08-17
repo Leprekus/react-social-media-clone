@@ -20,6 +20,7 @@ export interface User {
     username: string;
     bio: string;
     profileImage: string
+   
     // Add other user properties as needed
   }
 

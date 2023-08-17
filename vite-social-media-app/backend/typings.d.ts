@@ -50,9 +50,4 @@ export interface ServerSession extends Token {
   user: User
 }
 
-export interface IPostsBucket {
-  [key: string]: {
-    id : string
-    postIds: string[]
-  }
-}
+

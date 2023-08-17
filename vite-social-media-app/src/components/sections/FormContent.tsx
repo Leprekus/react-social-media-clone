@@ -3,16 +3,11 @@ import { BsArrowLeftSquareFill } from 'react-icons/bs'
 import { BiSolidUser } from 'react-icons/bi'
 import Button from '../ui/Button';
 import Input from '../ui/Input';
+import { NewAccount } from '../../../typings';
 
 interface FormContentProps {
   currentPage: number;
-  formData: {
-    email: string;
-    name: string;
-    username: string;
-    password: string;
-    bio: string;
-  };
+  formData: NewAccount;
   selectedImg: string | ArrayBuffer | null;
   handleFormChange: (fieldName: string, value: string) => void;
   handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;

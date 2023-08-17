@@ -27,6 +27,7 @@ export default function PostGrid() {
 
             if(data?.json?.posts) setPosts(data.json.posts)
 
+            console.log({posts: data?.json?.posts})
             setIsLoading(false)
     }
     useEffect(() => {

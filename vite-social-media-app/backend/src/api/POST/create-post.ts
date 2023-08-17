@@ -1,9 +1,10 @@
 import { type Request, type Response } from 'express'
 import { z } from 'zod'
 import { v4 as uid } from 'uuid'
-import { PostsBucket, UserPosts } from '../../Tables'
+import { PostsBucket } from '../../Tables'
 import { IPost } from '../../../../typings'
 import verifyToken from '../../utils/verifyToken'
+
 
 
 
@@ -42,32 +43,23 @@ export default async function handler(req: Request, res: Response) {
         id: uid()
     }      
 
-    const postsBucket = await PostsBucket
-                                .getOne().where(`${verifiedUser.username}.id`)
-                                .equals(verifiedUser.username).run()
-    if(postsBucket){
-        
-        const posts = postsBucket[verifiedUser.username]?.postIds as string[]
-        posts.push(newPost.id)
+    let postsBucket 
 
-        await PostsBucket.updateOne({
-            [verifiedUser.username] : {
-                id: verifiedUser.username,
-                postIds: posts
-            }
-        }).where(`${verifiedUser.username}.id`)
-          .equals(verifiedUser.username)
-          .run()
+    try {
+        postsBucket = await PostsBucket
+            .getOne().where(`${newPost.id}.id`)
+            .equals(verifiedUser.username).run()
+
+    } catch(error) {
+        postsBucket = null
     }
-    else 
-    PostsBucket.insert({
-        [verifiedUser.username] : {
-            id: verifiedUser.username,
-            postIds: [ newPost.id ]
-        }
-    })
 
-    await UserPosts(verifiedUser.username).insert(newPost)
+
+    if(postsBucket)
+        return res.status(409).json({ message: 'Duplicate record' })
+    
+    await PostsBucket.insert(newPost)
+
     return res.status(200).json({ message: 'post created successfully' })
   
 }

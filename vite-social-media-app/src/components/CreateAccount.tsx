@@ -3,19 +3,28 @@ import user from '../../mock/user.json'
 import Layout from '../Layout';
 import FormContent from './sections/FormContent';
 import { useAuth } from '../hooks/useAuth';
+import { NewAccount } from '../../typings';
 
 export default function CreateAccount() {
     const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>('')
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<NewAccount>({
     email: user.email,
     name: user.name,
     password: user.password,
     username: user.username,
     bio: user.bio,
-    profileImage: selectedImg
+    profileImage:  selectedImg as string || '',
+    id: ''
   });
+
+  
+
+
+
+
+
 
   const totalPages = 2;
   const { signIn } = useAuth()
@@ -47,7 +56,7 @@ export default function CreateAccount() {
         setIsLoading(true)
         setFormData((prev) => ({
           ...prev,
-          profileImage: selectedImg
+          profileImage: selectedImg as string
         }))
         const credentials = btoa(`${import.meta.env.VITE_CLIENT_ID}:${import.meta.env.VITE_CLIENT_SECRET}`)
         const res = await fetch(`${import.meta.env['VITE_BACKEND_URL']}api/POST/create-account`, {
@@ -60,7 +69,7 @@ export default function CreateAccount() {
         })
 
         if(res.ok)
-          signIn(formData.username, formData.password)
+          signIn(formData.username, formData.password as string)
        
       } catch(error) {
         console.log(error)
