@@ -1,5 +1,5 @@
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useAuth } from '../../hooks/useAuth';
 import { tryCatchPost } from '../../lib/fetch-helpers';
 
@@ -16,7 +16,7 @@ export default function LikedButton({ postId, likes }: LikedButtonProps) {
         !!likes.find(user => user === session?.user.username) ||
         false
         )
-        console.log(isLiked)
+
     const Heart = isLiked ? AiFillHeart : AiOutlineHeart
 
     const handleLike = async () => {

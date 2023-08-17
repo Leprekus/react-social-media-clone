@@ -28,7 +28,6 @@ export function mergeFilterObjects(target: any, payload: any) {
       }
   }
 
-    console.log({ obj })
     return obj;
 }
 
