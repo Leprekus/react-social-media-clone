@@ -1,32 +1,36 @@
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
 import React, { useEffect, useState } from 'react'
-import userUser from '../useUser';
 import { useAuth } from '../../hooks/useAuth';
+import { tryCatchPost } from '../../lib/fetch-helpers';
 
 interface LikedButtonProps {
     postId: string;
+    likes: string[]
 
 }
 
-export default function LikedButton({ postId }: LikedButtonProps) {
+export default function LikedButton({ postId, likes }: LikedButtonProps) {
     const { session } = useAuth()
-    const user = userUser()
-    const [isLiked, setIsLiked] = useState(false)
+   
+    const [isLiked, setIsLiked] = useState(
+        !!likes.find(user => user === session?.user.username) ||
+        false
+        )
+        console.log(isLiked)
     const Heart = isLiked ? AiFillHeart : AiOutlineHeart
-    useEffect(() => {
 
-        
-
-}, [])
     const handleLike = async () => {
-        const res = await user.like(
-            postId, 
-            session?.accessToken as string,
-            !isLiked
-            )
-        //TODO: handle like
-        const vote = true
-        setIsLiked(vote)
+        const queryString = new URLSearchParams({ id: postId })
+
+        const [ data, error ] = await tryCatchPost({ 
+            endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/like?${queryString}`,  
+            payload: { like: !isLiked, username: session?.user.username },
+            token: session?.accessToken
+        })
+
+        if(error || !data?.res.ok) setIsLiked(isLiked)
+        if(data?.res.ok) setIsLiked(!isLiked)
+        else setIsLiked(false)
     }
   return (
     <button onClick={handleLike}>

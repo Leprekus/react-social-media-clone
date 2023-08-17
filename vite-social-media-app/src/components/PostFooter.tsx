@@ -8,19 +8,20 @@ interface PostFooterProps {
     handleLoadComments: (id: string) => void;
     handleSharePost: (id: string) => void;
     post: IPost
+
 }
 export default function PostFooter({
     handleLoadComments,
     handleSharePost,
     post,
 }: PostFooterProps) {
-console.log({ id: post.id})
+
 
   return (
     <div className='flex flex-col'>
         <div className='flex justify justify-between gap-4 items-center py-2 px-4 h-14'>
             <div className='flex gap-3'>
-                <LikedButton postId={post.id}/>
+                <LikedButton postId={post.id} likes={post.likes}/>
                 <button onClick={() => handleLoadComments(post.id)}>
                     <Comment size={22} className='hover:text-gray-400 transition'/>
                 </button>

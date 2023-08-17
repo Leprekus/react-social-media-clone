@@ -10,9 +10,9 @@ const userUser = () => {
         payload: boolean
         ) => {
         const queryString = new URLSearchParams({ id })
-        const vote = tryCatchPost({ 
-            endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/vote?${queryString}`,  
-            payload: '',
+        const [ data, error ] = await tryCatchPost({ 
+            endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/like?${queryString}`,  
+            payload: { like: payload},
             token: token
         })
     }

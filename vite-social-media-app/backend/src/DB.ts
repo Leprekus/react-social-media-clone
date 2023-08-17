@@ -5,7 +5,7 @@ import collect from './lib/collect';
 import { Matcher, ObjectLiteral } from '../typings';
 import matchDataKeyValue from './lib/matchDataKeyValue';
 import createItemFromKeys from './lib/createItemsFromKeys';
-import mergeObjects from './lib/mergeObjects';
+import { mergeFilterObjects, mergeObjects } from './lib/mergeObject-helpers';
 
 export class JSONDB<T extends object> {
 
@@ -97,6 +97,23 @@ export class JSONDB<T extends object> {
 
                 await this.save(list)
 
+                return item
+            }
+
+            return null
+        })
+    }
+    filterOne(data: Partial<T>) {
+        return collect<T, Promise<T | null>>(async (matchers) => {
+            const list = await this.read()
+            const item = list.find((item) => {
+                return matchers.every((matcher: Matcher<T>) => 
+                    matchDataKeyValue(item, matcher)
+                )
+            })
+            if(item) {
+                mergeFilterObjects(item, data)
+                await this.save(list)
                 return item
             }
 
