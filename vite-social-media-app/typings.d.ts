@@ -12,6 +12,16 @@ export interface IPost {
     author_image: string;
 }
 
+export interface IComment {
+    id: number;
+    author: string;
+    body: string;
+    created_at: Date;
+    likes: string[];
+    like_count: number;
+    replies: IComment[]
+}
+
 
 export interface User {
     email: string;

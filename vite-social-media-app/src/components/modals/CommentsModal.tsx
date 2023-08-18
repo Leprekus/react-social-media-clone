@@ -2,30 +2,30 @@ import React, { ReactNode, Suspense, useEffect, useState } from 'react';
 import { tryCatchGet } from '../../lib/fetch-helpers';
 import toast from 'react-hot-toast';
 import useLoadComments from '../../hooks/useLoadComments';
-import { IPost } from '../../../typings';
+import { IComment } from '../../../typings';
 
 interface CommentsModalProps {
   children: ReactNode;
 }
-interface IPostData {
-  post: IPost;
+interface ICommentData {
+  comments: IComment[];
 }
 
 export function CommentsModal({ children }: CommentsModalProps) {
   const loadComments = useLoadComments();
-  const [post, setPost] = useState<IPost | null>(null);
+  const [comments, setComments] = useState<IComment[] | null>(null);
   //handles post fetching
   useEffect(() => {
     const fetchPost = async () => {
       const query = new URLSearchParams({ id: loadComments.id as string });
 
-      const [data, error] = await tryCatchGet<IPostData>({
+      const [data, error] = await tryCatchGet<ICommentData>({
         endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/post?${query}`,
       });
 
       if (error) return toast.error('Failed to load post');
 
-      setPost(data?.json?.post as IPost);
+      setComments(data?.json?.comments as IComment[]);
     };
     if (loadComments.id) fetchPost();
   }, [loadComments.id]);
@@ -46,7 +46,7 @@ export function CommentsModal({ children }: CommentsModalProps) {
     >
 
       <Suspense>
-        <Comments post={post}>{children}</Comments>
+        <Comments comments={comments}>{children}</Comments>
       </Suspense>
     </div>
   );

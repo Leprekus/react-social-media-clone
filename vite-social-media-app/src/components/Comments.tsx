@@ -1,9 +1,10 @@
 import { ReactNode } from 'react'
+import { IoIosClose } from 'react-icons/io'
 import { Drawer } from 'vaul'
-import { IPost } from '../../typings'
+import { IComment } from '../../typings'
 //import { IPost } from '../../typings'
 
-interface CommentsProps { children : ReactNode, post: IPost | null }
+interface CommentsProps { children : ReactNode, comments: IComment[] | null }
 interface CommentsTriggerProps { children : ReactNode, }
 
 export const CommentsTrigger = ({ children }: CommentsTriggerProps) => 
@@ -12,7 +13,7 @@ export const CommentsTrigger = ({ children }: CommentsTriggerProps) =>
               </Drawer.Trigger>
 
 
-const Footer = () => <div className='p-4 bg-zinc-100 border-t border-zinc-200 mt-auto'>
+const Footer = () => <div className='p-4 bg-[#262930] border-t border-[#1e2028] mt-auto'>
 <div className='flex gap-6 justify-end max-w-md mx-auto'>
   <a
     className='text-xs text-zinc-600 flex items-center gap-0.25'
@@ -63,15 +64,16 @@ const Footer = () => <div className='p-4 bg-zinc-100 border-t border-zinc-200 mt
 </div>
 </div>
 
-export function Comments({ children, post }: CommentsProps) {
+export function Comments({ children, comments }: CommentsProps) {
+  
+  console.log(comments)
   return (
     <Drawer.Root>
         { children }
-      
       <Drawer.Portal>
         <Drawer.Overlay className='fixed inset-0 bg-black/40'/>
         <Drawer.Content className='
-        bg-zinc-100 
+        //bg-zinc-100 
         flex 
         flex-col 
         rounded-t-[10px] 
@@ -83,34 +85,45 @@ export function Comments({ children, post }: CommentsProps) {
        
         sm:left-[25%]
         md:left-[50%]'>
-          <div className='p-4 bg-white rounded-t-[10px] flex-1'>
-            <div className='mx-auto w-12 h-1.5 flex-shrink-0 rounded-full bg-zinc-400 mb-8 active:bg-zinc-300 transition' />
+          <div className='p-4 bg-midnight rounded-t-[10px] flex-1 text-white'>
+            <div className='
+            mx-auto 
+            w-12 h-1.5 
+            flex-shrink-0 
+            rounded-full
+            bg-zinc-400 
+            mb-8 
+            active:bg-zinc-600 
+            transition
+            sm:w-full
+            sm:h-20
+            sm:bg-transparent
+            sm:active:bg-transparent
+            sm:flex
+            sm:justify-end
+            ' >
+              <Drawer.Close>
+                <button className='
+                hidden 
+                h-10
+                w-10
+                bg-neutral-700
+               hover:bg-neutral-800
+              
+                rounded-md 
+                transition
+
+                sm:flex
+                sm:justify-center
+                sm:items-center
+                '><IoIosClose size={40} className='text-gray-400'/></button>
+              </Drawer.Close>
+            </div>
             <div className='max-w-md mx-auto'>
               <Drawer.Title className='font-medium mb-4'>
                 Unstyled drawer for React.
               </Drawer.Title>
-              <p className='text-zinc-600 mb-2'>
-                This component can be used as a replacement for a Dialog on
-                mobile and tablet devices.
-              </p>
-              <p className='text-zinc-600 mb-8'>
-                It uses{' '}
-                <a
-                  href='https://www.radix-ui.com/docs/primitives/components/dialog'
-                  className='underline'
-                  target='_blank'
-                >
-                  Radix&apos;s Dialog primitive
-                </a>{' '}
-                under the hood and is inspired by{' '}
-                <a
-                  href='https://twitter.com/devongovett/status/1674470185783402496'
-                  className='underline'
-                  target='_blank'
-                >
-                  this tweet.
-                </a>
-              </p>
+              
             </div>
           </div>
           <Footer/>
