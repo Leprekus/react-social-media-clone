@@ -1,6 +1,5 @@
 import express, { NextFunction } from 'express'
 import cors from 'cors'
-import path from 'path'
 import body from './utils/parse-body'
 import cookieParser from 'cookie-parser'
 import handleRequest from './utils/request-handler'
@@ -25,8 +24,6 @@ app.get('/api/GET/*', async (req: express.Request, res:express.Response, next: N
     
    handleRequest(req, res, next)
 
-
-    
 })
 
 
