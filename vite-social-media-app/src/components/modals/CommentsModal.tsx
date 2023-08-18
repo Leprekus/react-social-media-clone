@@ -17,10 +17,10 @@ export function CommentsModal({ children }: CommentsModalProps) {
   //handles post fetching
   useEffect(() => {
     const fetchPost = async () => {
-      const query = new URLSearchParams({ id: loadComments.id as string });
+     // const query = new URLSearchParams({ id: loadComments.id as string });
 
       const [data, error] = await tryCatchGet<ICommentData>({
-        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/post?${query}`,
+        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/${loadComments.id}/comments`,
       });
 
       if (error) return toast.error('Failed to load post');

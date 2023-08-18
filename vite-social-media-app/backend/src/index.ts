@@ -3,6 +3,7 @@ import cors from 'cors'
 import path from 'path'
 import body from './utils/parse-body'
 import cookieParser from 'cookie-parser'
+import handleRequest from './utils/request-handler'
 const PORT = 4321
 const app = express()
 
@@ -17,51 +18,12 @@ app.use(body)
 
 app.post('/api/POST/*', async (req: express.Request, res:express.Response, next: NextFunction) => {
     
-    const filePath = path.join(__dirname, req.path)
-   
-    try {
-
-        const module = await import(filePath)
-
-        const handler = await module.default || await module.handler
-
-        const response: Response = await handler(req, res, next)
-
-        return response
-
-
-    } catch(Error) {
-
-        console.log(`Error at handler: ${req.path} Error: ${Error}`)
-        
-        return res.status(500).json({ Error: 'Internal server error '})
-
-    }
-
-
+    handleRequest(req, res, next)
     
 })
 app.get('/api/GET/*', async (req: express.Request, res:express.Response, next: NextFunction) => {
     
-    const filePath = path.join(__dirname, req.path)
-    try {
-
-        const module = await import(filePath)
-
-        const handler = await module.default || await module.handler
-
-        const response: Response = await handler(req, res, next)
-
-        return response
-
-
-    } catch(Error) {
-
-        console.log(`Error at handler: ${req.path} Error: ${Error}`)
-        
-        return res.status(500).json({ Error: 'Internal server error '})
-
-    }
+   handleRequest(req, res, next)
 
 
     
