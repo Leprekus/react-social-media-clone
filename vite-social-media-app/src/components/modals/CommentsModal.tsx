@@ -46,7 +46,7 @@ export function CommentsModal({ children }: CommentsModalProps) {
     >
 
       <Suspense>
-        <Comments comments={comments}>{children}</Comments>
+        <Comments comments={comments} postId={loadComments.id}>{children}</Comments>
       </Suspense>
     </div>
   );

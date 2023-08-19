@@ -1,11 +1,20 @@
-import { ReactNode } from 'react'
+import { ChangeEvent , ReactNode, useState } from 'react'
 import { IoIosClose } from 'react-icons/io'
+import { BiPaperPlane } from 'react-icons/bi'
 import { Drawer } from 'vaul'
 import { IComment } from '../../typings'
+
+import Textarea from './ui/Textarea'
+import Button from './ui/Button'
+import { useAuth } from '../hooks/useAuth'
+import { tryCatchPost } from '../lib/fetch-helpers'
+import toast from 'react-hot-toast'
 //import { IPost } from '../../typings'
 
-interface CommentsProps { children : ReactNode, comments: IComment[] | null }
+interface CommentsProps { children : ReactNode, comments: IComment[] | null, postId: string }
+interface CommentsFooterProps { children : ReactNode, comments: IComment[] | null, postId: string }
 interface CommentsTriggerProps { children : ReactNode, }
+interface CommentData { comments: IComment[] }
 
 export const CommentsTrigger = ({ children }: CommentsTriggerProps) => 
               <Drawer.Trigger asChild >
@@ -13,62 +22,53 @@ export const CommentsTrigger = ({ children }: CommentsTriggerProps) =>
               </Drawer.Trigger>
 
 
-const Footer = () => <div className='p-4 bg-[#262930] border-t border-[#1e2028] mt-auto'>
-<div className='flex gap-6 justify-end max-w-md mx-auto'>
-  <a
-    className='text-xs text-zinc-600 flex items-center gap-0.25'
-    href='https://github.com/emilkowalski/vaul'
-    target='_blank'
-  >
-    GitHub
-    <svg
-      fill='none'
-      height='16'
-      stroke='currentColor'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      strokeWidth='2'
-      viewBox='0 0 24 24'
-      width='16'
-      aria-hidden='true'
-      className='w-3 h-3 ml-1'
-    >
-      <path d='M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6'></path>
-      <path d='M15 3h6v6'></path>
-      <path d='M10 14L21 3'></path>
-    </svg>
-  </a>
-  <a
-    className='text-xs text-zinc-600 flex items-center gap-0.25'
-    href='https://twitter.com/emilkowalski_'
-    target='_blank'
-  >
-    Twitter
-    <svg
-      fill='none'
-      height='16'
-      stroke='currentColor'
-      strokeLinecap='round'
-      strokeLinejoin='round'
-      strokeWidth='2'
-      viewBox='0 0 24 24'
-      width='16'
-      aria-hidden='true'
-      className='w-3 h-3 ml-1'
-    >
-      <path d='M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6'></path>
-      <path d='M15 3h6v6'></path>
-      <path d='M10 14L21 3'></path>
-    </svg>
-  </a>
-</div>
-</div>
+const Footer = ({ postId }: CommentsFooterProps) => {
+  const { session } = useAuth()
+  const [isDisabled, setIsDisabled] = useState(true)
+  const [comment, setComment] = useState('')
 
-export function Comments({ children, comments }: CommentsProps) {
+  const handleChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
+    console.log(e.currentTarget.value,e.currentTarget.value.length,  isDisabled)
+    e.currentTarget.value.length > 0 ? setIsDisabled(false) : setIsDisabled(true)
+    setComment(e.currentTarget.value)
+  }
+
+  const handleSubmit = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+  
+      const [data, error] = await tryCatchPost<CommentData>({ 
+        endpoint: `${import.meta.env.VITE_BACKEND_URL}${postId}/`, 
+        token: session?.accessToken, 
+        payload: { body: comment }
+      })
+      if(error || !data?.res.ok) toast.error('Could not post comment')
+      
+      toast.success('Comment Posted')
+
+  }
+  return (
+    <div className='p-4 bg-[#262930] border-t border-[#1e2028] mt-auto'>
+      <div className='flex gap-6 items-end justify-end max-w-md mx-auto text-lg pb-2'
+      >
+        <Textarea 
+        onChange={handleChange}
+        placeholder='Comment' 
+        className={`resize-none rounded-[20px]  max-h-[60vh] sm:rounded-md sm:h-14 sm:pt-5`}/>
+        <Button 
+        disabled={isDisabled}
+        onClick={handleSubmit}
+        className={`${isDisabled ? 'bg-neutral-700 active:bg-neutral-700 border-transparent' : 'text-white'} w-fit `}>
+          <BiPaperPlane size={30} className={isDisabled ? 'text-gray-400' : 'text-white'}/>
+        </Button>
+      </div>
+    </div>
+)}
+
+export function Comments({ children, comments, postId }: CommentsProps) {
   
   console.log(comments)
   return (
-    <Drawer.Root>
+    <Drawer.Root defaultOpen>
         { children }
       <Drawer.Portal>
         <Drawer.Overlay className='fixed inset-0 bg-black/40'/>
@@ -123,10 +123,13 @@ export function Comments({ children, comments }: CommentsProps) {
               <Drawer.Title className='font-medium mb-4'>
                 Unstyled drawer for React.
               </Drawer.Title>
-              
+              {comments && comments?.length > 0 ?
+               comments.map(comment => <div>comment</div>)  :
+               <p className='text-gray-400 font-semibold mx-auto w-fit'>No Comments yet</p>
+            }
             </div>
           </div>
-          <Footer/>
+          <Footer postId={postId}/>
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
