@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ICommentData } from '../../../typings'
 import LikedButton from './LikedButton'
 import Button from './Button'
