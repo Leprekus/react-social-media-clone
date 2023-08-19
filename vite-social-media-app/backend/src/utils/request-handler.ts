@@ -23,9 +23,7 @@ export default async function handleRequest(req: Request, res: Response, next: N
             if(file.match(regex)) {
 
                 filePath = generateDynamicPath(filePath, req.method, file)
-                //const dynamicPath = path.join(dynamicRoute, endpoint)
-                //console.log({ dynamicPath, req: req.path,  })
-                console.log({ dynamicPath: filePath })
+                
             }
         }
 

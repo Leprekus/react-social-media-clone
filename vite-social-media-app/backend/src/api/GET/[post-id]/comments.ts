@@ -4,20 +4,22 @@ import { CommentBucket } from '../../../Tables'
 
 export default async function handler(req: Request, res: Response) {
 
-    const id = req.query.id
+    const reqSegments = req.path.split('/')
+    const postId = reqSegments[reqSegments.length - 2]
     
-    let post = null
+    let comments = null
     try {
-        post = await CommentBucket.getOne().where('id').equals(id).run()
+        comments = await CommentBucket.getOne().where(`${postId}.parentId`).equals(postId).run()
     }
     catch(error){
         console.log(error)
-        post = null
-    }   
+        comments = null
+    }  
     
-    if(!post)
-        return res.status(200).json({ posts: [] })
+    console.log({ comments })
+    if(!comments)
+        return res.status(200).json({ commentss: [] })
 
-    return res.status(200).json({ post })
+    return res.status(200).json({ comments })
   
 }
