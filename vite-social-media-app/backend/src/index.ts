@@ -5,7 +5,8 @@ import handleRequest from './utils/request-handler'
 const PORT = 4321
 const app = express()
 const cookieParser = require('cookie-parser')
-
+import { config } from 'dotenv'
+config()
 app.use(cookieParser())
 
 app.use(cors({
