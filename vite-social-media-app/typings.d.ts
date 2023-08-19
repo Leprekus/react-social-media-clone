@@ -16,7 +16,7 @@ export interface IComment {
     id: string;
     author: string;
     body: string;
-    created_at: Date;
+    created_at: number;
     likes: string[];
     like_count: number;
     replies: IComment[]

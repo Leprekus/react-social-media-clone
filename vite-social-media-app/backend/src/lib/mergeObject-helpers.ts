@@ -2,6 +2,10 @@
 export function mergeObjects(a: any, b: any) {
     if(a === null || typeof a !== 'object') return b;
     if(b === null || typeof b !== 'object') return b;
+
+    const areArrays = Array.isArray(a) && Array.isArray(b)
+    if(areArrays)
+      return a.concat(b)
     
     const obj = Array.isArray(a) ? [...a] : a;
     

@@ -12,7 +12,7 @@ import toast from 'react-hot-toast'
 //import { IPost } from '../../typings'
 
 interface CommentsProps { children : ReactNode, comments: IComment[] | null, postId: string }
-interface CommentsFooterProps { children : ReactNode, comments: IComment[] | null, postId: string }
+interface CommentsFooterProps { postId: string }
 interface CommentsTriggerProps { children : ReactNode, }
 interface CommentData { comments: IComment[] }
 
@@ -25,25 +25,34 @@ export const CommentsTrigger = ({ children }: CommentsTriggerProps) =>
 const Footer = ({ postId }: CommentsFooterProps) => {
   const { session } = useAuth()
   const [isDisabled, setIsDisabled] = useState(true)
-  const [comment, setComment] = useState('')
+  const [body, setBody] = useState('')
 
   const handleChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
     console.log(e.currentTarget.value,e.currentTarget.value.length,  isDisabled)
     e.currentTarget.value.length > 0 ? setIsDisabled(false) : setIsDisabled(true)
-    setComment(e.currentTarget.value)
+    setBody(e.target.value)
   }
 
   const handleSubmit = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
+    const comment:IComment = {
+      id: '',
+      author: session?.user.username as string,
+      body: body,
+      created_at: 0,
+      likes: [],
+      like_count: 0,
+      replies: [],
+    }
   
       const [data, error] = await tryCatchPost<CommentData>({ 
-        endpoint: `${import.meta.env.VITE_BACKEND_URL}${postId}/`, 
+        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/${postId}/comments`, 
         token: session?.accessToken, 
-        payload: { body: comment }
+        payload: { comment }
       })
       if(error || !data?.res.ok) toast.error('Could not post comment')
       
-      toast.success('Comment Posted')
+      if(data?.res.ok) toast.success('Comment Posted')
 
   }
   return (
