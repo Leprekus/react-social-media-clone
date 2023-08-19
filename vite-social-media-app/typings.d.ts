@@ -22,6 +22,10 @@ export interface IComment {
     replies: IComment[]
 }
 
+interface ICommentData {
+    postId: string;
+    comment: IComment
+  }
 
 export interface User {
     email: string;

@@ -9,7 +9,7 @@ export default async function handler(req: Request, res: Response) {
     
     let comments = null
     try {
-        comments = await CommentBucket.getOne().where(`postId`).equals(postId).run()
+        comments = await CommentBucket.getAll().where(`postId`).equals(postId).run()
     }
     catch(error){
         console.log(error)
@@ -18,7 +18,7 @@ export default async function handler(req: Request, res: Response) {
     
     console.log({ comments })
     if(!comments)
-        return res.status(200).json({ commentss: [] })
+        return res.status(200).json({ comments: [] })
 
     return res.status(200).json({ comments })
   

@@ -17,12 +17,13 @@ export default function PostFooter({
     post,
 }: PostFooterProps) {
 
+    const queryString = new URLSearchParams({ id: post.id })
 
   return (
     <div className='flex flex-col'>
         <div className='flex justify justify-between gap-4 items-center py-2 px-4 h-14'>
             <div className='flex gap-3'>
-                <LikedButton postId={post.id} likes={post.likes}/>
+                <LikedButton queryString={queryString} likes={post.likes}/>
                 <CommentsTrigger>
                     <button onClick={() => handleLoadComments(post.id)}>
                         <Comment size={22} className='hover:text-gray-400 transition'/>

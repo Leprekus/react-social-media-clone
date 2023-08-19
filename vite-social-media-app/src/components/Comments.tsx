@@ -2,7 +2,7 @@ import { ChangeEvent , ReactNode, useState } from 'react'
 import { IoIosClose } from 'react-icons/io'
 import { BiPaperPlane } from 'react-icons/bi'
 import { Drawer } from 'vaul'
-import { IComment } from '../../typings'
+import { IComment, ICommentData } from '../../typings'
 
 import Textarea from './ui/Textarea'
 import Button from './ui/Button'
@@ -12,7 +12,7 @@ import toast from 'react-hot-toast'
 import Comment from './ui/Comment'
 //import { IPost } from '../../typings'
 
-interface CommentsProps { children : ReactNode, comments: IComment[] | null, postId: string | null}
+interface CommentsProps { children : ReactNode, data: ICommentData[] | null, postId: string | null}
 interface CommentsFooterProps { postId: string | null}
 interface CommentsTriggerProps { children : ReactNode, }
 interface CommentData { comments: IComment[] }
@@ -52,8 +52,7 @@ const Footer = ({ postId }: CommentsFooterProps) => {
     }
   
       const [data, error] = await tryCatchPost<CommentData>({ 
-        //TODO use postId prop
-        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/${'ac909361-19a0-48bc-8d6d-7e98a809e3b5'}/comments`, 
+        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/${postId}/comments`, 
         token: session?.accessToken, 
         payload: { comment }
       })
@@ -81,7 +80,8 @@ const Footer = ({ postId }: CommentsFooterProps) => {
     </div>
 )}
 
-export function Comments({ children, comments, postId }: CommentsProps) {
+
+export function Comments({ children, data, postId }: CommentsProps) {
   return (
     <Drawer.Root defaultOpen>
         { children }
@@ -141,10 +141,12 @@ export function Comments({ children, comments, postId }: CommentsProps) {
               <Drawer.Title className='font-medium mb-4'>
                 Unstyled drawer for React.
               </Drawer.Title>
-              {comments && comments?.length > 0 ?
-               comments.map(comment => <Comment key={comment.id} data={comment}/>)  :
-               <p className='text-gray-400 font-semibold mx-auto w-fit'>No Comments yet</p>
-            }
+              <div className='flex flex-col gap-2'>
+                {data && data?.length > 0 ?
+                 data.map((child) => <Comment key={child.comment.id} data={child}/>)  :
+                 <p className='text-gray-400 font-semibold mx-auto w-fit'>No Comments yet</p>
+                            }
+              </div>
             </div>
           </div>
           <Footer postId={postId}/>

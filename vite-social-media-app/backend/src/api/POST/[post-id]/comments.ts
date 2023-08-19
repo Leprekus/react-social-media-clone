@@ -2,7 +2,6 @@ import { type Request, type Response } from 'express'
 import { CommentBucket } from '../../../Tables'
 import { v4 as uid } from 'uuid'
 import { IComment } from '../../../../../typings'
-import { ICommentBucket } from '../../../../typings'
 import verifyToken from '../../../utils/verifyToken'
 
 interface CommentBody {
@@ -29,26 +28,21 @@ export default async function handler(req: Request, res: Response) {
 
     let commentsBucket = null
     try {
-        commentsBucket = await CommentBucket.getOne().where('postId').equals(postId).run()
+        commentsBucket = await CommentBucket.getOne().where('comment.id').equals(comment.id).run()
         
     }
     catch(error){
         console.log(error)
         commentsBucket = null
     }
-
-    console.log({ commentsBucket })
     
-    if(!commentsBucket)
-       await CommentBucket.insert({
-                postId,
-                comments: [ comment ]
-            })
+    if(commentsBucket)
+       return res.status(409).json({ message: 'Duplicate record' })
             
-    else 
-        await CommentBucket.updateOne({
-            comments: [ comment ]
-        } as ICommentBucket).where('postId').equals(postId).run() 
+    await CommentBucket.insert({
+        postId,
+        comment
+    })
 
     return res.status(200).json({ message: 'comment posted successfully' })
   

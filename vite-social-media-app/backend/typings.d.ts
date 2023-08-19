@@ -52,7 +52,8 @@ export interface ServerSession extends Token {
 
 export interface ICommentBucket {
   postId: string;
-  comments: IComment[]
+  comment: IComment
+ 
 }
 
 

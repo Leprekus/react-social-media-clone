@@ -6,7 +6,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        midnight: '#1d1f25'
+        midnight: '#1d1f25',
+        charcoal : '#1e2028'
       }
     },
   },

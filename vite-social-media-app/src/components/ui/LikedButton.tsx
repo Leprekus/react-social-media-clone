@@ -4,23 +4,24 @@ import { useAuth } from '../../hooks/useAuth';
 import { tryCatchPost } from '../../lib/fetch-helpers';
 
 interface LikedButtonProps {
-    postId: string;
+    queryString: URLSearchParams;
     likes: string[]
 
 }
 
-export default function LikedButton({ postId, likes }: LikedButtonProps) {
+export default function LikedButton({ queryString, likes }: LikedButtonProps) {
     const { session } = useAuth()
    
     const [isLiked, setIsLiked] = useState(
-        !!likes.find(user => user === session?.user.username) ||
+        !!likes?.find(user => user === session?.user.username) ||
         false
         )
 
     const Heart = isLiked ? AiFillHeart : AiOutlineHeart
 
     const handleLike = async () => {
-        const queryString = new URLSearchParams({ id: postId })
+        
+        console.log({ queryString : queryString.toString()})
 
         const [ data, error ] = await tryCatchPost({ 
             endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/like?${queryString}`,  

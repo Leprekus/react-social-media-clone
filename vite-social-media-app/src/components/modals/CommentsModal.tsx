@@ -2,33 +2,32 @@ import React, { ReactNode, Suspense, useEffect, useState } from 'react';
 import { tryCatchGet } from '../../lib/fetch-helpers';
 import toast from 'react-hot-toast';
 import useLoadComments from '../../hooks/useLoadComments';
-import { IComment } from '../../../typings';
+import { ICommentData } from '../../../typings';
 import Loading from '../Loading';
 interface CommentsModalProps {
   children: ReactNode;
 }
-interface ICommentData {
-  comments: {
-    postId: string;
-    comments: IComment[]
-  }
+
+
+interface ICommentResponse{
+  comments: ICommentData[]
 }
+
 
 export function CommentsModal({ children }: CommentsModalProps) {
   const loadComments = useLoadComments();
-  const [comments, setComments] = useState<IComment[] | null>(null);
+  const [comments, setComments] = useState<ICommentData[] | null>(null);
   //handles post fetching
   useEffect(() => {
     const fetchPost = async () => {
      // const query = new URLSearchParams({ id: loadComments.id as string });
-      const [data, error] = await tryCatchGet<ICommentData>({
+      const [data, error] = await tryCatchGet<ICommentResponse>({
         endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/${loadComments.id}/comments`,
       });
 
       if (error || !data?.res.ok) return toast.error('Failed to load comments');
 
-
-      setComments(data.json?.comments.comments as IComment[]);
+      setComments(data.json?.comments as ICommentData[]);
     };
     if (loadComments.id) fetchPost();
   }, [loadComments.id]);
@@ -48,7 +47,9 @@ export function CommentsModal({ children }: CommentsModalProps) {
     >
 
       <Suspense fallback={<Loading/>}>
-        <Comments comments={comments} postId={loadComments.id}>{children}</Comments>
+        <Comments data={comments} postId={loadComments.id}>
+          {children}
+        </Comments>
       </Suspense>
     </div>
   );
