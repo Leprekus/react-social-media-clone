@@ -9,10 +9,11 @@ import Button from './ui/Button'
 import { useAuth } from '../hooks/useAuth'
 import { tryCatchPost } from '../lib/fetch-helpers'
 import toast from 'react-hot-toast'
+import Comment from './ui/Comment'
 //import { IPost } from '../../typings'
 
-interface CommentsProps { children : ReactNode, comments: IComment[] | null, postId: string }
-interface CommentsFooterProps { postId: string }
+interface CommentsProps { children : ReactNode, comments: IComment[] | null, postId: string | null}
+interface CommentsFooterProps { postId: string | null}
 interface CommentsTriggerProps { children : ReactNode, }
 interface CommentData { comments: IComment[] }
 
@@ -25,16 +26,21 @@ export const CommentsTrigger = ({ children }: CommentsTriggerProps) =>
 const Footer = ({ postId }: CommentsFooterProps) => {
   const { session } = useAuth()
   const [isDisabled, setIsDisabled] = useState(true)
-  const [body, setBody] = useState('')
+  const [body, setBody] = useState('') 
 
   const handleChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(e.currentTarget.value,e.currentTarget.value.length,  isDisabled)
+
     e.currentTarget.value.length > 0 ? setIsDisabled(false) : setIsDisabled(true)
+
     setBody(e.target.value)
   }
 
   const handleSubmit = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+
     e.preventDefault()
+
+    if(!postId) return toast.error('No post selected')
+
     const comment:IComment = {
       id: '',
       author: session?.user.username as string,
@@ -46,10 +52,12 @@ const Footer = ({ postId }: CommentsFooterProps) => {
     }
   
       const [data, error] = await tryCatchPost<CommentData>({ 
-        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/${postId}/comments`, 
+        //TODO use postId prop
+        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/${'ac909361-19a0-48bc-8d6d-7e98a809e3b5'}/comments`, 
         token: session?.accessToken, 
         payload: { comment }
       })
+
       if(error || !data?.res.ok) toast.error('Could not post comment')
       
       if(data?.res.ok) toast.success('Comment Posted')
@@ -74,8 +82,6 @@ const Footer = ({ postId }: CommentsFooterProps) => {
 )}
 
 export function Comments({ children, comments, postId }: CommentsProps) {
-  
-  console.log(comments)
   return (
     <Drawer.Root defaultOpen>
         { children }
@@ -85,6 +91,7 @@ export function Comments({ children, comments, postId }: CommentsProps) {
         //bg-zinc-100 
         flex 
         flex-col 
+
         rounded-t-[10px] 
         h-[96%] mt-24 
         fixed 
@@ -111,8 +118,8 @@ export function Comments({ children, comments, postId }: CommentsProps) {
             sm:flex
             sm:justify-end
             ' >
-              <Drawer.Close>
-                <button className='
+              <Drawer.Close
+                className='
                 hidden 
                 h-10
                 w-10
@@ -125,7 +132,9 @@ export function Comments({ children, comments, postId }: CommentsProps) {
                 sm:flex
                 sm:justify-center
                 sm:items-center
-                '><IoIosClose size={40} className='text-gray-400'/></button>
+                '
+              >
+                <IoIosClose size={40} className='text-gray-400'/>
               </Drawer.Close>
             </div>
             <div className='max-w-md mx-auto'>
@@ -133,7 +142,7 @@ export function Comments({ children, comments, postId }: CommentsProps) {
                 Unstyled drawer for React.
               </Drawer.Title>
               {comments && comments?.length > 0 ?
-               comments.map(comment => <div>comment</div>)  :
+               comments.map(comment => <Comment key={comment.id} data={comment}/>)  :
                <p className='text-gray-400 font-semibold mx-auto w-fit'>No Comments yet</p>
             }
             </div>

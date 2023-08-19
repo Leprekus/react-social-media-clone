@@ -1,5 +1,5 @@
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useAuth } from '../../hooks/useAuth';
 import { tryCatchPost } from '../../lib/fetch-helpers';
 

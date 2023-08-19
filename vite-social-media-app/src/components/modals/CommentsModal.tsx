@@ -3,12 +3,15 @@ import { tryCatchGet } from '../../lib/fetch-helpers';
 import toast from 'react-hot-toast';
 import useLoadComments from '../../hooks/useLoadComments';
 import { IComment } from '../../../typings';
-
+import Loading from '../Loading';
 interface CommentsModalProps {
   children: ReactNode;
 }
 interface ICommentData {
-  comments: IComment[];
+  comments: {
+    postId: string;
+    comments: IComment[]
+  }
 }
 
 export function CommentsModal({ children }: CommentsModalProps) {
@@ -18,14 +21,14 @@ export function CommentsModal({ children }: CommentsModalProps) {
   useEffect(() => {
     const fetchPost = async () => {
      // const query = new URLSearchParams({ id: loadComments.id as string });
-
       const [data, error] = await tryCatchGet<ICommentData>({
         endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/${loadComments.id}/comments`,
       });
 
-      if (error) return toast.error('Failed to load post');
+      if (error || !data?.res.ok) return toast.error('Failed to load comments');
 
-      setComments(data?.json?.comments as IComment[]);
+
+      setComments(data.json?.comments.comments as IComment[]);
     };
     if (loadComments.id) fetchPost();
   }, [loadComments.id]);
@@ -34,7 +37,6 @@ export function CommentsModal({ children }: CommentsModalProps) {
     import('../Comments').then((module) => ({ default: module.Comments }))
   );
 
-  //console.log({id : loadComments.id})
   return (
     <div
       className=' 
@@ -45,7 +47,7 @@ export function CommentsModal({ children }: CommentsModalProps) {
       vaul-drawer-wrapper=''
     >
 
-      <Suspense>
+      <Suspense fallback={<Loading/>}>
         <Comments comments={comments} postId={loadComments.id}>{children}</Comments>
       </Suspense>
     </div>

@@ -9,7 +9,7 @@ export default async function handler(req: Request, res: Response) {
     
     let comments = null
     try {
-        comments = await CommentBucket.getOne().where(`${postId}.parentId`).equals(postId).run()
+        comments = await CommentBucket.getOne().where(`postId`).equals(postId).run()
     }
     catch(error){
         console.log(error)
