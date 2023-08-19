@@ -17,5 +17,12 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'warn',
     "no-prototype-builtins": "warn"
   },
-  
+  overrides: [
+    {
+      files: ['./backend/**/*.ts'], // Replace with your directory path and file pattern
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
 }

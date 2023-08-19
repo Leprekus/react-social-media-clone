@@ -1,10 +1,10 @@
 import express, { NextFunction } from 'express'
 import cors from 'cors'
 import body from './utils/parse-body'
-import cookieParser from 'cookie-parser'
 import handleRequest from './utils/request-handler'
 const PORT = 4321
 const app = express()
+const cookieParser = require('cookie-parser')
 
 app.use(cookieParser())
 
