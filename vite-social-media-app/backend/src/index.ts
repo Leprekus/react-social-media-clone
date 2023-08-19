@@ -2,7 +2,6 @@ import express, { NextFunction } from 'express'
 import cors from 'cors'
 import body from './utils/parse-body'
 import handleRequest from './utils/request-handler'
-const PORT = 4321
 const app = express()
 const cookieParser = require('cookie-parser')
 import { config } from 'dotenv'
@@ -30,6 +29,6 @@ app.get('/api/GET/*', async (req: express.Request, res:express.Response, next: N
 
 
   
-app.listen(PORT, () => {
-    console.log(`Listening on port: ${PORT}`)
+app.listen(process.env.PORT, () => {
+    console.log(`Listening on port: ${process.env.PORT}`)
 })
