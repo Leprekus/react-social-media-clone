@@ -1,85 +1,79 @@
-/*
 import React, { Suspense, useEffect, useState } from 'react';
-import usePostModal from '../../hooks/useViewPostModal';
-import Box from '../ui/Box';
+import useViewPostModal from '../../hooks/useViewPostModal';
 import { tryCatchGet } from '../../lib/fetch-helpers';
 import { IPost } from '../../../typings';
 import toast from 'react-hot-toast';
 import Loading from '../Loading';
-import Carousel from '../ui/Carousel';
-
-//import Post from '../Post';
+import { IoIosClose } from 'react-icons/io';
 
 interface IPostData {
   post: IPost;
 }
-export default function PostModal() {
-  const postModal = usePostModal();
-  const [post, setPost] = useState<IPost | null>(null);
+export default function ViewPostModal() {
 
-  //handles post fetching
+  const viewPostModal = useViewPostModal();
+  const [post, setPost] = useState<IPost | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+
+  const fetchPosts = async () =>{
+      const [data, error] = 
+          await tryCatchGet<IPostData>({ 
+              endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/post?${new URLSearchParams({ id: viewPostModal.id  as string })}`, 
+          })
+
+          if(error) toast.error('Failed to fetch posts')
+
+          if(data?.json?.post) setPost(data.json.post)
+
+          setIsLoading(false)
+        
+  }
   useEffect(() => {
-    const fetchPost = async () => {
-      const query = new URLSearchParams({ id: postModal.id as string });
+    if(viewPostModal.id) fetchPosts()
+  }, [viewPostModal.id])
 
-      const [data, error] = await tryCatchGet<IPostData>({
-        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/post?${query}`,
-      });
 
-      if (error) return toast.error('Failed to load post');
+  if (!viewPostModal.isOpen || isLoading) return null;
 
-      setPost(data?.json?.post as IPost);
-    };
-    if (postModal.id) fetchPost();
-  }, [postModal.id]);
 
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  //handles component rendering
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  if (!postModal.isOpen) return null;
-
-  //TODO: set ids after fetching post
-  //desktop horizontal carousel with vertical scroll
-  //mobile vertical carousel
+  // TODO: set ids after fetching post
+  // desktop horizontal carousel with vertical scroll
+  // mobile vertical carousel
   const handleClose = () => {
-    postModal.removeId();
-    postModal.Close();
+    viewPostModal.removeId();
+    viewPostModal.Close();
   };
 
-  const Comments =
-    windowWidth < 640
-      ? React.lazy(() => import('./CommentsModal'))
-      : React.lazy(() => import('../Comments'));
-  return windowWidth < 640 ? (
-    <Suspense>
-      <Comments />
-    </Suspense>
-  ) : (
-    <Box onClick={handleClose} className='w-full h-full p-14'>
-      <Suspense fallback={<Loading />}>
-        {post?.image && (
-          <>
-            <div
-              className='
-          flex 
-          flex-col 
-          items-center gap-4'
-            >
-              <Carousel images={post?.image} />
-              <Suspense>
-                <Comments />
-              </Suspense>
-            </div>
-          </>
-        )}
-      </Suspense>
-    </Box>
-  );
+  const Post = React.lazy(() => import('../Post'))
+  
+  return (
+    <div className='relative text-white'>
+        <button
+          onClick={handleClose}
+          className=' 
+          h-10
+          w-10
+          bg-neutral-700
+          hover:bg-neutral-800
+        
+          rounded-md 
+          transition
+
+          flex
+          justify-center
+          items-center
+          absolute
+          right-4
+          top-4
+          '
+          >
+            <IoIosClose size={40} className='text-gray-400'/>
+          </button>
+        <Suspense fallback={<Loading/>}>
+          {post && <Post  post={post}/>}
+        </Suspense>
+    </div>
+
+    )
+  
 }
-*/
