@@ -5,6 +5,7 @@ import handleRequest from './utils/request-handler'
 const app = express()
 const cookieParser = require('cookie-parser')
 import { config } from 'dotenv'
+import allowCors from './utils/vercelCorsMiddleware'
 config()
 app.use(cookieParser())
 
@@ -12,6 +13,8 @@ app.use(cors({
     origin: process.env.ORIGIN_URL,
     credentials: true
 }))
+
+app.use(allowCors)
 
 app.use(body)
 
