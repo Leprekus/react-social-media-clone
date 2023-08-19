@@ -1,5 +1,5 @@
 import { type Request, type Response } from 'express'
-import { CommentBucket } from '../../../Tables'
+import { CommentBucket, PostsBucket } from '../../../Tables'
 import { v4 as uid } from 'uuid'
 import { IComment } from '../../../../../typings'
 import verifyToken from '../../../utils/verifyToken'
@@ -43,6 +43,11 @@ export default async function handler(req: Request, res: Response) {
         postId,
         comment
     })
+    const commentCount = (await PostsBucket.getOne().where('id').equals(postId).run())?.comment_count
+    await PostsBucket.updateOne({
+        comment_count: (commentCount  || 0) + 1,
+        comments: [ comment.id ]
+    }).where('id').equals(postId).run()
 
     return res.status(200).json({ message: 'comment posted successfully' })
   

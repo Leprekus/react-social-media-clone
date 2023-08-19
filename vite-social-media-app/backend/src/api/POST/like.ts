@@ -89,7 +89,7 @@ async function handleCommentLike(
   
       //takes data in to be filtered
       //remove user from likes
-      await CommentBucket.filterOne({
+      const x = await CommentBucket.filterOne({
         comment: {
             likes: [ verifiedUser.username ],
         } as IComment
@@ -98,6 +98,7 @@ async function handleCommentLike(
         .equals(commentId)
         .run();
 
+        console.log({ x: x?.comment.likes})
     } else { //like post
 
       const match = comment?.comment?.likes?.find((user) => user === result.data.username);

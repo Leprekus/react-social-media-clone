@@ -26,9 +26,13 @@ export function mergeFilterObjects(target: any, payload: any) {
 
   for (const key in payload) {
       if (payload.hasOwnProperty(key)) {
-          if (Array.isArray(obj[key]) && Array.isArray(payload[key])) {
-              obj[key] = obj[key].filter((element: any) => !payload[key].includes(element));
-          }
+
+        const areArrays = Array.isArray(obj[key]) && Array.isArray(payload[key])
+        
+          if (areArrays) 
+            obj[key] = obj[key].filter((element: any) => !payload[key].includes(element));
+          
+          else  obj[key] = mergeFilterObjects(obj[key], payload[key]);
       }
   }
 
