@@ -13,8 +13,8 @@ export default function UserListModal() {
       onClick={Close}
     >
       {
-        ids?.map(id => (
-          <ul>
+        ids?.map((id:string, i: number) => (
+          <ul key={i}>
             <li>{ id }</li>
           </ul>
         ))
