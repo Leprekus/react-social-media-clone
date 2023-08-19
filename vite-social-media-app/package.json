@@ -19,7 +19,8 @@
     "react-icons": "^4.10.1",
     "tailwind-merge": "^1.14.0",
     "ts-node": "^10.9.1",
-    "vaul": "^0.3.2"
+    "vaul": "^0.3.2",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
