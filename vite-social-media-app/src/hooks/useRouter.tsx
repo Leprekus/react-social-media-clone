@@ -36,6 +36,7 @@ export const MyRouterContextProvider = ({ children }: { children: ReactNode }) =
 
 
     const push = (path:string) => {
+        console.log({ pushedPath: path })
         window.history.pushState({}, '', path);
         setCurrentPath(path);
     };
@@ -73,6 +74,7 @@ export const MyRouterContextProvider = ({ children }: { children: ReactNode }) =
             // and the route and requested path
             // have the same pathDepth
             // render return the route
+            console.log({ parsedUrl })
             if(route.path === parsedUrl) return route.path === parsedUrl
 
             if(routeContainsSlug && (routeDepth === pathDepth)) {
