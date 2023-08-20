@@ -51,7 +51,7 @@ export default function Home() {
             href='/create-post'>Create a Post</Link>
         </div>
   return (
-    <div>
+    <div className='flex flex-col gap-4'>
       {
         posts.map(data => (
           <Post post={data} key={data.id}/>

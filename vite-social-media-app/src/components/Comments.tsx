@@ -83,7 +83,7 @@ const Footer = ({ postId }: CommentsFooterProps) => {
 
 export function Comments({ children, data, postId }: CommentsProps) {
   return (
-    <Drawer.Root defaultOpen>
+    <Drawer.Root>
         { children }
       <Drawer.Portal>
         <Drawer.Overlay className='fixed inset-0 bg-black/40'/>

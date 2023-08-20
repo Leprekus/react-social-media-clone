@@ -11,7 +11,12 @@ export default function Layout({ children }: LayoutProps) {
     mx-auto 
     bg-black 
     text-white 
-    sm:pl-20'>
+    sm:pl-20
+    pb-40
+    pt-10
+    sm:pb-10
+    sm-pt-10
+    '>
       <Navbar>
         { children }
       </Navbar>

@@ -32,11 +32,13 @@ export default function Post({ post }:PostProps) {
   return (
     <CommentsModal>
         <div className='
-            w-[400px]
+            sm:w-[400px]
             h-[540px]
             bg-midnight
             rounded-md
             mx-auto
+            w-[95%]
+            
         '>
             <div className='flex gap-4 items-center py-2 px-4 h-14'>
                 <div className='h-10 w-10 rounded-full bg-red-500'/>
