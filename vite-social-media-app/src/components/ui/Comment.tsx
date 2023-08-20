@@ -48,7 +48,7 @@ export default function Comment({ data: { comment, postId } }: CommentProps) {
 
     '>
         <Link 
-            href={comment.author}
+            href={`/${comment.author}`}
             className='w-1/4 hover:text-zinc-400 font-semibold transition'>
                 {comment.author}
         </Link>
