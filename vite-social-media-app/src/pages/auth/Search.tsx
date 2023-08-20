@@ -64,8 +64,9 @@ export default function Search() {
       <div className='flex flex-col items-center gap-4 sm:p-0 max-w-7xl w-full'>
         {isLoading && <Loading/>}
   
-        {users && users?.length > 0 &&
-        users?.map((user:User) => <ProfileListItem user={user}/>)
+        {users && users?.length > 0 ?
+        users?.map((user:User) => <ProfileListItem user={user}/>):
+        <div className='text-lg text-gray-400 font-semibold pt-10'>No users found</div>
         }
       </div>
     </div>
