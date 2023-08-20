@@ -1,6 +1,9 @@
+import Input from '../../components/ui/Input';
 
 export default function Search() {
   return (
-    <div>Search</div>
+    <div>
+      <Input/>
+    </div>
   )
 }

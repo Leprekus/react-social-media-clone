@@ -39,7 +39,7 @@ export default function Comment({ data: { comment, postId } }: CommentProps) {
         flex 
         justify-between
         gap-4
-        min-h-16
+        min-h-[80px]
         h-fit
         items-start
         text-sm
@@ -56,7 +56,7 @@ export default function Comment({ data: { comment, postId } }: CommentProps) {
             <p 
             className={`${displayMore ? 'h-fit' : 'line-clamp-2'} text-neutral-200`} 
             ref={bodyRef}>
-               Lorem ipsum dolor, sit amet consectetur adipisicing elit. Recusandae atque quasi voluptas nihil sint nisi, nam possimus illo animi, impedit quo repudiandae magni. Minus repellendus, sed aspernatur rem tenetur similique.
+               { comment.body}
             </p>
             <span className='
                 text-xs
