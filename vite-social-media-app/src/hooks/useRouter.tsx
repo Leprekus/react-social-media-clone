@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { 
+    ReactNode, 
+    createContext, 
+    useContext, 
+    useEffect, 
+    useState } from 'react';
+import qs from 'query-string'
 
 type RouterContextType  = {
     pathname: string;
@@ -24,7 +30,6 @@ export const MyRouterContextProvider = ({ children }: { children: ReactNode }) =
         }
 
         window.addEventListener('popstate', pathListener)
-        console.log({ currentPath })
 
         return () => window.removeEventListener('popstate', pathListener)
     }, [currentPath])
@@ -55,18 +60,21 @@ export const MyRouterContextProvider = ({ children }: { children: ReactNode }) =
     const renderRoute = (routes: { path: string, component: ReactNode }[], NotFound: ReactNode) => {
         const match = routes.find(route => {
 
-            if(route.path === currentPath) return route.path === currentPath
     
             const split = route.path.split('/')
             const routeContainsSlug = split[split.length - 1].includes(':')
-    
-            const pathDepth = currentPath.split('/').length
+            
+            const parsedUrl = qs.parseUrl(currentPath).url
+            const pathDepth = parsedUrl.split('/').length
             const routeDepth = route.path.split('/').length
+    
     
             // if the route contains a slug ':'
             // and the route and requested path
             // have the same pathDepth
             // render return the route
+            if(route.path === parsedUrl) return route.path === parsedUrl
+
             if(routeContainsSlug && (routeDepth === pathDepth)) {
               return route
             }
