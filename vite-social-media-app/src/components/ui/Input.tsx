@@ -15,12 +15,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     className={twMerge(`
     px-4
     py-4
-    border
     shadow
     rounded-md
-    focus:outline-black
+    focus:outline-midnight
+    bg-charcoal
     w-full
-    text-gray-700
+    text-white
     
     `, className)}
     {...props}

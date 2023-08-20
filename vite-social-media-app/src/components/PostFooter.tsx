@@ -49,10 +49,10 @@ export default function PostFooter({
             '>
                 Show More
             </button>
-            <button>
+            <p className={`${post.like_count > 0 ? 'block' : 'invisible'}`}>
                 {post.like_count} 
                 <span className='font-semibold'> likes</span>
-            </button>
+            </p>
         </div>
         <div className='mx-auto max-w-[340px]'>
             <p className='truncate'>{ post.description }</p>

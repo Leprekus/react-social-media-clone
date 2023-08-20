@@ -63,7 +63,7 @@ const Footer = ({ postId }: CommentsFooterProps) => {
 
   }
   return (
-    <div className='p-4 bg-[#262930] border-t border-[#1e2028] mt-auto'>
+    <div className='p-4 bg-[#262930] border-t border-charcoal mt-auto'>
       <div className='flex gap-6 items-end justify-end max-w-md mx-auto text-lg pb-2'
       >
         <Textarea 
@@ -139,7 +139,7 @@ export function Comments({ children, data, postId }: CommentsProps) {
             </div>
             <div className='max-w-md mx-auto'>
               <Drawer.Title className='font-medium mb-4'>
-                Unstyled drawer for React.
+                Comment Section
               </Drawer.Title>
               <div className='flex flex-col gap-2'>
                 {data && data?.length > 0 ?

@@ -14,12 +14,12 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   return (
     <textarea 
     className={twMerge(`
-    border
+    text-white
     shadow
     rounded-md
     focus:outline-slate-400
     w-full
-    text-gray-700
+    bg-charcoal
     resize-none
     leading-3
     pt-3
