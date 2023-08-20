@@ -1,16 +1,18 @@
-//import { Comparator } from '../../typings'
 
-export enum Comparator {
-    Equals,
-    NotEqual,
-    In,
-    Between,
-    GreaterThan,
-    LessThan,
-    GreaterOrEqual,
-    LessOrEqual,
-    Matches,
-  }
+// export enum Comparator {
+//     Equals,
+//     NotEqual,
+//     In,
+//     Includes,
+//     Between,
+//     GreaterThan,
+//     LessThan,
+//     GreaterOrEqual,
+//     LessOrEqual,
+//     Matches,
+//   }
+
+import { Comparator } from '../../enums'
 
 
 export default function where<T, R>(

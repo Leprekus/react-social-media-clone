@@ -1,17 +1,7 @@
+import { Comparator } from '../../enums';
 import {  Matcher, ObjectLiteral } from '../../typings';
 import getKeyChainValue from './getKeyChainValue';
-//import {  Comparator } from '../../typings';
-export enum Comparator {
-    Equals,
-    NotEqual,
-    In,
-    Between,
-    GreaterThan,
-    LessThan,
-    GreaterOrEqual,
-    LessOrEqual,
-    Matches,
-  }
+
 export default function matchDataKeyValue<T>(
     data: T,
     { comparator, key, value }: Matcher<T>
@@ -24,7 +14,11 @@ export default function matchDataKeyValue<T>(
         case Comparator.NotEqual:
             return val !== value;
         case Comparator.In:
-            return (value as Array<unknown>).includes(val);
+            //handle includes in arrays and strings
+            return Array.isArray(val) ? 
+            (val as Array<unknown> ).includes(value) :
+            (val as string).toLowerCase().includes((value as string).toLowerCase())
+            ;
         case Comparator.Between:
             return (
                 Number(val) > Number((value as Array<number>[0])) &&

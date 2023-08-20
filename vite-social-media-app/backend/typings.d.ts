@@ -10,17 +10,7 @@ export type ObjectLiteral = {
     value: unknown | string | RegExp | [number, number] | unknown[] | number;
   }
   
-  export enum Comparator {
-    Equals,
-    NotEqual,
-    In,
-    Between,
-    GreaterThan,
-    LessThan,
-    GreaterOrEqual,
-    LessOrEqual,
-    Matches,
-  }
+  
   // export const Comparator = {
   //   Equals: 0,
   //   NotEqual: 1,
