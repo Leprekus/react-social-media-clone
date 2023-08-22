@@ -46,4 +46,7 @@ export interface ICommentBucket {
  
 }
 
-
+export interface IUserProfileImage {
+  id: string; //userid
+  image: string;
+}

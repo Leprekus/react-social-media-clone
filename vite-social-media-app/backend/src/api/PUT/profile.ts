@@ -1,10 +1,10 @@
 import { type Request, type Response } from 'express'
 import { z } from 'zod'
-import { UserTable } from '../../Tables'
+import { UserProfileImage, UserTable } from '../../Tables'
 import verifyToken from '../../utils/verifyToken'
 import { updateSession } from '../../utils/session-helpers'
-
-
+import { config } from 'dotenv'
+config()
 
 
 export default async function handler(req: Request, res: Response) {
@@ -32,20 +32,28 @@ export default async function handler(req: Request, res: Response) {
        
 
     let updatedUser 
+    let userProfileImage
 
     try {
         updatedUser = await UserTable
             .updateOne({
-                ...userPayload,
+                ...result.data,
+                profileImage: (new URL(`${process.env.BACKEND_URL}api/GET/profile/${result.data.id}/picture`)).toString()
             }).where('id')
             .equals(userPayload.id).run()
+        
+            userProfileImage = await UserProfileImage
+            .updateOne({
+                image: result.data.profileImage,
+            }).where('id')
+            .equals(result.data.id).run()
 
     } catch(error) {
         updatedUser = null
     }
 
 
-    if(!updatedUser)
+    if(!updatedUser || !userProfileImage)
         return res.status(409).json({ message: 'Failed to update values' })
     
 
