@@ -14,7 +14,7 @@ export default function CreateAccount() {
     name: user.name,
     password: user.password,
     username: user.username,
-    bio: user.bio,
+    bio: '',
     profileImage:  selectedImg as string || '',
     id: ''
   });
@@ -43,6 +43,7 @@ export default function CreateAccount() {
   };
 
   const handleFormChange = (fieldName: string, value: string) => {
+    console.log({ fieldName, value})
     setFormData(prevData => ({ ...prevData, [fieldName]: value }));
   };
 

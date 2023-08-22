@@ -145,7 +145,7 @@ export default function FormContent({
               placeholder="bio"
               name='bio'
               type="text"
-              onChange={e => handleFormChange('password', e.target.value)}
+              onChange={e => handleFormChange('bio', e.target.value)}
             />
             
           </>

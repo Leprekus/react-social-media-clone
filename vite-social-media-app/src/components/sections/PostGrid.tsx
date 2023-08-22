@@ -8,6 +8,7 @@ import { tryCatchGet } from '../../lib/fetch-helpers'
 import { useAuth } from '../../hooks/useAuth'
 import toast from 'react-hot-toast'
 import Loading from '../Loading'
+import { useRouter } from '../../hooks/useRouter'
 
 interface IPostData {
     posts: IPost[]
@@ -16,11 +17,14 @@ export default function PostGrid() {
     const { session } = useAuth()
     const [posts, setPosts] = useState<IPost[]>([])
     const [isLoading, setIsLoading] = useState(true)
+    const pathname = useRouter().pathname.split('/')
+    const username = pathname.at(-1)
+    
+    const isAdmin = session?.user.username === username
     const fetchPosts = async () =>{
         const [data, error] = 
             await tryCatchGet<IPostData>({ 
-                endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/user-posts`, 
-                token: session?.accessToken
+                endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/user-posts?username=${username}`, 
             })
 
             if(error) toast.error('Failed to fetch posts')
@@ -36,7 +40,7 @@ export default function PostGrid() {
 
     if(isLoading) return <Loading/>
 
-    if(posts.length < 1) 
+    if(posts.length < 1 && isAdmin) 
         return <div className='p-8 flex flex-col items-center gap-4'>
             <p className='font-semibold text-gray-400 text-lg'>Share your thoughts and moments with the community!</p>
             <Link 
