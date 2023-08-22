@@ -42,6 +42,7 @@ export default async function generateSession (user: User, res: Response): Promi
     expires 
 })
 
+
     return sessionCookie
     
 }

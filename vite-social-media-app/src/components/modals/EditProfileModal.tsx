@@ -19,6 +19,12 @@ export default function EditProfileModal() {
   const { isOpen, Close } = useEditProfileModal()
   const { session } = useAuth()
   const [isDisabled, setIsDisabled] = useState(true)
+  const [src, setSrc] = useState(null)
+  const fetchProfileImage = async () => {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/profile/picture?userId=${session?.user.username}`)
+    const data = await res.json()
+    setSrc(data.profileImage)
+  }
   const [formData, setFormData] = useState<User >({
     email: '',
     name: '',
@@ -30,6 +36,9 @@ export default function EditProfileModal() {
   useEffect(() => {
     if(session?.user) {
       setFormData({ ...session?.user })
+    }
+    if(session?.user.profileImage) {
+      fetchProfileImage()
     }
 
   }, [session?.user, ])
@@ -89,10 +98,10 @@ export default function EditProfileModal() {
       { session ?
         <div className='flex flex-col gap-4 p-4'>
         {
-          formData.profileImage ? 
+          src ? 
           <img 
           className="w-24 h-24 bg-gray-200 rounded-full mx-auto object-cover shadow-md" 
-          src={(formData.profileImage as string)}
+          src={src}
           />
           :<span className='
           mx-auto 

@@ -7,6 +7,7 @@ import { tryCatchGet, tryCatchPost } from '../lib/fetch-helpers';
 type AuthContextType  = {
     session: Session | null
     signIn: (username: string, password: string) => void
+    signOut: () => void
 }
 
 interface SessionData {
@@ -31,6 +32,21 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
                 //TODO: Handle error message
             
             setSession(data?.json?.session)
+    }
+    const signOut = async () => {
+
+            if(!session) return 
+
+            const endpoint = `${import.meta.env['VITE_BACKEND_URL']}api/POST/sign-out`
+            const [data , error] = await tryCatchPost<{ message: string }>({ 
+                endpoint, 
+                payload: { userId: session.user.id, createdAt: session.createdAt }, 
+                token: session.accessToken 
+            })
+            console.log({signOut: data?.json?.message})
+            
+            if(error) return
+            else setSession(null)
     }
 
     const refreshToken = async () => {
@@ -79,6 +95,7 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
     const values = {
         session, 
         signIn,
+        signOut
     }
 
     return (

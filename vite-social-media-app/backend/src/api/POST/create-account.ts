@@ -38,7 +38,7 @@ export default async function handler(req: Request, res: Response) {
     const id = uuid()
     user = {
         ...result.data,
-        profileImage:  (new URL(`${process.env.BACKEND_URL}api/GET/profile/${id}/picture`)).toString(),
+        profileImage:  (new URL(`${process.env.BACKEND_URL}api/GET/profile/picture?userId=${result.data.username}`)).toString(),
         id
     }    
   

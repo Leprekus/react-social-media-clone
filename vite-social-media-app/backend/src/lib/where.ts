@@ -36,7 +36,7 @@ export default function where<T, R>(
                 return chain
             },
             equals(val: unknown) {
-                collector(key, Comparator.Matches, val)
+                collector(key, Comparator.Equals, val)
                 return chain
             },
             notEqual(val: unknown) {

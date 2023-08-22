@@ -1,11 +1,10 @@
 import { type Request, type Response } from 'express'
-import { UserProfileImage } from '../../../../Tables'
+import { UserProfileImage } from '../../../Tables'
 
 
 export default async function handler(req: Request, res: Response) {
 
-    const reqSegments = req.path.split('/')
-    const userId = reqSegments[reqSegments.length - 2]
+    const userId = req.query.userId
 
 
 

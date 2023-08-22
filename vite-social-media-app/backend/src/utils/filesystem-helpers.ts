@@ -27,3 +27,4 @@ export function generateDynamicPath(filePath:string, method: string, file:string
     return path.join(dynamicRoute, ...endpoint)
 
 }
+

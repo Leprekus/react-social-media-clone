@@ -38,7 +38,7 @@ export default async function handler(req: Request, res: Response) {
         updatedUser = await UserTable
             .updateOne({
                 ...result.data,
-                profileImage: (new URL(`${process.env.BACKEND_URL}api/GET/profile/${result.data.id}/picture`)).toString()
+                profileImage: (new URL(`${process.env.BACKEND_URL}api/GET/profile/picture?userId=${result.data.username}`)).toString(),
             }).where('id')
             .equals(userPayload.id).run()
         
@@ -46,7 +46,7 @@ export default async function handler(req: Request, res: Response) {
             .updateOne({
                 image: result.data.profileImage,
             }).where('id')
-            .equals(result.data.id).run()
+            .equals(result.data.username).run()
 
     } catch(error) {
         updatedUser = null
