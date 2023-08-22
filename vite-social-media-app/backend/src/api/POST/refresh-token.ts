@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express'
 import { SessionTable } from '../../Tables'
-import generateSession from '../../utils/generateSession'
+import generateSession from '../../utils/session-helpers'
 import { User } from '../../../../typings'
 
 export default async function handler(req: Request, res: Response) {

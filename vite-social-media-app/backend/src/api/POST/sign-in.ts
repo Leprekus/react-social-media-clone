@@ -2,7 +2,7 @@ import { type Request, type Response } from 'express'
 import { config } from 'dotenv'
 import { UserTable } from '../../Tables'
 import { Session, User } from '../../../../typings'
-import generateSession from '../../utils/generateSession'
+import generateSession from '../../utils/session-helpers'
 
 config()
 
@@ -30,7 +30,6 @@ export default async function handler(req: Request, res: Response) {
 
     if(storedUser) {
         const session: Session = await generateSession((storedUser as User)!, res)
-
         return res.status(200).json({ session })
     }
     return res.status(401).json({ message: 'invald credentials'})

@@ -24,7 +24,7 @@ export default function SignInContent() {
             password: e.target.value
           })
         )}/>
-        <Button onClick={() => signIn(formData.email, formData.password)}>
+        <Button onClick={async () => await signIn(formData.email, formData.password)}>
             Sign in
         </Button>
     </>

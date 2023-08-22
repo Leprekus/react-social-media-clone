@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser')
 import { config } from 'dotenv'
 
 config()
+app.use(body)
 app.use(cookieParser())
 
 app.use(cors({
@@ -16,15 +17,19 @@ app.use(cors({
 
 
 
-app.use(body)
 
+app.put('/api/PUT/*', async (req: express.Request, res:express.Response, next: NextFunction) => {
+
+    handleRequest(req, res, next)
+    
+})
 app.post('/api/POST/*', async (req: express.Request, res:express.Response, next: NextFunction) => {
     
     handleRequest(req, res, next)
     
 })
 app.get('/api/GET/*', async (req: express.Request, res:express.Response, next: NextFunction) => {
-    
+
    handleRequest(req, res, next)
 
 })

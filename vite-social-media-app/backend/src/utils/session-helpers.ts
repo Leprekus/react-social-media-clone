@@ -1,7 +1,7 @@
 import { Session, User } from '../../../typings';
 import { SessionTable } from '../Tables';
 import { v4 as uid } from 'uuid';
-import type { Response } from 'express';
+import type { Response, Request } from 'express';
 
 function generateToken (uid: string) {
     const CHARACTERS = 'acbdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'
@@ -35,7 +35,7 @@ export default async function generateSession (user: User, res: Response): Promi
     ...session,
     expiresAt: session.createdAt + (3600 * 1000)
 }
-   
+
    res.cookie('session', JSON.stringify(sessionCookie), { 
     httpOnly: true, 
     maxAge: 604800000, //7 days in miliseconds
@@ -43,5 +43,27 @@ export default async function generateSession (user: User, res: Response): Promi
 })
 
     return sessionCookie
+    
+}
+export async function updateSession (user: User, req: Request, res: Response): Promise<Session> {
+
+   const session = req.cookies.session
+
+   const updatedSession = {
+    ...session,
+    user
+   }
+
+   const expires = new Date()
+   expires.setDate(expires.getDate() + 7)
+   
+   res.cookie('session', JSON.stringify(updateSession), { 
+    httpOnly: true, 
+    maxAge: 604800000, //7 days in miliseconds
+    expires
+    
+})
+
+    return updatedSession
     
 }

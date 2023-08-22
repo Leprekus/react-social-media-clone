@@ -29,8 +29,6 @@ export default async function handler(req: Request, res: Response) {
         username: z.string(),
         bio: z.string(),
         profileImage: z.string(),
-     
-
     })
 
     const result = User.safeParse(user)

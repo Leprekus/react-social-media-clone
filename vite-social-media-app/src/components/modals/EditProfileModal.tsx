@@ -43,7 +43,6 @@ export default function EditProfileModal() {
 
   }, [formData, session])
 
-  const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null | undefined>(formData.profileImage)
   if(!isOpen) return null
   // TODO: connect form to db to persist changes
 
@@ -54,7 +53,11 @@ export default function EditProfileModal() {
 
       const reader = new FileReader();
       reader.onload = () => {
-        setSelectedImg(reader.result);
+
+        setFormData(prev => ({
+          ...prev,
+          profileImage: reader.result as string
+        }))
       };
       reader.readAsDataURL(file);
 
@@ -65,13 +68,15 @@ export default function EditProfileModal() {
 
     if(formData.id !== session?.user.id) return
 
+    console.log({ formData})
     const [data, error] = await tryCatchPost<UserData>({ 
       endpoint: `${import.meta.env.VITE_BACKEND_URL}api/PUT/profile`, 
       token: session.accessToken, 
       payload: formData, 
       method: 'PUT'})
 
-      if(!error || !data?.res.ok) toast.error('Failed to update profile')
+      if(error || !data?.res.ok) toast.error('Failed to update profile')
+        
 
       if(data?.res.ok) toast.success('Profile updated')
   }
@@ -84,10 +89,10 @@ export default function EditProfileModal() {
       { session ?
         <div className='flex flex-col gap-4 p-4'>
         {
-          selectedImg ? 
+          formData.profileImage ? 
           <img 
           className="w-24 h-24 bg-gray-200 rounded-full mx-auto object-cover shadow-md" 
-          src={(selectedImg as string)}
+          src={(formData.profileImage as string)}
           />
           :<span className='
           mx-auto 

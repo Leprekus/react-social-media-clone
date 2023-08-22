@@ -11,13 +11,12 @@ export default function Router() {
     const router = useRouter()
     const { session } = useAuth()
 
-    console.log({ session })
-    if(!session) {
+    // if(!session) {
 
-      router.replace('/login')
-      return <Login/>
+    //   router.replace('/login')
+    //   return <Login/>
       
-    }
+    // }
 
     const path = router.pathname
     console.log({ path })

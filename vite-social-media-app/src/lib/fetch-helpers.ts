@@ -56,7 +56,7 @@ export async function tryCatchGet<T>({ endpoint, token }: TryCatchGetProps): Pro
         })
         const contentType = res.headers.get('content-type');
         const isJson = contentType && contentType.indexOf('application/json') !== -1;
-    
+        
         if(isJson) {
             const json = (await res.json() as T)
             return [ {json, res } , null ]

@@ -14,7 +14,7 @@ export default async function handler(req: Request, res: Response) {
     JSON.parse(req?.cookies?.session) : 
     null
     //const isExpired = cookieSession?.expiresAt && cookieSession?.expiresAt < Date.now() 
-
+    
     // if(!cookieSession) 
     //     res.cookie('session', null,  { httpOnly: true, expires: new Date(0) })
 
