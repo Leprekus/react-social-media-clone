@@ -4,11 +4,12 @@ interface TryCatchPostProps {
     payload: { [key: string]: any },
     endpoint: string;
     token?: string; 
+    method?: 'POST' | 'PUT';
 
 }
 
 
-export async function tryCatchPost<T>({ endpoint, payload, token }: TryCatchPostProps): Promise<Result<{ json: T | null, res: Response }, any>> {
+export async function tryCatchPost<T>({ endpoint, payload, token, method = 'POST' }: TryCatchPostProps): Promise<Result<{ json: T | null, res: Response }, any>> {
 
     const credentials = btoa(`${import.meta.env.VITE_CLIENT_ID}:${import.meta.env.VITE_CLIENT_SECRET}`)
     const headers = { 
@@ -19,7 +20,7 @@ export async function tryCatchPost<T>({ endpoint, payload, token }: TryCatchPost
 
     try {
         const res = await fetch(endpoint, { 
-            method: 'POST', 
+            method, 
             headers,
             credentials: 'include',
             body: JSON.stringify(payload) 

@@ -27,7 +27,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     transition
     w-full
     `, 
-    disabled && 'cursor-not-allowed bg-gray-400',
+    disabled && 'cursor-not-allowed bg-gray-600 border-transparent text-gray-400',
     className)}
     {...props}
     ref={ref}
