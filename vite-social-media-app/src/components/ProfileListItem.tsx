@@ -1,22 +1,13 @@
-import React, { useEffect, useState } from 'react'
 import { User } from '../../typings'
-import { BiSolidUserCircle } from 'react-icons/bi'
 import Button from './ui/Button'
 import Link from './Link'
+import useFetchProfileImage from '../hooks/useFetchProfileImage'
 
 interface ProfileListItemProps { user: User }
 export default function ProfileListItem({ user }:ProfileListItemProps) {
-  const [src, setSrc] = useState<string | null>(null)
-  const fetchProfileImage = async () => {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/profile/picture?userId=${user?.username}`)
-    const data = await res.json()
-    setSrc(data.profileImage)
-  }
-  useEffect(() => {
-    if(user.username) fetchProfileImage()
-}, [ user.username ])
 
-  if(!src) return null
+  const { Img } = useFetchProfileImage(user.username)
+
   return (
     <Link 
     href={`/${user.username}`}
@@ -42,11 +33,7 @@ export default function ProfileListItem({ user }:ProfileListItemProps) {
       relative
       '>
       <div className='flex items-center justify-center overflow-hidden w-20 h-20 rounded-full'>
-        { 
-          user.profileImage.length > 0 ? 
-          <img className='object-fill'  src={src}/> :
-          <BiSolidUserCircle size={100}/>
-        }
+        { Img }
       </div>
       <div className='flex flex-col gap-2 lg:ml-20'>
         <p className='font-semibold lg:text-xl'>{user.username}</p>
