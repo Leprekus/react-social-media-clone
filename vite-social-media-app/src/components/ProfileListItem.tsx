@@ -7,7 +7,6 @@ import FollowsButton from './ui/FollowsButton'
 interface ProfileListItemProps { user: User }
 export default function ProfileListItem({ user }:ProfileListItemProps) {
   const { Img } = useFetchProfileImage(user.username, 42)
-  const queryString = (new URLSearchParams({ id: user.id })).toString()
 
   return (
     <Link 
@@ -15,6 +14,7 @@ export default function ProfileListItem({ user }:ProfileListItemProps) {
     className='
       flex
       items-center 
+      justify-around
       gap-4 
       bg-midnight
       rounded-md 
@@ -35,11 +35,11 @@ export default function ProfileListItem({ user }:ProfileListItemProps) {
       <div className='flex items-center justify-center overflow-hidden w-20 h-20 rounded-full'>
         { Img }
       </div>
-      <div className='flex flex-col gap-2 lg:ml-20'>
+      <div className='flex flex-col gap-2'>
         <p className='font-semibold lg:text-xl'>{user.username}</p>
         <p className='lg:text-lg'>{user.name}</p>
       </div>
-      <FollowsButton queryString={queryString} followers={user.followers as string[]}/>
+      <FollowsButton id={user.id} followers={user.followers as string[]}/>
     </Link>
   )
 }

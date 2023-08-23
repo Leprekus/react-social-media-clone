@@ -5,10 +5,10 @@ import Button from './Button'
 import toast from 'react-hot-toast';
 
 interface FollowsButtonProps {
-    queryString: string;
+    id: string;
     followers: string[]
 }
-export default function FollowsButton({ queryString, followers }: FollowsButtonProps) {
+export default function FollowsButton({ id, followers }: FollowsButtonProps) {
 
     const { session } = useAuth()
     const [follows, setFollows] = useState(
@@ -20,6 +20,7 @@ export default function FollowsButton({ queryString, followers }: FollowsButtonP
         e.stopPropagation()
         e.preventDefault()
         
+        const queryString = (new URLSearchParams({ id: id })).toString()
         const [data, error] = await tryCatchPost({
           endpoint: `${import.meta.env.VITE_BACKEND_URL}api/PUT/follows?${queryString}`,
           token: session?.accessToken,
@@ -30,20 +31,18 @@ export default function FollowsButton({ queryString, followers }: FollowsButtonP
         if(error || !data?.res.ok) toast.error('Something went wrong')
         if(!error && data?.res.ok) setFollows(!follows)
       }
+  
+  if(id === session?.user.id) return null
   return (
     <Button 
       onClick={handleFollow}
       className='
-      absolute 
-      right-4
-      sm:block
-      w-28 py-2
+      w-fit
+      py-2
       bg-violet-950/20 
       hover:bg-violet-950/60
       active:bg-violet-950
-      sm:relative
-      sm:left-20
-      
+      relative
       '
       >
         {follows ? 'Following' : 'Follow'}
