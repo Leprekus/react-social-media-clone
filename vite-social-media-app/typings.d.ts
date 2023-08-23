@@ -54,7 +54,6 @@ export interface Token {
     refreshToken: string;
     accessToken: string;
 }
-
 export interface Session extends Token {
     user: {
         email: string;
@@ -63,8 +62,8 @@ export interface Session extends Token {
         username: string;
         bio: string;
         profileImage: string;
-        followers_count: number;
-        following_count: number;
+        followers_count?: number;
+        following_count?: number;
     }
   }
   

@@ -110,7 +110,7 @@ export default function ProfileBar() {
                     active:bg-gray-400/0
                     border-none
                 '
-                ><span className='font-semibold'>{[].length}</span> followers
+                ><span className='font-semibold'>{session?.user.followers_count}</span> followers
             </Button>
             <Button
                 onClick={handleFollowingList}
@@ -125,7 +125,7 @@ export default function ProfileBar() {
                     active:bg-gray-400/0
                     border-none
                 '
-                ><span className='font-semibold'>{[]}</span> following
+                ><span className='font-semibold'>{session?.user.following_count}</span> following
             </Button>
             <p className='w-fit py-1.5 hidden'>
                 <span className='font-semibold'>

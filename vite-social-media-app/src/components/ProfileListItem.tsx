@@ -6,7 +6,7 @@ import useFetchProfileImage from '../hooks/useFetchProfileImage'
 interface ProfileListItemProps { user: User }
 export default function ProfileListItem({ user }:ProfileListItemProps) {
 
-  const { Img } = useFetchProfileImage(user.username)
+  const { Img } = useFetchProfileImage(user.username, 42)
 
   return (
     <Link 
