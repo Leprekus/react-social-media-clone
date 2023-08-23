@@ -1,4 +1,4 @@
-import { User, IComment } from '../typings';
+import { IComment } from '../typings';
 
 export type ObjectLiteral = {
     [key: string]: any;
@@ -34,10 +34,6 @@ export interface Token {
   createdAt: number;
   refreshToken: string;
   accessToken: string;
-}
-
-export interface ServerSession extends Token {
-  user: User
 }
 
 export interface ICommentBucket {

@@ -1,9 +1,9 @@
-import { IPost, NewAccount } from '../../typings';
-import { ICommentBucket, IUserProfileImage, ServerSession } from '../typings';
+import { IPost, NewAccount, Session } from '../../typings';
+import { ICommentBucket, IUserProfileImage } from '../typings';
 import { JSONDB } from './DB';
 
 export const UserTable = new JSONDB<NewAccount>('users')
-export const SessionTable = new JSONDB<ServerSession>('tokens')
+export const SessionTable = new JSONDB<Session>('tokens')
 export const UserProfileImage = new JSONDB<IUserProfileImage>('users-profile-image')
 
 //each post contains ids of all comments

@@ -30,8 +30,11 @@ export default async function generateSession (user: User, res: Response): Promi
         user
     }
 
+
+    console.log({ session, stringified: JSON.stringify(session) })
     await SessionTable.insert(session)
 
+    console.log({ ran: 'ran' })
    const expires = new Date()
    expires.setDate(expires.getDate() + 7)
    const sessionCookie = {
