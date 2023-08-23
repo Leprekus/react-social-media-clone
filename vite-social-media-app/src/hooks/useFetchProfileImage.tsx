@@ -26,7 +26,7 @@ const useFetchProfileImage = (username?: string, size?: number) => {
 
     const Img = (!isLoading && src) ? 
     <img src={src} className='object-fill'/> :
-    <BiSolidUser size={size || 60} clssName='object-fill text-white'/>
+    <BiSolidUser size={size || 60} className='object-fill text-white'/>
 
     return {
         error,
