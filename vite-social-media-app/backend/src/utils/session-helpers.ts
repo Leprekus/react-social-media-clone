@@ -20,6 +20,9 @@ export default async function generateSession (user: User, res: Response): Promi
     
     const token = generateToken(uid())
 
+    delete user?.followers
+    delete user?.following
+
     const session = {
         createdAt: Date.now(),
         refreshToken: uid(),
