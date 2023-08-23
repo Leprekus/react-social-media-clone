@@ -13,7 +13,7 @@ export default function LikedButton({ queryString, likes }: LikedButtonProps) {
     const { session } = useAuth()
    
     const [isLiked, setIsLiked] = useState(
-        !!likes?.find(user => user === session?.user.username) ||
+        !!likes?.find(userId => userId === session?.user.id) ||
         false
         )
 

@@ -71,6 +71,7 @@ export const MyAuthContextProvider = ({ children }: { children: ReactNode}) => {
 
         return setSession(null)
     }
+    
 
     
     useEffect(() => {

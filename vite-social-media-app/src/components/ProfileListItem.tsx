@@ -1,12 +1,13 @@
 import { User } from '../../typings'
-import Button from './ui/Button'
 import Link from './Link'
 import useFetchProfileImage from '../hooks/useFetchProfileImage'
+import FollowsButton from './ui/FollowsButton'
+
 
 interface ProfileListItemProps { user: User }
 export default function ProfileListItem({ user }:ProfileListItemProps) {
-
   const { Img } = useFetchProfileImage(user.username, 42)
+  const queryString = (new URLSearchParams({ id: user.id })).toString()
 
   return (
     <Link 
@@ -24,7 +25,6 @@ export default function ProfileListItem({ user }:ProfileListItemProps) {
       sm:rounded-none
       sm:bg-neutral-950
       sm:hover:bg-neutral-900
-      sm:active:bg-neutral-900/70
       sm:border-b
       sm:border-gray-500
 
@@ -39,17 +39,7 @@ export default function ProfileListItem({ user }:ProfileListItemProps) {
         <p className='font-semibold lg:text-xl'>{user.username}</p>
         <p className='lg:text-lg'>{user.name}</p>
       </div>
-      <Button className='
-      absolute 
-      right-4
-      sm:block
-      w-28 py-2
-      bg-violet-950/20 
-      sm:relative
-      sm:left-20
-      '>
-        Follow
-      </Button>
+      <FollowsButton queryString={queryString} followers={user.followers as string[]}/>
     </Link>
   )
 }
