@@ -12,7 +12,7 @@ async function handlePostLike(
   result: {
     data: {
       like: boolean;
-      username: string;
+      userId: string;
     };
   },
   id: string,
@@ -33,17 +33,17 @@ async function handlePostLike(
 
     //takes data in to be filtered
     await PostsBucket.filterOne({
-      likes: [verifiedUser.username],
+      likes: [verifiedUser.id],
     })
       .where('id')
       .equals(id)
       .run();
   } else {
     //like post
-    const match = post?.likes?.find((user) => user === result.data.username);
+    const match = post?.likes?.find((user) => user === result.data.userId);
     if (!match) {
       const updatedLikes = post?.likes;
-      post?.likes?.push(result.data.username);
+      post?.likes?.push(result.data.userId);
       const likeCount = (post?.like_count || 0) + 1;
 
       await PostsBucket.updateOne({
@@ -61,7 +61,7 @@ async function handleCommentLike(
     result: {
       data: {
         like: boolean;
-        username: string;
+        userId: string;
       };
     },
     id: string,
@@ -101,10 +101,10 @@ async function handleCommentLike(
 
     } else { //like post
 
-      const match = comment?.comment?.likes?.find((user) => user === result.data.username);
+      const match = comment?.comment?.likes?.find((user) => user === result.data.userId);
       if (!match) {
         const updatedLikes = comment?.comment?.likes as string[];
-        comment?.comment?.likes?.push(result.data.username);
+        comment?.comment?.likes?.push(result.data.userId);
 
         const likeCount = (comment?.comment?.like_count || 0) + 1;
   
@@ -132,14 +132,14 @@ export default async function handler(req: Request, res: Response) {
 
   const id = req.query.id;
   const commentId = req.query.commentId;
-  const { like, username } = req.body;
+  const { like, userId } = req.body;
 
   const Like = z.object({
     like: z.boolean(),
-    username: z.string(),
+    userId: z.string(),
   });
 
-  const result = Like.safeParse({ like, username });
+  const result = Like.safeParse({ like, userId });
   if (!result.success)
     return res.status(422).json({ error: 'validation failed' });
 

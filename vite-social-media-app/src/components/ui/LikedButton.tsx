@@ -25,7 +25,7 @@ export default function LikedButton({ queryString, likes }: LikedButtonProps) {
 
         const [ data, error ] = await tryCatchPost({ 
             endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/like?${queryString}`,  
-            payload: { like: !isLiked, username: session?.user.username },
+            payload: { like: !isLiked, userId: session?.user.id },
             token: session?.accessToken
         })
 
