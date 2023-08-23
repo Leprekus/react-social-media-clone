@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BiSolidUser } from 'react-icons/bi'
-const useFetchProfileImage = (userId?: string, size?: number) => {
+const useFetchProfileImage = (username?: string, size?: number) => {
 
     const [src, setSrc] = useState<string | null>(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -8,7 +8,7 @@ const useFetchProfileImage = (userId?: string, size?: number) => {
 
     const fetchProfileImage = async () => {
         try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/profile/picture?userId=${userId}`)
+            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/profile/picture?username=${username}`)
             const data = await res.json()
             console.log(res.ok, res.statusText)
             if(!res.ok) setError(res.statusText)
@@ -21,8 +21,8 @@ const useFetchProfileImage = (userId?: string, size?: number) => {
       }
 
       useEffect(() => {
-        if(userId) fetchProfileImage()
-    }, [ userId, ])
+        if(username) fetchProfileImage()
+    }, [ username, ])
 
     const Img = (!isLoading && src) ? 
     <img src={src} className='object-fill'/> :

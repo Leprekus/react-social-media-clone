@@ -43,6 +43,6 @@ export interface ICommentBucket {
 }
 
 export interface IUserProfileImage {
-  id: string; //userid
+  username: string; //userid
   image: string;
 }

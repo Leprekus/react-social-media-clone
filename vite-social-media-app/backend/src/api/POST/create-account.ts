@@ -54,7 +54,7 @@ export default async function handler(req: Request, res: Response) {
         return res.status(409).json({ message: 'username or password already exists'})
 
     await UserTable.insert(user)
-    await UserProfileImage.insert({ id, image: result.data.profileImage })
+    await UserProfileImage.insert({ username: user.username, image: result.data.profileImage })
     
     return res.status(200).json({ message: 'account created successfully' })
 }

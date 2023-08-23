@@ -4,14 +4,14 @@ import { UserProfileImage } from '../../../Tables'
 
 export default async function handler(req: Request, res: Response) {
 
-    const userId = req.query.userId
+    const username = req.query.username
 
 
 
 
     let userProfileImage = null
     try {
-        userProfileImage = await UserProfileImage.getOne().where('id').equals(userId).run()
+        userProfileImage = await UserProfileImage.getOne().where('username').equals(username).run()
         
     }
     catch(error){
