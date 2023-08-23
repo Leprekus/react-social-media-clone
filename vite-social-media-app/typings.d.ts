@@ -36,8 +36,8 @@ export interface User {
     profileImage: string
     followers_count?: number;
     following_count?: number;
-    followers?: string[];
-    following?: string[]
+    followers?: string[]; //id NOT username
+    following?: string[] //id NOT username
 
    
     // Add other user properties as needed
