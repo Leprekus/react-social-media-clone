@@ -28,11 +28,10 @@ export class JSONDB<T extends object> {
             let content = data
             
             if(!Array.isArray(data)) {
-
                 content = await this.read()
                 content.push(data)
             }
-
+                
             return writeFile(this.filePath, JSON.stringify(content))
 
         }catch(error) {

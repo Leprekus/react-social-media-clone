@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from '../../hooks/useRouter'
 import { User } from '../../../typings'
 import Loading from '../Loading'
+import useFetchProfileImage from '../../hooks/useFetchProfileImage'
 export default function ProfileBar() {
 
     const { session, signOut } = useAuth()
@@ -13,22 +14,18 @@ export default function ProfileBar() {
     const username = pathname.at(-1)
     const isAdmin = session?.user.username === username
     const [userData, setUserData] = useState<User | null>(null)
-    const [src, setSrc] = useState<string | null>(null)
-
+    const { Img } = useFetchProfileImage(userData?.username)
+    
     const fetchData = async () => {
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/user?username=${username}`)
         const data = await res.json()
         setUserData(data.user)
     }
-    const fetchProfileImage = async () => {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/profile/picture?userId=${userData?.username}`)
-        const data = await res.json()
-        setSrc(data.profileImage)
-      }
+
     useEffect(() => {
         if(username) fetchData()
-        if(userData) fetchProfileImage()
-    }, [ username, userData ])
+    
+    }, [ username, ])
     const userListModal = useUserListModal()
     const editProfileModal = useEditProfileModal()
     const handleFollowersList = () => {
@@ -61,8 +58,9 @@ export default function ProfileBar() {
         flex 
         items-center
         justify-center
+        bg-gray-400
         '>
-            <img src={src as string} className='object-fill'/>
+            {Img}
         </div>
         <div className='flex flex-col gap-4 pl-4 md:pl-6'>
             <div className='flex gap-4 items-center'>
