@@ -34,6 +34,11 @@ export interface User {
     username: string;
     bio: string;
     profileImage: string
+    followers_count: number;
+    following_count: number;
+    followers: string[];
+    following: string[]
+
    
     // Add other user properties as needed
   }
@@ -51,6 +56,15 @@ export interface Token {
 }
 
 export interface Session extends Token {
-    user: User
+    user: {
+        email: string;
+        name: string;
+        id: string;
+        username: string;
+        bio: string;
+        profileImage: string;
+        followers_count: number;
+        following_count: number;
+    }
   }
   

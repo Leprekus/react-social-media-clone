@@ -39,6 +39,10 @@ export default async function handler(req: Request, res: Response) {
     user = {
         ...result.data,
         profileImage:  (new URL(`${process.env.BACKEND_URL}api/GET/profile/picture?userId=${result.data.username}`)).toString(),
+        followers: [],
+        followers_count: 0,
+        following: [],
+        following_count: 0,
         id
     }    
   
