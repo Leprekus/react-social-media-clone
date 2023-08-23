@@ -3,7 +3,7 @@ import { AiFillCamera } from 'react-icons/ai'
 import Input from './ui/Input'
 import Button from './ui/Button'
 import type { IPost } from '../../typings'
-import Post from './Post'
+import { CreatePostPreview } from './Post'
 import { useAuth } from '../hooks/useAuth'
 import placeholder from '../assets/placeholder-image.png'
 import { tryCatchPost } from '../lib/fetch-helpers'
@@ -29,7 +29,7 @@ export default function CreatePost() {
       
   }, [isLoading])
   
-  const [post, setPost] = useState<IPost>({
+  const initialPostState = {
     author: session?.user.username as string,
     author_image: session?.user.profileImage ? session?.user.profileImage : '',
     like_count: 0,
@@ -40,7 +40,8 @@ export default function CreatePost() {
     id: '',
     description: '',
     created_at: 0,
-  })
+  }
+  const [post, setPost] = useState<IPost>(initialPostState)
   const isFormEnabled = post.image.filter(img => img !== placeholder).length > 0;
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +86,10 @@ export default function CreatePost() {
 
     if(!data?.res?.ok) toast.error('Unable to upload post')
 
-    if(data?.res?.ok) toast.success('Post Created Successfully')
+    if(data?.res?.ok) {
+      setPost(initialPostState)
+      toast.success('Post Created Successfully')
+    }
 
     setIsLoading(false)
 
@@ -128,7 +132,7 @@ export default function CreatePost() {
         >Create</Button>
       </div>
       <div style={{ pointerEvents:'none' }}>
-        <Post post={post}/>
+        <CreatePostPreview post={post}/>
       </div>
     </form>
   )
