@@ -9,17 +9,19 @@ export default async function handler(req: Request, res: Response) {
     let following = null
     try {
         const user = await UserTable.getOne().where('id').equals(id).run()
-        following = user?.following?.map(async (followingId) => 
-        await UserTable.getOne().where('id').equals(followingId).run()
+        following = user?.following?.map(async (id) => 
+         await UserTable.getOne().where('id').equals(id).run()
         )
-        console.log({ following})
-        
+        if(following)
+            following = await Promise.all(following)
     }
     catch(error){
         console.log(error)
         following = null
     }   
     
+    
+
     if(!following)
         return res.status(200).json({ following: [] })
 

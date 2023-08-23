@@ -13,6 +13,8 @@ export default async function handler(req: Request, res: Response) {
         await UserTable.getOne().where('id').equals(followerId).run()
         )
         
+        if(followers)
+            followers = await Promise.all(followers)
     }
     catch(error){
         console.log(error)
