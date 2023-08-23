@@ -7,11 +7,8 @@ import { useRouter } from '../../hooks/useRouter'
 import { User } from '../../../typings'
 import Loading from '../Loading'
 import useFetchProfileImage from '../../hooks/useFetchProfileImage'
-import { tryCatchGet } from '../../lib/fetch-helpers'
-import toast from 'react-hot-toast'
+import useUser from '../../hooks/useUser'
 
-interface FollowersData { followers: User[] }
-interface FollowingData { following: User[] }
 export default function ProfileBar() {
 
     const { session, signOut } = useAuth()
@@ -33,29 +30,19 @@ export default function ProfileBar() {
     }, [ username, ])
     const userListModal = useUserListModal()
     const editProfileModal = useEditProfileModal()
+    const user = useUser()
     const handleFollowersList = async () => {
         if(!userListModal.isOpen)  {
-            const [ data, error ] = await tryCatchGet<FollowersData>({
-                endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/followers?id=${userData?.id}`,
-            })
-            
-            if(error) toast.error('Failed to get followers')
-            if(data?.json?.followers) {
-                console.log(data.json)
-                userListModal.setUsers(data.json.followers)
-            }
+            const followers = await user.getFollowers()
+            userListModal.setUsers(followers)
             userListModal.Open()
         }
     }
 
     const handleFollowingList = async () => {
         if(!userListModal.isOpen) {
-            const [ data, error ] = await tryCatchGet<FollowingData>({
-                endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/following?id=${userData?.id}`,
-            })
-            
-            if(error) toast.error('Failed to get following')
-            if(data?.json?.following) userListModal.setUsers(data.json.following)
+            const following = await user.getFollowing()
+            userListModal.setUsers(following)
             userListModal.Open()
         }
             

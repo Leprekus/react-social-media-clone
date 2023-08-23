@@ -6,19 +6,26 @@ import PostFooter from './PostFooter'
 import Carousel from './ui/Carousel'
 import Link from './Link'
 import useFetchProfileImage from '../hooks/useFetchProfileImage'
+import useUser from '../hooks/useUser'
 
 interface PostProps {
     post: IPost
 }
+
 export default function Post({ post }:PostProps) {
 
  
     const loadComments = useLoadComments()
-    const userList = useUserListModal()
+    const userListModal = useUserListModal()
+    const user = useUser()
+
     const { Img } = useFetchProfileImage(post.author)
-    const handleSharePost = (id: string) => {
-        userList.setIds([id])
-        userList.Open()
+    const handleSharePost = async () => {
+        if(!userListModal.isOpen)  {
+            const followers = await user.getFollowers()
+            userListModal.setUsers(followers)
+            userListModal.Open()
+        }
     }
     
   return (

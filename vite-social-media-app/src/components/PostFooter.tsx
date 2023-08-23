@@ -7,7 +7,7 @@ import { CommentsTrigger } from './Comments';
 
 interface PostFooterProps {
     handleLoadComments: (id: string) => void;
-    handleSharePost: (id: string) => void;
+    handleSharePost: () => void;
     post: IPost
 
 }
@@ -29,7 +29,7 @@ export default function PostFooter({
                         <Comment size={22} className='hover:text-gray-400 transition'/>
                     </button>
                 </CommentsTrigger>
-                <button onClick={() => handleSharePost(post.id)}>
+                <button onClick={handleSharePost}>
                     <Share size={22} className='hover:text-gray-400 transition'/>
                 </button>
             </div>
