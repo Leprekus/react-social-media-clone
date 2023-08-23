@@ -19,7 +19,7 @@ export default function EditProfileModal() {
   const { isOpen, Close } = useEditProfileModal()
   const { session } = useAuth()
   const [isDisabled, setIsDisabled] = useState(true)
-  const [src, setSrc] = useState(null)
+  const [src, setSrc] = useState<string | null>(null)
   const fetchProfileImage = async () => {
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/profile/picture?userId=${session?.user.username}`)
     const data = await res.json()
@@ -67,6 +67,7 @@ export default function EditProfileModal() {
           ...prev,
           profileImage: reader.result as string
         }))
+        setSrc(reader.result as string)
       };
       reader.readAsDataURL(file);
 
@@ -97,34 +98,60 @@ export default function EditProfileModal() {
     >
       { session ?
         <div className='flex flex-col gap-4 p-4'>
-        {
-          src ? 
-          <img 
-          className="w-24 h-24 bg-gray-200 rounded-full mx-auto object-cover shadow-md" 
-          src={src}
-          />
-          :<span className='
-          mx-auto 
-          relative 
-          w-24 h-24 
-          bg-gray-400/40 
-          flex 
-          items-center 
-          justify-center 
-          rounded-full
-          transition
-          hover:bg-gray-400/80
-          '>
-            <BiSolidUser size={60} className='text-white'/>
-            <input
-            className="w-24 h-24 bg-gray-200 rounded-full absolute hover:cursor-pointer opacity-0"
-            type='file'
-            name='profileImage'
-            accept='image/*'
-            onChange={handleImageChange}
-            />
-          </span>
-        }
+          <div className='w-24 h-24 flex items-center justify-center overflow-hidden relative group'>
+            {
+              src ? 
+              <img 
+              className="w-24 h-24 bg-gray-200 rounded-full mx-auto object-cover shadow-md" 
+              src={src}
+              />
+              :
+
+              <span className='
+              mx-auto 
+              relative 
+              w-24 h-24 
+              bg-gray-400/40 
+              flex 
+              items-center 
+              justify-center 
+              rounded-full
+              transition
+              hover:bg-gray-400/80
+              '>
+                <BiSolidUser size={60} className='text-white'/>
+                <input
+                className="w-24 h-24 bg-gray-200 rounded-full absolute hover:cursor-pointer opacity-0"
+                type='file'
+                name='profileImage'
+                accept='image/*'
+                onChange={handleImageChange}
+                />
+              </span>
+            }
+            <div 
+            onClick={e => e.bubbles}
+            style={{ pointerEvents: 'none' }}
+            className='
+              absolute 
+              bottom-0 
+              h-1/2 
+              bg-black/70 
+              w-full 
+              rounded-b-full 
+              flex 
+              justify-center 
+              items-center
+              opacity-0
+              transition
+              group-hover:opacity-100
+              cursor-pointer
+              '
+              >
+              <p className='select-none'>Edit</p>
+            </div>
+          </div>
+
         <label htmlFor="">Name
         <Input value={ formData.name } onChange={(e) => 
           setFormData(prev => ({

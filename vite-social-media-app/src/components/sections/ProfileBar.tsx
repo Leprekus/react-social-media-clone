@@ -16,7 +16,7 @@ export default function ProfileBar() {
     const username = pathname.at(-1)
     const isAdmin = session?.user.username === username
     const [userData, setUserData] = useState<User | null>(null)
-    const { Img } = useFetchProfileImage(userData?.username)
+    const { Img } = useFetchProfileImage(userData?.id)
     
     const fetchData = async () => {
         const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/user?username=${username}`)

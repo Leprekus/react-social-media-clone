@@ -41,7 +41,7 @@ export default function Post({ post }:PostProps) {
         '>
             <div className='p-1'>
                 <Link href={`/${post.author}`} className='flex gap-4 items-center py-2 px-4 h-14  hover:bg-gray-600/10 transition w-fit rounded-md'>
-                    <div className='h-10 w-10 rounded-full overflow-hidden'>
+                    <div className='h-10 w-10 rounded-full flex items-center justify-center overflow-hidden'>
                         {Img}
                     </div>
                     <p className='font-semibold'>{post.author}</p>
@@ -76,7 +76,7 @@ export function CreatePostPreview ({ post }: CreatePostPreviewProps) {
         '>
             <div className='p-1'>
                 <Link href={`/${post.author}`} className='flex gap-4 items-center py-2 px-4 h-14  hover:bg-gray-600/10 transition w-fit rounded-md'>
-                    <div className='h-10 w-10 rounded-full overflow-hidden'>
+                    <div className='h-10 w-10 rounded-full flex items-center justify-center overflow-hidden'>
                         {Img}
                     </div>
                     <p className='font-semibold'>{post.author}</p>

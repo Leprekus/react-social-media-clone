@@ -40,13 +40,13 @@ export default async function handler(req: Request, res: Response) {
                 ...result.data,
                 profileImage: (new URL(`${process.env.BACKEND_URL}api/GET/profile/picture?userId=${result.data.username}`)).toString(),
             }).where('id')
-            .equals(userPayload.id).run()
+            .equals(result.data.id).run()
         
             userProfileImage = await UserProfileImage
             .updateOne({
                 image: result.data.profileImage,
             }).where('id')
-            .equals(result.data.username).run()
+            .equals(result.data.id).run()
 
     } catch(error) {
         updatedUser = null
