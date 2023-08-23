@@ -34,8 +34,8 @@ export interface User {
     username: string;
     bio: string;
     profileImage: string
-    followers_count: number;
-    following_count: number;
+    followers_count?: number;
+    following_count?: number;
     followers?: string[];
     following?: string[]
 
