@@ -1,5 +1,4 @@
 import React from 'react'
-import { BsArrowLeftSquareFill } from 'react-icons/bs'
 import { BiSolidUser } from 'react-icons/bi'
 import Button from '../ui/Button';
 import Input from '../ui/Input';
@@ -13,9 +12,9 @@ interface FormContentProps {
   handleImageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handlePreviousPage: () => void;
   handleNextPage: () => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   isLoading: boolean;
-  totalPages: number;
+
 }
 
 export default function FormContent({
@@ -28,11 +27,10 @@ export default function FormContent({
   handleNextPage,
   handleSubmit,
   isLoading,
-  totalPages,
 }:FormContentProps) {
   return (
     <form
-        onSubmit={(e) =>handleSubmit(e)}
+        //onSubmit={(e) =>handleSubmit(e)}
         className="
           flex
           flex-col
@@ -87,19 +85,6 @@ export default function FormContent({
 
         {currentPage === 2 && (
           <>
-            <button
-              onClick={handlePreviousPage} 
-              className='
-                absolute
-                top-0
-                left-0
-               
-                h-8
-                w-8
-                '
-            >
-              <BsArrowLeftSquareFill size={32} className='text-blue-600 active:text-blue-600 transition'/>
-            </button>
             {selectedImg ? 
             <img 
             className="w-24 h-24 bg-gray-200 rounded-full mx-auto object-cover shadow-md" 
@@ -154,11 +139,41 @@ export default function FormContent({
           <div className={`w-3 h-3 rounded-full ${currentPage === 1 ? 'bg-blue-600' : 'bg-gray-500'} transition`}/>
           <div className={`w-3 h-3 rounded-full ${currentPage === 2 ? 'bg-blue-600' : 'bg-gray-500'} transition`}/>
         </div>
+        <div className='flex gap-2'>
+          <Button 
+            onClick={handlePreviousPage}
+            type='button'
+            className='
+              text-lg  
+              md:text-base
+              w-full
+              py-1.5
+              bg-gray-400/20
+              transition
+              hover:bg-gray-400/10
+              active:bg-gray-400/0
+              border-none
+          '>Prev</Button>
+          <Button 
+            onClick={handleNextPage}
+            type='button'
+            className='
+              text-lg  
+              md:text-base
+              w-full
+              py-1.5
+              bg-gray-400/20
+              transition
+              hover:bg-gray-400/10
+              active:bg-gray-400/0
+              border-none
+          '>Next</Button>
+        </div>
         <Button 
-        onClick={handleNextPage} 
-        type={currentPage === 2 ? 'submit' : 'button'} 
-        disabled={isLoading}>
-          {currentPage === totalPages ? 'Create' : 'Next'}
+        type='button'
+        onClick={handleSubmit}
+        disabled={currentPage < 2 || isLoading}>
+          Create Account
         </Button>
       </form>
   )

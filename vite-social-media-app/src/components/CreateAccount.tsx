@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import user from '../../mock/user.json'
+//import user from '../../mock/user.json'
 import Layout from '../Layout';
 import FormContent from './sections/FormContent';
 import { useAuth } from '../hooks/useAuth';
@@ -10,10 +10,10 @@ export default function CreateAccount() {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>('')
   const [formData, setFormData] = useState<NewAccount>({
-    email: user.email,
-    name: user.name,
-    password: user.password,
-    username: user.username,
+    email: '',
+    name: '',
+    password: '',
+    username: '',
     bio: '',
     profileImage:  selectedImg as string || '',
     id: ''
@@ -47,9 +47,9 @@ export default function CreateAccount() {
     setFormData(prevData => ({ ...prevData, [fieldName]: value }));
   };
 
-  const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
-    console.log({ totalPages, currentPage, selectedImg})
+    
     if (currentPage === totalPages) {
       //TODO:Handle form submission
       
@@ -105,7 +105,6 @@ export default function CreateAccount() {
         handleNextPage={handleNextPage}
         handleSubmit={handleSubmit}
         isLoading={isLoading}
-        totalPages={totalPages}
       />
     </Layout>
   );
