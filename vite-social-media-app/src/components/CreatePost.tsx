@@ -131,7 +131,10 @@ export default function CreatePost() {
         disabled={isLoading}
         >Create</Button>
       </div>
-      <div style={{ pointerEvents:'none' }}>
+      <div onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+      }}>
         <CreatePostPreview post={post}/>
       </div>
     </form>
