@@ -63,7 +63,7 @@ export default function ProfileBar() {
         flex 
         items-center
         justify-center
-        bg-gray-400
+        bg-gray-400/10
         '>
             {Img}
         </div>
