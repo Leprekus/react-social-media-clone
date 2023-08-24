@@ -13,6 +13,9 @@ config()
 //     credentials: true
 // }))
 app.use(cors()) //trying to see if it works with all cors enabled
+app.use((req: express.Request) => {
+    console.log({ envOrigin: process.env.ORIGIN_URL, origin: req.headers.origin })
+})
 app.use(body)
 app.use(cookieParser())
 
