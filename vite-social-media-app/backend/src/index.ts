@@ -8,14 +8,11 @@ import { config } from 'dotenv'
 
 config()
 
-app.use(cors({
-    origin: process.env.ORIGIN_URL,
-    credentials: true
-}))
-
-// Add this middleware to set the CORS headers explicitly.
-app.options('*', cors());
-
+// app.use(cors({
+//     origin: process.env.ORIGIN_URL,
+//     credentials: true
+// }))
+app.use(cors()) //trying to see if it works with all cors enabled
 app.use(body)
 app.use(cookieParser())
 
