@@ -14,6 +14,7 @@ specifiers:
   eslint-plugin-react-hooks: ^4.6.0
   eslint-plugin-react-refresh: ^0.4.3
   express: ^4.18.2
+  lodash: ^4.17.21
   nodemon: ^3.0.1
   postcss: ^8.4.27
   query-string: ^8.1.0
@@ -34,6 +35,7 @@ dependencies:
   class-variance-authority: 0.7.0
   dayjs: 1.11.9
   express: 4.18.2
+  lodash: 4.17.21
   query-string: 8.1.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -2095,6 +2097,10 @@ packages:
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
+
+  /lodash/4.17.21:
+    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+    dev: false
 
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
