@@ -5,17 +5,17 @@ import { useAuth } from '../hooks/useAuth'
 
 export default function SignInContent() {
     const [formData, setFormData] = useState({
-        email: '',
+        username: '',
         password: ''
     })
 
     const { signIn } = useAuth()
   return (
     <>
-        <Input placeholder='email' onChange={(e) => 
+        <Input placeholder='username' onChange={(e) => 
           setFormData(prev => ({ 
             ...prev, 
-            email: e.target.value
+            username: e.target.value
           })
         )}/>
         <Input placeholder='password' onChange={(e) => 
@@ -24,7 +24,7 @@ export default function SignInContent() {
             password: e.target.value
           })
         )}/>
-        <Button onClick={async () => await signIn(formData.email, formData.password)}>
+        <Button onClick={async () => await signIn(formData.username, formData.password)}>
             Sign in
         </Button>
     </>

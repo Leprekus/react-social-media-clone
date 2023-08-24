@@ -3,6 +3,7 @@ import { config } from 'dotenv'
 import { UserTable } from '../../Tables'
 import { Session, User } from '../../../../typings'
 import generateSession from '../../utils/session-helpers'
+import { z } from 'zod'
 
 config()
 
@@ -19,10 +20,18 @@ export default async function handler(req: Request, res: Response) {
         process.env.CLIENT_SECRET !== clientSecret
     ) return res.status(409).json({ message: 'Invalid credentials' })
     
-    const { email, password } = req.body
+    const CredentialsSchema = z.object({
+        username: z.string(),
+        password: z.string()
+    })
+    const { username, password } = req.body
     
+    const result = CredentialsSchema.safeParse({ username, password })
+    if(!result.success) 
+        return res.status(422).json({ message: 'Failed to validate form' })
+
     const storedUser = await UserTable.getOne()
-    .where('email').equals(email)
+    .where('username').equals(username)
     .where('password').equals(password)
     .run()
 
@@ -34,6 +43,7 @@ export default async function handler(req: Request, res: Response) {
         const session: Session = await generateSession((storedUser as User)!, res)
         return res.status(200).json({ session })
     }
+    console.log({ username, password, storedUser })
     return res.status(401).json({ message: 'invald credentials'})
     
 }
