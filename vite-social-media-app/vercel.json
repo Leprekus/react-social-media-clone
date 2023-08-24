@@ -1,0 +1,8 @@
+{
+    "routes": {
+      "/*": {
+        "src": "/index.html",
+        "status": 200
+      }
+    }
+  }
