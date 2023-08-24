@@ -18,7 +18,7 @@ export default function PostGrid() {
     const [posts, setPosts] = useState<IPost[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const pathname = useRouter().pathname.split('/')
-    const username = pathname.at(-1)
+    const username = pathname[pathname.length - 1]
     
     const isAdmin = session?.user.username === username
     const fetchPosts = async () =>{

@@ -13,7 +13,7 @@ export default function ProfileBar() {
 
     const { session, signOut } = useAuth()
     const pathname = useRouter().pathname.split('/')
-    const username = pathname.at(-1)
+    const username = pathname[pathname.length - 1]
     const isAdmin = session?.user.username === username
     const [userData, setUserData] = useState<User | null>(null)
     const { Img } = useFetchProfileImage(userData?.username)
