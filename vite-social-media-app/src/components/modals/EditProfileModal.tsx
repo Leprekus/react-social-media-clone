@@ -1,4 +1,3 @@
-import { BiSolidUser } from 'react-icons/bi'
 import useEditProfileModal from '../../hooks/useEditProfileModal'
 import Box from '../ui/Box'
 import { useEffect, useState } from 'react'
@@ -10,6 +9,7 @@ import Loading from '../Loading'
 import _ from 'lodash'
 import { tryCatchPost } from '../../lib/fetch-helpers'
 import toast from 'react-hot-toast'
+import useFetchProfileImage from '../../hooks/useFetchProfileImage'
 
 interface UserData {
   user: User
@@ -19,12 +19,6 @@ export default function EditProfileModal() {
   const { isOpen, Close } = useEditProfileModal()
   const { session } = useAuth()
   const [isDisabled, setIsDisabled] = useState(true)
-  const [src, setSrc] = useState<string | null>(null)
-  const fetchProfileImage = async () => {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/profile/picture?userId=${session?.user.username}`)
-    const data = await res.json()
-    setSrc(data.profileImage)
-  }
   const [formData, setFormData] = useState<User >({
     email: '',
     name: '',
@@ -33,15 +27,14 @@ export default function EditProfileModal() {
     profileImage: '',
     id: ''
   });
+  const [src, setSrc] = useState<string | null>(null)
+  const { Img } = useFetchProfileImage(formData.username)
   useEffect(() => {
-    if(session?.user) {
+    if(session?.user) 
       setFormData({ ...session?.user })
-    }
-    if(session?.user.profileImage) {
-      fetchProfileImage()
-    }
+    
 
-  }, [session?.user, ])
+  }, [ session?.user ])
 
   useEffect(() => {
 
@@ -104,31 +97,17 @@ export default function EditProfileModal() {
               <img 
               className="w-24 h-24 bg-gray-200 rounded-full mx-auto object-cover shadow-md" 
               src={src}
-              />
+              /> 
               :
-
-              <span className='
-              mx-auto 
-              relative 
-              w-24 h-24 
-              bg-gray-400/40 
-              flex 
-              items-center 
-              justify-center 
-              rounded-full
-              transition
-              hover:bg-gray-400/80
-              '>
-                <BiSolidUser size={60} className='text-white'/>
-                <input
+              Img
+            }
+              <input
                 className="w-24 h-24 bg-gray-200 rounded-full absolute hover:cursor-pointer opacity-0"
                 type='file'
                 name='profileImage'
                 accept='image/*'
                 onChange={handleImageChange}
                 />
-              </span>
-            }
             <div 
             onClick={e => e.bubbles}
             style={{ pointerEvents: 'none' }}
