@@ -6,10 +6,10 @@ import { useAuth } from '../../hooks/useAuth'
 import Button from '../ui/Button'
 import { User } from '../../../typings'
 import Loading from '../Loading'
-import _ from 'lodash'
 import { tryCatchPost } from '../../lib/fetch-helpers'
 import toast from 'react-hot-toast'
 import useFetchProfileImage from '../../hooks/useFetchProfileImage'
+import _ from 'lodash'
 
 interface UserData {
   user: User
