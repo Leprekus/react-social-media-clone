@@ -8,13 +8,14 @@ import { config } from 'dotenv'
 
 config()
 
-// app.use(cors({
-//     origin: process.env.ORIGIN_URL,
-//     credentials: true
-// }))
-app.use(cors()) //trying to see if it works with all cors enabled
+app.use(cors({
+    origin: process.env.ORIGIN_URL,
+    credentials: true
+}))
+
 app.use((req: express.Request) => {
     console.log({ envOrigin: process.env.ORIGIN_URL, origin: req.headers.origin })
+    console.log({ headers: req.headers })
 })
 app.use(body)
 app.use(cookieParser())
