@@ -32,16 +32,21 @@ export const MyAuthContextProvider = ({
   const pathname = router.pathname;
   const signIn = async (username: string, password: string) => {
     const endpoint = `${import.meta.env['VITE_BACKEND_URL']}api/POST/sign-in`;
-    const payload = { username, password };
-    const [data, error] = await tryCatchPost<SessionData>({
-      endpoint,
-      payload,
-    });
+    const credentials = btoa(`${import.meta.env.VITE_CLIENT_ID}:${import.meta.env.VITE_CLIENT_SECRET}`)
+    const res = await fetch(endpoint, {
+          method: 'POST',
+          headers:{ 
+            'Content-Type': 'application/json',
+            'Authorization': `${credentials}`
+          },
+          body: JSON.stringify({ username, password})
+        })
 
-    if (error || !data?.json?.session) return setSession(null);
+      const { session } = await res.json()
+    if (res.ok && session) return setSession(session);
     //TODO: Handle error message
 
-    setSession(data?.json?.session);
+    setSession(null);
   };
   const signOut = async () => {
     if (!session) return;

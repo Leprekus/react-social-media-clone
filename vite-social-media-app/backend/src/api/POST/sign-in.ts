@@ -41,9 +41,9 @@ export default async function handler(req: Request, res: Response) {
 
     if(storedUser) {
         const session: Session = await generateSession((storedUser as User)!, res)
+
         return res.status(200).json({ session })
     }
-    console.log({ username, password, storedUser })
     return res.status(401).json({ message: 'invald credentials'})
     
 }
