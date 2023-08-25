@@ -10,19 +10,11 @@ config()
 
 app.use(cors({
     origin: process.env.ORIGIN_URL,
-    credentials: true
+    credentials: true,
 }))
 
-app.use((req: express.Request) => {
-    console.log({ envOrigin: process.env.ORIGIN_URL, origin: req.headers.origin })
-    console.log({ headers: req.headers })
-})
 app.use(body)
 app.use(cookieParser())
-
-
-
-
 
 app.put('/api/PUT/*', async (req: express.Request, res:express.Response, next: NextFunction) => {
 
