@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { Session } from '../../typings';
 import { useRouter } from './useRouter';
-import { tryCatchGet, tryCatchPost } from '../lib/fetch-helpers';
+import { tryCatchPost } from '../lib/fetch-helpers';
 
 type AuthContextType = {
   session: Session | null;
@@ -39,16 +39,18 @@ export const MyAuthContextProvider = ({
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        "Access-Control-Allow-Credentials": 'true', //exposes headers to js turn off when cookies are working
         Authorization: `${credentials}`,
       },
       credentials: 'include',
+      mode: 'cors',
       body: JSON.stringify({ username, password }),
     });
 
     const { session } = await res.json();
     if (res.ok && session) {
-      //await getSession()
-      return setSession(session)
+      return await getSession()
+      //return setSession(session)
     }
     //TODO: Handle error message
 
@@ -86,15 +88,36 @@ export const MyAuthContextProvider = ({
   };
 
   const getSession = async () => {
-    const [data, error] = await tryCatchGet<SessionData>({
-      endpoint: `${import.meta.env['VITE_BACKEND_URL']}api/GET/session`,
+    const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/GET/session`
+    // const [data, error] = await tryCatchGet<SessionData>({
+    //   endpoint,
+      
+    // });
+    // if (!error && data?.json?.session) {
+    //   return setSession(data.json.session);
+    // }
+    try {
+    const res = await fetch(endpoint, {
+      method: 'GET',
+      headers: { 
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Credentials": 'true',
+       },
+      credentials: 'include',
+      mode: 'cors',
     });
 
-    if (!error && data?.json?.session) {
-      return setSession(data.json.session);
+    console.log({ getSessionHeaders: res.headers})
+    if(res.ok) {
+      const session = await res.json()
+      console.log({ getSession: session })
     }
 
-    return setSession(null);
+  } catch(error) {
+    console.log('request failed ', error)
+    setSession(null);
+  }
+
   };
 
   useEffect(() => {

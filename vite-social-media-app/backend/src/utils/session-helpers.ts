@@ -41,8 +41,11 @@ export default async function generateSession (user: User, res: Response): Promi
 
    res.cookie('session', JSON.stringify(sessionCookie), { 
     httpOnly: true, 
+    secure: true,
     maxAge: 604800000, //7 days in miliseconds
-    expires 
+    expires,
+    domain: 'https://momento-client-leprekus.vercel.app',
+    path: '/',
 })
 
 
@@ -65,6 +68,8 @@ export async function updateSession (user: User, req: Request, res: Response): P
     httpOnly: true, 
     maxAge: 604800000, //7 days in miliseconds
     expires,
+    domain: '5300-2604-3d08-367e-fc00-81d1-6825-a3a4-708a.ngrok-free.app',
+    
     
 })
 

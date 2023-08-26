@@ -9,10 +9,13 @@ import { config } from 'dotenv'
 config()
   
 app.use(cors({
-    origin: 'https://5300-2604-3d08-367e-fc00-81d1-6825-a3a4-708a.ngrok-free.app',
-    methods: ['POST', 'PUT', 'GET', 'DEL'],
-    allowedHeaders : ['Authorization', 'Content-Type'],
+    origin: 'https://momento-client-leprekus.vercel.app',
+    methods: ["GET,HEAD,OPTIONS,POST,PUT"],
+    allowedHeaders : ['Authorization', 
+    "Access-Control-Allow-Headers", "Origin,Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", 'access-control-allow-credentials'
+],
     credentials: true,
+    optionsSuccessStatus: 200,
 
 }))
 
