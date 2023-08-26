@@ -10,15 +10,13 @@ export default async function handler(req: Request, res: Response) {
             return false;
         }
     }
+
     const cookieSession:Session = isJSONString(req?.cookies?.session) ? 
     JSON.parse(req?.cookies?.session) : 
     null
-    //const isExpired = cookieSession?.expiresAt && cookieSession?.expiresAt < Date.now() 
-    
-    // if(!cookieSession) 
-    //     res.cookie('session', null,  { httpOnly: true, expires: new Date(0) })
 
     const status = cookieSession ? 200 : 404;
 
+    console.log({ cookieSession, cookies: req.cookies })
     return res.status(status).json({ session: cookieSession });
 }

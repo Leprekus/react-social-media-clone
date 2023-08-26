@@ -38,7 +38,7 @@ export default async function handler(req: Request, res: Response) {
     delete storedUser?.password
     delete storedUser?.followers
     delete storedUser?.following
-
+    
     if(storedUser) {
         const session: Session = await generateSession((storedUser as User)!, res)
 

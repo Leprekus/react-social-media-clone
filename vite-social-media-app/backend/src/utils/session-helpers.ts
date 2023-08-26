@@ -61,10 +61,10 @@ export async function updateSession (user: User, req: Request, res: Response): P
    const expires = new Date()
    expires.setDate(expires.getDate() + 7)
    
-   res.cookie('session', JSON.stringify(updateSession), { 
+   res.cookie('session', JSON.stringify(updatedSession), { 
     httpOnly: true, 
     maxAge: 604800000, //7 days in miliseconds
-    expires
+    expires,
     
 })
 
