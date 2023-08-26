@@ -29,7 +29,7 @@ export default async function handleRequest(req: Request, res: Response, next: N
 
       const module = await import(filePath);
 
-      const handler = module.default || module.handler;
+      const handler = await module.default || await module.handler;
   
       const response: Response = await handler(req, res, next);
   
