@@ -38,11 +38,8 @@ export default async function handleRequest(req: Request, res: Response, next: N
     } catch (error) {
 
       console.log(`Error at handler: ${req.path} ${error}`);
+      
+      next(error)
 
-      return res.status(500).json({ Error: 'Internal server error' });
-
-    } finally {
-
-        next()
-    }
+    } 
   }
