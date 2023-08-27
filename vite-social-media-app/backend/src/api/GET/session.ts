@@ -11,12 +11,15 @@ export default async function handler(req: Request, res: Response) {
         }
     }
 
-    const cookieSession:Session = isJSONString(req?.cookies?.session) ? 
+    const cookie = req.headers.cookie?.split(';')
+    .find(cookie => cookie.startsWith('session='))
+
+    const cookieSession:Session = (cookie &&  isJSONString(cookie)) ? 
     JSON.parse(req?.cookies?.session) : 
     null
 
     const status = cookieSession ? 200 : 401;
 
-    console.log({ cookieSession, cookies: req.cookies })
+    console.log({ cookieSession, cookie, cookies: req.headers.cookie })
     return res.status(status).json({ session: cookieSession });
 }

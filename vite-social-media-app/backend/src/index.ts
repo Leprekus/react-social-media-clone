@@ -11,11 +11,21 @@ config()
 app.use(cors({
     origin: 'https://momento-client-leprekus.vercel.app',
     methods: ["GET,HEAD,OPTIONS,POST,PUT"],
+    optionsSuccessStatus: 200,
     allowedHeaders : ['Authorization', 
-    "Access-Control-Allow-Headers", "Origin,Accept", "X-Requested-With", "Content-Type", "Access-Control-Request-Method", "Access-Control-Request-Headers", 'access-control-allow-credentials'
+    'Access-Control-Allow-Origin',
+    "Access-Control-Allow-Headers",
+    "Origin",
+    "Accept",
+     "X-Requested-With",
+    "Content-Type", 
+    "Access-Control-Request-Method", 
+    "Access-Control-Request-Headers", 
+    'access-control-allow-credentials',
+    "ngrok-skip-browser-warning"
 ],
     credentials: true,
-    optionsSuccessStatus: 200,
+
 
 }))
 

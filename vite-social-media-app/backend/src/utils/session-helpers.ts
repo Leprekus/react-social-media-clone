@@ -39,15 +39,17 @@ export default async function generateSession (user: User, res: Response): Promi
     expiresAt: session.createdAt + (3600 * 1000)
 }
 
-   res.cookie('session', JSON.stringify(sessionCookie), { 
-    httpOnly: true, 
-    secure: true,
-    maxAge: 604800000, //7 days in miliseconds
-    expires,
-    domain: 'https://momento-client-leprekus.vercel.app',
-    path: '/',
-})
+//    res.cookie('session', JSON.stringify(sessionCookie), { 
+//     httpOnly: true, 
+//     secure: true,
+//     maxAge: 604800000, //7 days in miliseconds
+//     expires,
+//     domain: 'https://momento-client-leprekus.vercel.app',
+//     path: '/',
+// })
 
+    res.set('Set-Cookie', `session=${JSON.stringify(sessionCookie)}; SameSite=None; Secure`
+    )
 
     return sessionCookie
     

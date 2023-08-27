@@ -40,6 +40,7 @@ export const MyAuthContextProvider = ({
       headers: {
         'Content-Type': 'application/json',
         "Access-Control-Allow-Credentials": 'true', //exposes headers to js turn off when cookies are working
+        "ngrok-skip-browser-warning": "true",
         Authorization: `${credentials}`,
       },
       credentials: 'include',
@@ -102,6 +103,7 @@ export const MyAuthContextProvider = ({
       headers: { 
         'Content-Type': 'application/json',
         "Access-Control-Allow-Credentials": 'true',
+        "ngrok-skip-browser-warning": 'true',
        },
       credentials: 'include',
       mode: 'cors',
