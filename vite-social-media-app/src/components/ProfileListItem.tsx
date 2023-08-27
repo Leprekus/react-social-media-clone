@@ -43,7 +43,7 @@ export default function ProfileListItem({ user, action='follow' }:ProfileListIte
       </div>
       {action === 'follow' && <FollowsButton id={user.id} followers={user.followers as string[]}/>}
       {action === 'share' && <ShareButton id={user.id} followers={user.followers as string[]}/>}
-      {action === 'message' && <MessageButton/>}
+      {action === 'message' && <MessageButton receiverId={user.id} />}
     </Link>
   )
 }
