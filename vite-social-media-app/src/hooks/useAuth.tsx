@@ -23,6 +23,9 @@ export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
 
+interface SessionData {
+  session : Session
+}
 export const MyAuthContextProvider = ({
   children,
 }: {
@@ -34,28 +37,35 @@ export const MyAuthContextProvider = ({
   const pathname = router.pathname;
   const signIn = async (username: string, password: string) => {
     const endpoint = `${import.meta.env['VITE_BACKEND_URL']}api/POST/sign-in`;
-    const credentials = btoa(
-      `${import.meta.env.VITE_CLIENT_ID}:${import.meta.env.VITE_CLIENT_SECRET}`
-    );
-    const res = await fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Credentials": 'true', //exposes headers to js turn off when cookies are working
-        "ngrok-skip-browser-warning": "true",
-        Authorization: `${credentials}`,
-      },
-      credentials: 'include',
-      mode: 'cors',
-      body: JSON.stringify({ username, password }),
-    });
+    // const credentials = btoa(
+    //   `${import.meta.env.VITE_CLIENT_ID}:${import.meta.env.VITE_CLIENT_SECRET}`
+    // );
+    // const res = await fetch(endpoint, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     "Access-Control-Allow-Credentials": 'true', //exposes headers to js turn off when cookies are working
+    //     "ngrok-skip-browser-warning": "true",
+    //     Authorization: `${credentials}`,
+    //   },
+    //   credentials: 'include',
+    //   mode: 'cors',
+    //   body: JSON.stringify({ username, password }),
+    // });
+    const [data, error] = await tryCatchPost<SessionData>({
+      endpoint,
+      payload: { username, password }
+     })
 
-    const { session } = await res.json();
-    if (res.ok && session) {
-      return await getSession()
-      //return setSession(session)
-    }
-    setErrorCode(res.status)
+    if(data?.json?.session) return await getSession()
+    if(!data?.res.ok || error) setErrorCode(data?.res.status ?? 500)
+    setSession(null)
+    // const { session } = await res.json();
+    // if (res.ok && session) {
+    //   return await getSession()
+    //   //return setSession(session)
+    // }
+    // setErrorCode(res.status)
     //TODO: Handle error message
 
     setSession(null);
