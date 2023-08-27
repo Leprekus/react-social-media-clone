@@ -111,8 +111,9 @@ export const MyAuthContextProvider = ({
 
     console.log({ getSessionHeaders: res.headers})
     if(res.ok) {
-      const session = await res.json()
+      const { session } = await res.json()
       console.log({ getSession: session })
+      setSession(session)
     }
 
   } catch(error) {
@@ -123,21 +124,19 @@ export const MyAuthContextProvider = ({
   };
 
   useEffect(() => {
-    getSession().then(() => {
+    getSession();
 
-      const validSession =
-        session && session?.expiresAt && session.expiresAt > Date.now();
-  
-      if (validSession && pathname === '/login') router.push('/');
-  
-      if (session && session?.expiresAt) {
-        const refreshThreshold = session?.expiresAt - 5 * 60 * 1000; // 5 minutes in milliseconds
-        //handles about to expire / expired tokens
-        if (session.expiresAt < Date.now() || refreshThreshold <= Date.now())
-          refreshToken();
-      } else if (!validSession) router.push('/login');
-    })
+    const validSession =
+      session && session?.expiresAt && session.expiresAt > Date.now();
 
+    if (validSession && pathname === '/login') router.push('/');
+
+    if (session && session?.expiresAt) {
+      const refreshThreshold = session?.expiresAt - 5 * 60 * 1000; // 5 minutes in milliseconds
+      //handles about to expire / expired tokens
+      if (session.expiresAt < Date.now() || refreshThreshold <= Date.now())
+        refreshToken();
+    } else if (!validSession) router.push('/login');
   }, [session?.expiresAt, pathname]);
   const values = {
     session,
