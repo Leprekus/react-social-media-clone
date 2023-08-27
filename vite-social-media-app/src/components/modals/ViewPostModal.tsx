@@ -5,7 +5,6 @@ import { IPost } from '../../../typings';
 import toast from 'react-hot-toast';
 import Loading from '../Loading';
 import { BsArrowLeftShort } from 'react-icons/bs';
-import Layout from '../../Layout';
 import _ from 'lodash'
 interface IPostsData {
   posts: IPost[];
@@ -75,8 +74,7 @@ export default function ViewPostModal() {
     overflow-y-scroll'>
         
         <Suspense fallback={<Loading/>}>
-          <div className='absolute top-10'>
-            <Layout>
+          <div className='absolute top-10 flex flex-col gap-10'>
             <button
             onClick={handleClose}
             className=' 
@@ -113,7 +111,6 @@ export default function ViewPostModal() {
                ))
              }
               
-            </Layout>
           </div>
         </Suspense>
     </div>

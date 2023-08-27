@@ -15,6 +15,7 @@ export default function Layout({ children }: LayoutProps) {
     pt-10
     sm:pb-10
     sm-pt-10
+    gap-10
     '>
       <Navbar>
         { children }
