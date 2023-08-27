@@ -5,7 +5,7 @@ import Box from '../ui/Box'
 
 
 export default function UserListModal() {
-  const { isOpen, Close, users } = useUserListModal()
+  const { isOpen, Close, users, action } = useUserListModal()
   
   if(!isOpen) return null
 
@@ -16,9 +16,11 @@ export default function UserListModal() {
       onClick={Close}
     >
       {
+        (users && users?.length > 0) ?
         users?.map((user:User) => (
-          <ProfileListItem user={ user } key={user.id} action='share'/>
-        ))
+          <ProfileListItem user={ user } key={user.id} action={action}/>
+        )) :
+        <p className='text-gray-400 font-semibold mt-5 ml-5'>No followers yet. Connect with others!</p>
       }
     </Box>
   )

@@ -8,7 +8,7 @@ import ShareButton from './ui/ShareButton'
 interface ProfileListItemProps { user: User, action?: 'share' | 'follow' }
 export default function ProfileListItem({ user, action='follow' }:ProfileListItemProps) {
   const { Img } = useFetchProfileImage(user.username, 42)
-
+  
   return (
     <Link 
     href={`/${user.username}`}

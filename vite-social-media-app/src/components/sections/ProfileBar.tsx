@@ -43,6 +43,7 @@ export default function ProfileBar() {
         if(!userListModal.isOpen)  {
             const followers = await user.getFollowers()
             userListModal.setUsers(followers)
+            userListModal.setAction('follow')
             userListModal.Open()
         }
     }
@@ -51,6 +52,7 @@ export default function ProfileBar() {
         if(!userListModal.isOpen) {
             const following = await user.getFollowing()
             userListModal.setUsers(following)
+            userListModal.setAction('follow')
             userListModal.Open()
         }
             
