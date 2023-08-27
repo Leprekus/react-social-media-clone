@@ -2,10 +2,11 @@ import { User } from '../../typings'
 import Link from './Link'
 import useFetchProfileImage from '../hooks/useFetchProfileImage'
 import FollowsButton from './ui/FollowsButton'
+import ShareButton from './ui/ShareButton'
 
 
-interface ProfileListItemProps { user: User }
-export default function ProfileListItem({ user }:ProfileListItemProps) {
+interface ProfileListItemProps { user: User, action?: 'share' | 'follow' }
+export default function ProfileListItem({ user, action='follow' }:ProfileListItemProps) {
   const { Img } = useFetchProfileImage(user.username, 42)
 
   return (
@@ -39,7 +40,8 @@ export default function ProfileListItem({ user }:ProfileListItemProps) {
         <p className='font-semibold lg:text-xl'>{user.username}</p>
         <p className='lg:text-lg'>{user.name}</p>
       </div>
-      <FollowsButton id={user.id} followers={user.followers as string[]}/>
+      {action === 'follow' && <FollowsButton id={user.id} followers={user.followers as string[]}/>}
+      {action === 'share' && <ShareButton id={user.id} followers={user.followers as string[]}/>}
     </Link>
   )
 }

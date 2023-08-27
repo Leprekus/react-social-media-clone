@@ -17,7 +17,7 @@ export default function UserListModal() {
     >
       {
         users?.map((user:User) => (
-          <ProfileListItem user={ user } key={user.id}/>
+          <ProfileListItem user={ user } key={user.id} action='share'/>
         ))
       }
     </Box>
