@@ -47,9 +47,3 @@ export interface IUserProfileImage {
   image: string;
 }
 
-export interface IMessageBucket {
-  id: string; //conversation id
-  users: string[]; //usersIds
-  messages: Message[];
-  created_at: number;
-}

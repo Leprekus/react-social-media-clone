@@ -24,14 +24,11 @@ export default async function handler(req: Request, res: Response) {
     const result = MessageSchema.safeParse(message)
     if(!result.success)
         return res.status(422).json({ error: 'Form validation failed' })
-    
-    //const binaryData = result.data.image.map(img => atob(img))
-    //TODO: turn images to binary to reduce space
+
     const newMessage:Message = {
         ...result.data,
         created_at: Date.now(),
         status: 'delivered',
-        //image: binaryData,
         id: uid()
     }      
 

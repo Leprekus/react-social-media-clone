@@ -74,3 +74,10 @@ export interface Message {
     status: 'read' | 'delivered' | 'failed';
     id: string;
 }
+
+export interface Conversation {
+    id: string; //conversation id
+    users: string[]; //usersIds
+    messages: Message[];
+    created_at: number;
+  }
