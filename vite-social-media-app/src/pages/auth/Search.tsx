@@ -66,7 +66,11 @@ export default function Search({ className, action}: SearchProps) {
         {isLoading && <Loading/>}
   
         {users && (users?.length > 0 ?
-        users?.map((user:User) => <ProfileListItem user={user} action={action}/>):
+        users?.map((user:User) => 
+        <ProfileListItem 
+          key={user.id}
+          user={user} 
+          action={action}/>):
         <div className='text-lg text-gray-400 font-semibold pt-10'>No users found</div>)
         }
       </div>
