@@ -2,16 +2,21 @@ import { FaComment } from 'react-icons/fa'
 import { AiFillHeart } from 'react-icons/ai'
 import type { IPost } from '../../typings'
 import useViewPostModal from '../hooks/useViewPostModal'
+import { useRouter } from '../hooks/useRouter'
 interface PostProps  {
     post: IPost
 }
 export default function PostPreview({ post }: PostProps) {
 
+  const pathname = useRouter().pathname.split('/')
+  const username = pathname[pathname.length - 1]
   const viewPostModal = useViewPostModal()
   const handleClick = () => {
   
     if(!viewPostModal.isOpen && viewPostModal.id === null) {
       viewPostModal.setId(post.id)
+      viewPostModal.setUsername(username)
+      console.log(viewPostModal.username)
       viewPostModal.Open()
     }
   }

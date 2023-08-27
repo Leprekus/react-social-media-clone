@@ -5,8 +5,11 @@ interface ViewPostModalStore {
     Open: () => void;
     Close: () => void;
     id: string | null;
-    setId: (ids: string) => void;
+    username: string | null
+    setId: (id: string) => void;
+    setUsername: (username: string) => void;
     removeId: () => void;
+    removeUsername: () => void
 
 
 }
@@ -16,9 +19,11 @@ const useViewPostModal = create<ViewPostModalStore>((set) => ({
     Open: () => set({ isOpen: true }),
     Close: () => set({ isOpen: false }),
     id: null,
+    username: null,
     setId: (id: string) => set({ id }),
-    removeId: () => set({ id: null })
-
+    setUsername: (username: string) => set({ username }),
+    removeId: () => set({ id: null }),
+    removeUsername: () => set({ username: null }),
 }))
 export default useViewPostModal
 

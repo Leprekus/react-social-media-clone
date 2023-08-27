@@ -6,25 +6,29 @@ import toast from 'react-hot-toast';
 import Loading from '../Loading';
 import { BsArrowLeftShort } from 'react-icons/bs';
 import Layout from '../../Layout';
-
-interface IPostData {
-  post: IPost;
+import _ from 'lodash'
+interface IPostsData {
+  posts: IPost[];
 }
 export default function ViewPostModal() {
 
   const viewPostModal = useViewPostModal();
-  const [post, setPost] = useState<IPost | null>(null)
+  const [posts, setPosts] = useState<IPost[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   const fetchPosts = async () =>{
       const [data, error] = 
-          await tryCatchGet<IPostData>({ 
-              endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/post?${new URLSearchParams({ id: viewPostModal.id  as string })}`, 
+          await tryCatchGet<IPostsData>({ 
+              endpoint: `${import.meta.env.VITE_BACKEND_URL}api/GET/user-posts?${new URLSearchParams({ username: viewPostModal.username  as string })}`, 
           })
 
           if(error) toast.error('Failed to fetch posts')
 
-          if(data?.json?.post) setPost(data.json.post)
+          if(data?.json?.posts) {
+            const currentPost = data.json.posts.find(post => post.id === viewPostModal.id)
+            const sortedPosts = _.uniqBy([currentPost, ...data.json.posts], 'id')
+            setPosts(sortedPosts as IPost[])
+          }
 
           setIsLoading(false)
         
@@ -51,6 +55,7 @@ export default function ViewPostModal() {
   // mobile vertical carousel
   const handleClose = () => {
     viewPostModal.removeId();
+    viewPostModal.removeUsername();
     viewPostModal.Close();
   };
 
@@ -102,8 +107,12 @@ export default function ViewPostModal() {
             >
               <BsArrowLeftShort size={40} className='text-gray-400'/>
             </button>
-              {post && <Post  post={post}/>}
-              {post && <Post  post={post}/>}
+              {posts && 
+               posts.map(post => (
+                <Post key={post.id} post={post}/>
+               ))
+             }
+              
             </Layout>
           </div>
         </Suspense>
