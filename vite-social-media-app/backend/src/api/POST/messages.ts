@@ -2,10 +2,8 @@ import { type Request, type Response } from 'express'
 import { z } from 'zod'
 import { v4 as uid } from 'uuid'
 import { MessageBucket } from '../../Tables'
-import { Message } from '../../../../typings'
+import { Conversation, Message } from '../../../../typings'
 import verifyToken from '../../utils/verifyToken'
-
-import { IMessageBucket } from '../../../typings'
 
 export default async function handler(req: Request, res: Response) {
 
@@ -56,7 +54,7 @@ export default async function handler(req: Request, res: Response) {
         return res.status(200).json({ message: 'Sent successfully' })
     }
     
-    const newConversation: IMessageBucket  = {
+    const newConversation: Conversation  = {
         id: uid(),
         users: [ senderId, receiverId ],
         created_at: Date.now(),

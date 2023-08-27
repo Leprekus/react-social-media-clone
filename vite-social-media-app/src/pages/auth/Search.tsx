@@ -7,10 +7,11 @@ import { tryCatchGet } from '../../lib/fetch-helpers';
 import toast from 'react-hot-toast';
 import { User } from '../../../typings';
 import Loading from '../../components/Loading';
+import { twMerge } from 'tailwind-merge';
 
 interface UserData { users: User[] }
-
-export default function Search() {
+interface SearchProps { className?: string}
+export default function Search({ className }: SearchProps) {
 
   const [isLoading, setIsLoading] = useState(false)
   const [value, setValue] = useState('')
@@ -46,7 +47,7 @@ export default function Search() {
   },[debouncedValue])
 
   return (
-    <div className='
+    <div className={twMerge(`
     flex 
     flex-col 
     items-center 
@@ -56,7 +57,7 @@ export default function Search() {
     pt-5 
     px-10
     mx-auto
-    '>
+    `, className)}>
       <Input 
       className=''
       onChange={(e) => setValue(e.target.value)}

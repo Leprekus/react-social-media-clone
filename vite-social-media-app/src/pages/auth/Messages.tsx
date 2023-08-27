@@ -3,6 +3,8 @@ import { tryCatchGet } from '../../lib/fetch-helpers'
 import { useAuth } from '../../hooks/useAuth'
 import toast from 'react-hot-toast'
 import { Conversation } from '../../../typings'
+import Sidebar from '../../components/sections/Messages/Sidebar'
+
 
 interface ConversationsData {
   conversations: Conversation[]
@@ -29,7 +31,9 @@ export default function Messages() {
       fetchConversations()
 
   },[])
-  return conversations && conversations.length < 1 ? 
-  <p>You have no conversations yet</p> :
-  <p>Conversations</p>
+  return( 
+    <Sidebar conversations={conversations}>
+      
+    </Sidebar>
+  )
 }
