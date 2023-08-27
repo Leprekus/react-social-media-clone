@@ -66,21 +66,27 @@ export const MyRouterContextProvider = ({ children }: { children: ReactNode }) =
             const routeContainsSlug = split[split.length - 1].includes(':')
             
             const parsedUrl = qs.parseUrl(currentPath).url
-            const pathDepth = parsedUrl.split('/').length
-            const routeDepth = route.path.split('/').length
+    
     
     
             // if the route contains a slug ':'
             // and the route and requested path
             // have the same pathDepth
             // render return the route
-            console.log({ parsedUrl })
             if(route.path === parsedUrl) return route.path === parsedUrl
 
-            if(routeContainsSlug && (routeDepth === pathDepth)) {
+
+            const pathSegments = parsedUrl.split('/')
+            const routeSegments = route.path.split('/')
+
+            const routeWithoutSlug = routeSegments.filter(segment => !segment.includes(':'))
+            const pathMatchesDynamicRoute = routeWithoutSlug
+                .every(segment =>pathSegments.indexOf(segment) !== -1)
+
+            if(routeContainsSlug && pathMatchesDynamicRoute) 
               return route
-            }
-    
+            
+
           })
         return match?.component ? match?.component : NotFound
     };

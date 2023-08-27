@@ -15,6 +15,7 @@ export default [
     { path: '/search', component: <Search/> },
     { path: '/search/:query', component:  <Search/>},
     { path: '/messages', component: <Messages/> },
+    { path: '/messages/:conversationId', component: <Messages/> },
     { path: '/create-post', component: <CreatePost/> },
     { path: '/:username', component: <Profile/> },
   ]
