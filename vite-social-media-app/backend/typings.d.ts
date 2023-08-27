@@ -1,4 +1,4 @@
-import { IComment } from '../typings';
+import { IComment, Message } from '../typings';
 
 export type ObjectLiteral = {
     [key: string]: any;
@@ -45,4 +45,11 @@ export interface ICommentBucket {
 export interface IUserProfileImage {
   username: string; //userid
   image: string;
+}
+
+export interface IMessageBucket {
+  id: string; //conversation id
+  users: string[]; //usersIds
+  messages: Message[];
+  created_at: number;
 }

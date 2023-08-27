@@ -67,3 +67,10 @@ export interface Session extends Token {
     }
   }
   
+export interface Message {
+    userId: string;
+    body: string;
+    created_at: number;
+    status: 'read' | 'delivered' | 'failed';
+    id: string;
+}
