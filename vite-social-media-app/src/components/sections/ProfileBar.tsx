@@ -8,7 +8,12 @@ import { User } from '../../../typings'
 import Loading from '../Loading'
 import useFetchProfileImage from '../../hooks/useFetchProfileImage'
 import useUser from '../../hooks/useUser'
+import { tryCatchGet } from '../../lib/fetch-helpers'
 
+
+interface UserData {
+    user: User
+}
 export default function ProfileBar() {
 
     const { session, signOut } = useAuth()
@@ -19,9 +24,12 @@ export default function ProfileBar() {
     const { Img } = useFetchProfileImage(userData?.username)
     
     const fetchData = async () => {
-        const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/user?username=${username}`)
-        const data = await res.json()
-        setUserData(data.user)
+        
+        const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/GET/user?username=${username}`
+        const [data, error] = await tryCatchGet<UserData>({ endpoint })
+        if(!data?.res.ok || error) return
+        if(data.json?.user) setUserData(data.json.user)
+
     }
 
     useEffect(() => {
