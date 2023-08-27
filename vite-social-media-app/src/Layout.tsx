@@ -9,7 +9,6 @@ export default function Layout({ children }: LayoutProps) {
     min-h-screen 
     max-w-7xl 
     mx-auto 
-    bg-black 
     text-white 
     sm:pl-20
     pb-40

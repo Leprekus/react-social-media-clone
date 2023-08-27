@@ -62,7 +62,7 @@ export default function ViewPostModal() {
     inset-0 
     text-white 
     z-10 
-    bg-black/40 
+    bg-black/70 
     flex 
     flex-col
     items-center 
