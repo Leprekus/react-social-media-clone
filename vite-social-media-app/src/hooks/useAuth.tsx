@@ -13,6 +13,7 @@ type AuthContextType = {
   session: Session | null;
   signIn: (username: string, password: string) => void;
   signOut: () => void;
+  errorCode: number | null
 };
 
 interface SessionData {
@@ -28,6 +29,7 @@ export const MyAuthContextProvider = ({
   children: ReactNode;
 }) => {
   const [session, setSession] = useState<Session | null>(null);
+  const [errorCode, setErrorCode] = useState<number | null>(null)
   const router = useRouter();
   const pathname = router.pathname;
   const signIn = async (username: string, password: string) => {
@@ -53,6 +55,7 @@ export const MyAuthContextProvider = ({
       return await getSession()
       //return setSession(session)
     }
+    setErrorCode(res.status)
     //TODO: Handle error message
 
     setSession(null);
@@ -141,6 +144,7 @@ export const MyAuthContextProvider = ({
     session,
     signIn,
     signOut,
+    errorCode
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
