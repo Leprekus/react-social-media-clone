@@ -3,9 +3,10 @@ import Link from './Link'
 import useFetchProfileImage from '../hooks/useFetchProfileImage'
 import FollowsButton from './ui/FollowsButton'
 import ShareButton from './ui/ShareButton'
+import MessageButton from './sections/Messages/MessageButton'
 
 
-interface ProfileListItemProps { user: User, action?: 'share' | 'follow' }
+interface ProfileListItemProps { user: User, action?: 'share' | 'follow' | 'message' }
 export default function ProfileListItem({ user, action='follow' }:ProfileListItemProps) {
   const { Img } = useFetchProfileImage(user.username, 42)
   
@@ -42,6 +43,7 @@ export default function ProfileListItem({ user, action='follow' }:ProfileListIte
       </div>
       {action === 'follow' && <FollowsButton id={user.id} followers={user.followers as string[]}/>}
       {action === 'share' && <ShareButton id={user.id} followers={user.followers as string[]}/>}
+      {action === 'message' && <MessageButton/>}
     </Link>
   )
 }

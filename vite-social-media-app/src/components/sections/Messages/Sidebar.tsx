@@ -1,9 +1,9 @@
-import { useState, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { Conversation } from '../../../../typings'
 import { BiSearch } from 'react-icons/bi'
 import ConversationItem from './ConversationItem'
-import Search from '../../../pages/auth/Search';
 import Input from '../../ui/Input';
+import useSearchModal from '../../../hooks/useSearchModal';
 
 
 interface SidebarProps { conversations: Conversation[] | null, children: ReactNode }
@@ -28,6 +28,12 @@ const ConversationSkeleton = () => {
 
 export default function Sidebar({ conversations, children  }: SidebarProps) {
 
+    const searchModal = useSearchModal()
+    const handleClick = () => {
+        if(!searchModal.isOpen) {
+            searchModal.Open()
+        }
+    }
   return (
     
         <div
@@ -46,7 +52,7 @@ export default function Sidebar({ conversations, children  }: SidebarProps) {
             p-4
             '>
                 <div 
-                //onClick={}
+                onClick={handleClick}
                 
                 className='flex items-center justify-center gap-4'>
                     <button
@@ -77,6 +83,7 @@ export default function Sidebar({ conversations, children  }: SidebarProps) {
             )) //render conversations
         
             }
+            { children }
         </div>
 
   )

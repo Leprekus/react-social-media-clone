@@ -10,8 +10,8 @@ import Loading from '../../components/Loading';
 import { twMerge } from 'tailwind-merge';
 
 interface UserData { users: User[] }
-interface SearchProps { className?: string}
-export default function Search({ className }: SearchProps) {
+interface SearchProps { className?: string, action?: 'message'}
+export default function Search({ className, action}: SearchProps) {
 
   const [isLoading, setIsLoading] = useState(false)
   const [value, setValue] = useState('')
@@ -66,7 +66,7 @@ export default function Search({ className }: SearchProps) {
         {isLoading && <Loading/>}
   
         {users && (users?.length > 0 ?
-        users?.map((user:User) => <ProfileListItem user={user}/>):
+        users?.map((user:User) => <ProfileListItem user={user} action={action}/>):
         <div className='text-lg text-gray-400 font-semibold pt-10'>No users found</div>)
         }
       </div>
