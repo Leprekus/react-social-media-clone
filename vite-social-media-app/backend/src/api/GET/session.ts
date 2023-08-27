@@ -10,16 +10,19 @@ export default async function handler(req: Request, res: Response) {
             return false;
         }
     }
+   
+    const parseCookie = (cookie: string | undefined): string => {
+        return cookie?.split(';')
+        .find(cookie => cookie.trim().startsWith('session='))
+        ?.replace('session=', '')  ?? ''
+    }
 
-    const cookie = req.headers.cookie?.split(';')
-    .find(cookie => cookie.startsWith('session='))
-
-    const cookieSession:Session = (cookie &&  isJSONString(cookie)) ? 
+  
+    const cookieSession:Session = isJSONString(parseCookie(req.headers.cookie)) ? 
     JSON.parse(req?.cookies?.session) : 
     null
 
     const status = cookieSession ? 200 : 401;
 
-    console.log({ cookieSession, cookie, cookies: req.headers.cookie })
     return res.status(status).json({ session: cookieSession });
 }

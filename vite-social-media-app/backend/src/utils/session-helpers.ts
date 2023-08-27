@@ -48,7 +48,7 @@ export default async function generateSession (user: User, res: Response): Promi
 //     path: '/',
 // })
 
-    res.set('Set-Cookie', `session=${JSON.stringify(sessionCookie)}; SameSite=None; Secure`
+    res.set('Set-Cookie', `session=${JSON.stringify(sessionCookie)}; Secure; SameSite=None; path=/`
     )
 
     return sessionCookie

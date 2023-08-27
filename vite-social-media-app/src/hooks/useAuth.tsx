@@ -136,7 +136,7 @@ export const MyAuthContextProvider = ({
       if (session.expiresAt < Date.now() || refreshThreshold <= Date.now())
         refreshToken();
     } else if (!validSession) router.push('/login');
-  }, [session?.expiresAt]);
+  }, [session?.expiresAt, pathname]);
   const values = {
     session,
     signIn,

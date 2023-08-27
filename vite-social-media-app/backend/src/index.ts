@@ -7,9 +7,10 @@ const cookieParser = require('cookie-parser')
 import { config } from 'dotenv'
 
 config()
+
   
 app.use(cors({
-    origin: 'https://momento-client-leprekus.vercel.app',
+    origin: 'https://react-social-media-clone-one.vercel.app',
     methods: ["GET,HEAD,OPTIONS,POST,PUT"],
     optionsSuccessStatus: 200,
     allowedHeaders : ['Authorization', 
