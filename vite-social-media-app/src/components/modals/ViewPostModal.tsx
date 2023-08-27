@@ -4,7 +4,8 @@ import { tryCatchGet } from '../../lib/fetch-helpers';
 import { IPost } from '../../../typings';
 import toast from 'react-hot-toast';
 import Loading from '../Loading';
-import { IoIosClose } from 'react-icons/io';
+import { BsArrowLeftShort } from 'react-icons/bs';
+import Layout from '../../Layout';
 
 interface IPostData {
   post: IPost;
@@ -29,12 +30,15 @@ export default function ViewPostModal() {
         
   }
   useEffect(() => {
+
+    const enableScroll = () => { document.body.style.overflow = 'auto' }
     const disableScroll = () => { document.body.style.overflow = 'hidden' }
-    const enableScroll =  () => { document.body.style.overflow = 'auto' }
+  
     if(viewPostModal.id) {
       fetchPosts()
       disableScroll()
     }
+
     return () => enableScroll()
   }, [viewPostModal.id])
 
@@ -53,30 +57,55 @@ export default function ViewPostModal() {
   const Post = React.lazy(() => import('../Post'))
   
   return (
-    <div className='absolute inset-0 text-white z-10 bg-black/40 flex items-center justify-center'>
-        <button
-          onClick={handleClose}
-          className=' 
-          h-10
-          w-10
-          bg-neutral-700
-          hover:bg-neutral-800
+    <div className='
+    fixed 
+    inset-0 
+    text-white 
+    z-10 
+    bg-black/40 
+    flex 
+    flex-col
+    items-center 
+    justify-center 
+    overflow-y-scroll'>
         
-          rounded-md 
-          transition
-
-          flex
-          justify-center
-          items-center
-          absolute
-          right-4
-          top-4
-          '
-          >
-            <IoIosClose size={40} className='text-gray-400'/>
-          </button>
         <Suspense fallback={<Loading/>}>
-          {post && <Post  post={post}/>}
+          <div className='absolute top-10'>
+            <Layout>
+            <button
+            onClick={handleClose}
+            className=' 
+            h-10
+            w-10
+            bg-neutral-700
+            hover:bg-neutral-800
+          
+            rounded-md 
+            transition
+
+            flex
+            justify-center
+            items-center
+            fixed
+            left-4
+            top-4
+
+            opacity-30
+            hover:opacity-50
+
+            sm:opacity-100
+
+            z-50
+            sm:left-32
+            sm:top-10
+            '
+            >
+              <BsArrowLeftShort size={40} className='text-gray-400'/>
+            </button>
+              {post && <Post  post={post}/>}
+              {post && <Post  post={post}/>}
+            </Layout>
+          </div>
         </Suspense>
     </div>
 
