@@ -29,7 +29,13 @@ export default function ViewPostModal() {
         
   }
   useEffect(() => {
-    if(viewPostModal.id) fetchPosts()
+    const disableScroll = () => { document.body.style.overflow = 'hidden' }
+    const enableScroll =  () => { document.body.style.overflow = 'auto' }
+    if(viewPostModal.id) {
+      fetchPosts()
+      disableScroll()
+    }
+    return () => enableScroll()
   }, [viewPostModal.id])
 
 
@@ -47,7 +53,7 @@ export default function ViewPostModal() {
   const Post = React.lazy(() => import('../Post'))
   
   return (
-    <div className='relative text-white'>
+    <div className='absolute inset-0 text-white z-10 bg-black/40 flex items-center justify-center'>
         <button
           onClick={handleClose}
           className=' 

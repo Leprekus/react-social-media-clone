@@ -85,13 +85,12 @@ export function Comments({ children, data, postId }: CommentsProps) {
   return (
     <Drawer.Root>
         { children }
-      <Drawer.Portal>
+      <Drawer.Portal className='z-50'>
         <Drawer.Overlay className='fixed inset-0 bg-black/40'/>
-        <Drawer.Content className='
-        //bg-zinc-100 
+        <Drawer.Content className=' 
+        z-50
         flex 
         flex-col 
-
         rounded-t-[10px] 
         h-[96%] mt-24 
         fixed 
