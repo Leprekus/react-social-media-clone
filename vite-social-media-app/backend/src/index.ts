@@ -10,7 +10,7 @@ config()
 
   
 app.use(cors({
-    origin: 'https://react-social-media-clone-one.vercel.app',
+    origin: 'https://momento-client-leprekus.vercel.app',
 
     methods: ["GET,HEAD,OPTIONS,POST,PUT"],
     optionsSuccessStatus: 200,
