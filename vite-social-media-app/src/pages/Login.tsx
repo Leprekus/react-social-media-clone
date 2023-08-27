@@ -10,8 +10,8 @@ import { useAuth } from '../hooks/useAuth';
 export default function Login() {
   const [createAccount, setCreateAccount] = useState(false)
   const [formData, setFormData] = useState({
-    username: '',
-    password: ''
+    username: 'Leprekus',
+    password: 'qwerty'
 })
 
 const { signIn } = useAuth()
@@ -27,13 +27,17 @@ const { signIn } = useAuth()
 
           <div className='flex flex-col gap-8 mx-auto w-full px-10 sm:px-0 sm:pr-20 sm:w-96'>
             <div className='flex flex-col gap-2'>
-              <Input placeholder='username' onChange={(e) =>
+              <Input placeholder='username' 
+              value={formData.username}
+              onChange={(e) =>
               setFormData(prev => ({
                 ...prev,
                 username: e.target.value
               })
                       )}/>
-                      <Input placeholder='password' onChange={(e) =>
+              <Input 
+              value={formData.password}
+              placeholder='password' onChange={(e) =>
               setFormData(prev => ({
                 ...prev,
                 password: e.target.value
