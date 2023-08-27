@@ -123,19 +123,21 @@ export const MyAuthContextProvider = ({
   };
 
   useEffect(() => {
-    getSession();
+    getSession().then(() => {
 
-    const validSession =
-      session && session?.expiresAt && session.expiresAt > Date.now();
+      const validSession =
+        session && session?.expiresAt && session.expiresAt > Date.now();
+  
+      if (validSession && pathname === '/login') router.push('/');
+  
+      if (session && session?.expiresAt) {
+        const refreshThreshold = session?.expiresAt - 5 * 60 * 1000; // 5 minutes in milliseconds
+        //handles about to expire / expired tokens
+        if (session.expiresAt < Date.now() || refreshThreshold <= Date.now())
+          refreshToken();
+      } else if (!validSession) router.push('/login');
+    })
 
-    if (validSession && pathname === '/login') router.push('/');
-
-    if (session && session?.expiresAt) {
-      const refreshThreshold = session?.expiresAt - 5 * 60 * 1000; // 5 minutes in milliseconds
-      //handles about to expire / expired tokens
-      if (session.expiresAt < Date.now() || refreshThreshold <= Date.now())
-        refreshToken();
-    } else if (!validSession) router.push('/login');
   }, [session?.expiresAt, pathname]);
   const values = {
     session,
