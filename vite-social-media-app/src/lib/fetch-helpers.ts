@@ -8,15 +8,18 @@ interface TryCatchPostProps {
 
 }
 
-
+const headers: ObjectLiteral  = { 
+    'Content-Type': 'application/json',
+    "Access-Control-Allow-Credentials": 'true',
+    "ngrok-skip-browser-warning": 'true',
+   }
 export async function tryCatchPost<T>({ endpoint, payload, token, method = 'POST' }: TryCatchPostProps): Promise<Result<{ json: T | null, res: Response }, any>> {
 
     const credentials = btoa(`${import.meta.env.VITE_CLIENT_ID}:${import.meta.env.VITE_CLIENT_SECRET}`)
-    const headers = { 
-        'Content-Type': 'application/json',
-        'Authorization': token ? `Bearer: ${token}` : `${credentials}`
-      }
 
+
+    if(token) headers.Authorization = `Bearer: ${token}`
+    else headers.Authorization = `${credentials}`
 
     try {
         const res = await fetch(endpoint, { 
@@ -52,13 +55,8 @@ interface ObjectLiteral {
 export async function tryCatchGet<T>({ endpoint, token }: TryCatchGetProps): Promise<Result<{ json: T | null, res: Response }, any>> {
     try {
  
-        const headers: ObjectLiteral  = { 
-            'Content-Type': 'application/json',
-            "Access-Control-Allow-Credentials": 'true',
-            "ngrok-skip-browser-warning": 'true',
-           }
         if(token) headers.Authorization = `Bearer ${(token as string)}`
-        
+
         const res = await fetch(endpoint, {
             method: 'GET',
             headers,
