@@ -11,10 +11,12 @@ config()
   
 app.use(cors({
     origin: 'https://react-social-media-clone-one.vercel.app',
+
     methods: ["GET,HEAD,OPTIONS,POST,PUT"],
     optionsSuccessStatus: 200,
-    allowedHeaders : ['Authorization', 
-    'Access-Control-Allow-Origin',
+    allowedHeaders : [
+    'Authorization', 
+   // 'Access-Control-Allow-Origin',
     "Access-Control-Allow-Headers",
     "Origin",
     "Accept",

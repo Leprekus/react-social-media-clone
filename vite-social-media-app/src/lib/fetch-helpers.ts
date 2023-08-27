@@ -46,14 +46,25 @@ interface TryCatchGetProps {
     token?: string; 
 }
 
+interface ObjectLiteral {
+    [key: string] : string
+}
 export async function tryCatchGet<T>({ endpoint, token }: TryCatchGetProps): Promise<Result<{ json: T | null, res: Response }, any>> {
     try {
-        const headers = { authorization: token ? `Bearer ${(token as string)}` : '' } 
-        const res = await fetch(endpoint, { 
-            method: 'GET', 
+ 
+        const headers: ObjectLiteral  = { 
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Credentials": 'true',
+            "ngrok-skip-browser-warning": 'true',
+           }
+        if(token) headers.Authorization = `Bearer ${(token as string)}`
+        
+        const res = await fetch(endpoint, {
+            method: 'GET',
             headers,
             credentials: 'include',
-        })
+            mode: 'cors',
+          })
         const contentType = res.headers.get('content-type');
         const isJson = contentType && contentType.indexOf('application/json') !== -1;
         

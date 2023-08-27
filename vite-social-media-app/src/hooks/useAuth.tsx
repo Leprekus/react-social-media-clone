@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { Session } from '../../typings';
 import { useRouter } from './useRouter';
-import { tryCatchPost } from '../lib/fetch-helpers';
+import { tryCatchGet, tryCatchPost } from '../lib/fetch-helpers';
 
 type AuthContextType = {
   session: Session | null;
@@ -90,36 +90,35 @@ export const MyAuthContextProvider = ({
 
   const getSession = async () => {
     const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/GET/session`
-    // const [data, error] = await tryCatchGet<SessionData>({
-    //   endpoint,
+    const [data, error] = await tryCatchGet<SessionData>({
+      endpoint,
       
-    // });
-    // if (!error && data?.json?.session) {
-    //   return setSession(data.json.session);
-    // }
-    try {
-    const res = await fetch(endpoint, {
-      method: 'GET',
-      headers: { 
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Credentials": 'true',
-        "ngrok-skip-browser-warning": 'true',
-       },
-      credentials: 'include',
-      mode: 'cors',
     });
-
-    console.log({ getSessionHeaders: res.headers})
-    if(res.ok) {
-      const { session } = await res.json()
-      console.log({ getSession: session })
-      setSession(session)
+    if (!error && data?.json?.session) {
+      return setSession(data.json.session);
     }
+  //   try {
+  //   const res = await fetch(endpoint, {
+  //     method: 'GET',
+  //     headers: { 
+  //       'Content-Type': 'application/json',
+  //       "Access-Control-Allow-Credentials": 'true',
+  //       "ngrok-skip-browser-warning": 'true',
+  //      },
+  //     credentials: 'include',
+  //     mode: 'cors',
+  //   });
 
-  } catch(error) {
-    console.log('request failed ', error)
-    setSession(null);
-  }
+  //   if(res.ok) {
+  //     const { session } = await res.json()
+  //     console.log({ getSession: session })
+  //     setSession(session)
+  //   }
+
+  // } catch(error) {
+  //   console.log('request failed ', error)
+  //   setSession(null);
+  // }
 
   };
 
