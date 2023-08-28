@@ -16,7 +16,7 @@ app.use(cors({
     optionsSuccessStatus: 200,
     allowedHeaders : [
     'Authorization', 
-   // 'Access-Control-Allow-Origin',
+    'Access-Control-Allow-Origin',
     "Access-Control-Allow-Headers",
     "Origin",
     "Accept",
