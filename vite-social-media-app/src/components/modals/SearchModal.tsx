@@ -1,4 +1,3 @@
-import React from 'react'
 import useSearchModal from '../../hooks/useSearchModal'
 import Box from '../ui/Box'
 import Search from '../../pages/auth/Search'

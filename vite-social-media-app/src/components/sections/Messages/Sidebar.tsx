@@ -74,7 +74,7 @@ export default function Sidebar({ chats, children  }: SidebarProps) {
                     <Input placeholder='Search username' className='sm:hidden md:block'/>
                 </div>
             {!chats ? //render skeleton
-            [0,0,0, 0, 0].map((chat, i) => <ChatsSkeleton key={i}/>)
+            [0,0,0, 0, 0].map((chat, i) => <ChatsSkeleton key={`${chat}-${i}`}/>)
             :
             chats.length < 1 ?
             <p className='text-gray-400 font-semibold text-lg sm:hidden md:block'>Start chatting</p>: //handle no conversations
