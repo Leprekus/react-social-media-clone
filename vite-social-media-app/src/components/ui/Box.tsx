@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { BsArrowLeftShort } from 'react-icons/bs'
 import { IoIosClose } from 'react-icons/io'
 import { twMerge } from 'tailwind-merge'
@@ -15,6 +15,17 @@ export default function Box({ children, onClick, className }: BoxProps) {
     onClick && onClick()
     
   }
+
+  useEffect(() => {
+
+    const enableScroll = () => { document.body.style.overflow = 'auto' }
+    const disableScroll = () => { document.body.style.overflow = 'hidden' }
+  
+    disableScroll()
+    return () => enableScroll()
+    
+  }, [])
+
   return (
     <div className='
     backdrop-blur-lg 
@@ -25,7 +36,8 @@ export default function Box({ children, onClick, className }: BoxProps) {
     left-0 
     z-50
     bg-black/30
-    overflow-hidden
+    overflow-x-hidden
+    overflow-y-scroll
     '>
         <div className={twMerge(`
           sm:w-[400px]
