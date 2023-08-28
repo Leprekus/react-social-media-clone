@@ -19,6 +19,9 @@ export default function matchDataKeyValue<T>(
             (val as Array<unknown> ).includes(value) :
             (val as string).toLowerCase().includes((value as string).toLowerCase())
             ;
+        case Comparator.IncludesAll:
+            //val = key
+            return (value as Array<unknown>).every(v => (val as Array<unknown>).includes(v));
         case Comparator.Between:
             return (
                 Number(val) > Number((value as Array<number>[0])) &&

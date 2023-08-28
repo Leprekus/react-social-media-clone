@@ -2,28 +2,29 @@ import { useEffect, useState } from 'react'
 import { tryCatchGet } from '../../lib/fetch-helpers'
 import { useAuth } from '../../hooks/useAuth'
 import toast from 'react-hot-toast'
-import { Conversation } from '../../../typings'
+import { Chat } from '../../../typings'
 import Sidebar from '../../components/sections/Messages/Sidebar'
+import Conversation from '../../components/sections/Messages/Conversation'
 
 
-interface ConversationsData {
-  conversations: Conversation[]
+interface ChatsData {
+  chats: Chat[]
 }
 export default function Messages() {
 
   const { session } = useAuth()
-  const [conversations, setConversations] = useState<Conversation[] | null>(null)
+  const [chats, setConversations] = useState<Chat[] | null>(null)
 
   const fetchConversations = async () => {
-    const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/GET/conversations?userId=${session?.user.id}`
+    const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/GET/chats?userId=${session?.user.id}`
 
-    const [data, error] = await tryCatchGet<ConversationsData>({
+    const [data, error] = await tryCatchGet<ChatsData>({
       endpoint,
       token: session?.accessToken
     })
 
     if(!data?.res.ok || error) toast.error('Failed to load conversations')
-    if(data?.json?.conversations) setConversations(data.json.conversations)
+    if(data?.json?.chats) setConversations(data.json.chats)
 
   }
   useEffect(() => {
@@ -32,8 +33,8 @@ export default function Messages() {
 
   },[])
   return( 
-    <Sidebar conversations={conversations}>
-      
+    <Sidebar chats={chats}>
+      <Conversation/>
     </Sidebar>
   )
 }

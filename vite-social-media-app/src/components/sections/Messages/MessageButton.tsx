@@ -2,7 +2,6 @@ import React from 'react'
 import Button from '../../ui/Button'
 import { useRouter } from '../../../hooks/useRouter'
 import useSearchModal from '../../../hooks/useSearchModal'
-import { useAuth } from '../../../hooks/useAuth'
 
 interface MessageButtonProps {
   receiverId: string
@@ -10,15 +9,13 @@ interface MessageButtonProps {
 export default function MessageButton({ receiverId }: MessageButtonProps) {
   const router = useRouter()
   const searchModal = useSearchModal()
-  const { session } = useAuth()
   const handleClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if(searchModal.isOpen) {
       event.stopPropagation()
       event.preventDefault()
-      router.push('/messages/test')
+      router.push(`/messages/${receiverId}`)
       searchModal.Close()
     }
-    console.log({ receiverId, senderId: session?.user.id })
   }
   return (
     <Button 

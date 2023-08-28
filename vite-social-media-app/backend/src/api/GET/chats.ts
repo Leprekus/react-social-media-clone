@@ -13,21 +13,21 @@ export default async function handler(req: Request, res: Response) {
     
     const userId = req.query.userId
 
-    let conversations 
+    let chats 
 
     try {
-        conversations = await MessageBucket
+        chats = await MessageBucket
             .getAll()
             .where('users').in([ userId as string ])
             .run()
     
 
     } catch(error) {
-        conversations = null
+        chats = null
     }
 
     
 
-    return res.status(200).json({ conversations: conversations || [] })
+    return res.status(200).json({ chats: chats || [] })
   
 }

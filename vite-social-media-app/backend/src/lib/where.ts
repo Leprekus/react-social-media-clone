@@ -47,6 +47,10 @@ export default function where<T, R>(
                 collector(key, Comparator.In, val)
                 return chain
             },
+            includesAll(val: Array<unknown>) {
+                collector(key, Comparator.IncludesAll, val)
+                return chain
+            },
             between(val: [number, number]) {
                 collector(key, Comparator.Between, val)
                 return chain

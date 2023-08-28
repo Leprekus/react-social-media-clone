@@ -2,8 +2,10 @@ import { type Request, type Response } from 'express'
 import { z } from 'zod'
 import { v4 as uid } from 'uuid'
 import { MessageBucket } from '../../Tables'
-import { Conversation, Message } from '../../../../typings'
 import verifyToken from '../../utils/verifyToken'
+import { BackendConversation } from '../../../typings'
+import { Conversation } from '../../../../typings'
+import { getUser } from '../../utils/helpers'
 
 export default async function handler(req: Request, res: Response) {
 
@@ -13,55 +15,57 @@ export default async function handler(req: Request, res: Response) {
     
     if(!verifiedUser) return res.status(401).json({ message: 'failed to verify user' })
  
-    const { message, conversationId, senderId, receiverId } = req.body
+    const { senderId, receiverId } = req.body
 
     const MessageSchema = z.object({
-        body: z.string(),
-        userId: z.string(),
+        receiverId: z.string(),
+        senderId: z.string(),
     })
-    const result = MessageSchema.safeParse(message)
+    const result = MessageSchema.safeParse({ senderId, receiverId })
     if(!result.success)
         return res.status(422).json({ error: 'Form validation failed' })
-
-    const newMessage:Message = {
-        ...result.data,
-        created_at: Date.now(),
-        status: 'delivered',
-        id: uid()
-    }      
 
     let messageBucket 
 
     try {
         messageBucket = await MessageBucket
             .getOne()
-            .where('id').equals(conversationId)
+            .where('userIds')
+            .includesAll([ result.data.senderId, result.data.receiverId ])
             .run()
-    
+
 
     } catch(error) {
         messageBucket = null
     }
 
+    const sender = await getUser(result.data.senderId)
+    const receiver = await getUser(result.data.receiverId)
 
     if(messageBucket) {
-
-        await MessageBucket.updateOne({
-            messages: [ newMessage ]
-        }).where('id').equals(conversationId)
-        .run()
-
-        return res.status(200).json({ message: 'Sent successfully' })
-    }
+        const retrievedConversation = {
+            ...messageBucket,
+            users: [ sender, receiver ]
+        } as Conversation
+        return res.status(200).json({ conversation: retrievedConversation })
+    } 
     
-    const newConversation: Conversation  = {
+    
+    const newConversation: BackendConversation  = {
         id: uid(),
-        users: [ senderId, receiverId ],
+        userIds: [ senderId, receiverId ],
         created_at: Date.now(),
-        messages: [ newMessage ]
+        messages: []
     }
+
     await MessageBucket.insert(newConversation)
 
-    return res.status(200).json({ message: 'conversation started successfully' })
+    
+    const clientConvesation: Conversation = {
+        ...newConversation,
+        users: [ sender, receiver]
+    }
+
+    return res.status(200).json({ conversation: clientConvesation })
   
 }

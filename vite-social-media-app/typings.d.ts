@@ -67,17 +67,25 @@ export interface Session extends Token {
     }
   }
   
-export interface Message {
-    userId: string;
+export interface ClientMessage {
+    user: User;
+    userId
     body: string;
     created_at: number;
     status: 'read' | 'delivered' | 'failed';
     id: string;
 }
 
+
+
 export interface Conversation {
-    id: string; //conversation id
-    users: string[]; //usersIds
+    id: string; // Unique identifier for the chat or conversation
+    users: [ User, User ];
+    userIds: string[]; 
+    created_at: number; 
     messages: Message[];
-    created_at: number;
-  }
+}
+
+export interface Chat extends Omit<Conversation, 'messages'> {
+    lastMessage: Message;
+}

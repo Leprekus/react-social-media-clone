@@ -1,15 +1,15 @@
 import { type ReactNode } from 'react'
-import { Conversation } from '../../../../typings'
+import { Chat } from '../../../../typings'
 import { BiSearch } from 'react-icons/bi'
-import ConversationItem from './ConversationItem'
+import ConversationItem from './ChatItem'
 import Input from '../../ui/Input';
 import useSearchModal from '../../../hooks/useSearchModal';
 
 
-interface SidebarProps { conversations: Conversation[] | null, children: ReactNode }
+interface SidebarProps { chats: Chat[] | null, children: ReactNode }
 
 
-const ConversationSkeleton = () => {
+const ChatsSkeleton = () => {
     return (
       <div className="flex items-center p-4 bg-gray-600/50 rounded-md animate-pulse">
         {/* Avatar placeholder */}
@@ -26,7 +26,7 @@ const ConversationSkeleton = () => {
     );
   };
 
-export default function Sidebar({ conversations, children  }: SidebarProps) {
+export default function Sidebar({ chats, children  }: SidebarProps) {
 
     const searchModal = useSearchModal()
     const handleClick = () => {
@@ -36,13 +36,13 @@ export default function Sidebar({ conversations, children  }: SidebarProps) {
     }
   return (
     
+      <div className='absolute top-0 w-full sm:flex'>
         <div
         className='
-            absolute
-            top-0
             w-full
             min-h-screen
-            sm:w-96
+            sm:w-20
+            md:w-96
             sm:border-zinc-600
             sm:border-l
             bg-charcoal
@@ -71,20 +71,20 @@ export default function Sidebar({ conversations, children  }: SidebarProps) {
                     >
                     <BiSearch size={30} className='text-gray-400'/>
                     </button>
-                    <Input placeholder='Search username'/>
+                    <Input placeholder='Search username' className='sm:hidden md:block'/>
                 </div>
-            {!conversations ? //render skeleton
-            [0,0,0, 0, 0].map((conversation, i) => <ConversationSkeleton key={i}/>)
+            {!chats ? //render skeleton
+            [0,0,0, 0, 0].map((chat, i) => <ChatsSkeleton key={i}/>)
             :
-            conversations.length < 1 ?
-            <p className='text-gray-400 font-semibold text-lg'>Start chatting</p>: //handle no conversations
-            conversations.map(conversation => (
-                <ConversationItem conversation={conversation}/>
+            chats.length < 1 ?
+            <p className='text-gray-400 font-semibold text-lg sm:hidden md:block'>Start chatting</p>: //handle no conversations
+            chats.map(chat => (
+                <ConversationItem chat={chat}/>
             )) //render conversations
         
             }
-            { children }
         </div>
-
+          { children }
+        </div>
   )
 }

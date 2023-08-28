@@ -1,4 +1,4 @@
-import { IComment, Message } from '../typings';
+import { ClientMessage, Conversation, IComment } from '../typings';
 
 export type ObjectLiteral = {
     [key: string]: any;
@@ -47,3 +47,9 @@ export interface IUserProfileImage {
   image: string;
 }
 
+//users should be added when fetching conversations | Chats | Messages
+
+
+export interface BackendMessage extends Omit<ClientMessage, 'user'> {}
+
+export interface BackendConversation extends Omit<Conversation, 'users'>{}

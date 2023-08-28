@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express'
 import { PostsBucket } from '../../Tables'
-import { sort } from '../../utils/post-helpers'
+import { sort } from '../../utils/helpers'
 import { IPost } from '../../../../typings'
 
 export default async function handler(req: Request, res: Response) {
