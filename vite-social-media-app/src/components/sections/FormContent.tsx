@@ -52,7 +52,6 @@ export default function FormContent({
         
         {currentPage === 1 && (
           <>
-            <div className="w-24 h-24 bg-gray-200 rounded-full mx-auto">logo</div>
 
             <label htmlFor="email">Email</label>
             <Input
