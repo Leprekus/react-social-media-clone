@@ -43,6 +43,7 @@ export default function Conversation() {
     absolute 
     inset-0
     bg-black
+    w-full
     sm:static
       '>
         <div 
@@ -50,6 +51,7 @@ export default function Conversation() {
             border-b
             border-zinc-600
             p-4
+            w-full
         '>
             <button
             onClick={() => router.push('/messages')}
