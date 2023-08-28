@@ -33,7 +33,6 @@ export default function matchDataKeyValue<T>(
         case Comparator.LessThan:
             return Number(val) < Number(value);
         case Comparator.Matches:
-            console.log({ val, value })
             return typeof value === 'string' 
             ? new RegExp(value).test(`${val}`)
             : (value as RegExp).test(`${val}`)
