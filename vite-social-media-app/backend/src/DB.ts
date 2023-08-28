@@ -43,6 +43,9 @@ export class JSONDB<T extends object> {
     get size() {
         return this._size
     }
+    get path () {
+        return this.filePath
+    }
     async insert(data: T) {
         await this.save(data)
         this._size += 1;
