@@ -9,3 +9,9 @@ export const getUser = async (id: string):Promise<User> => {
     delete user?.password
     return user as User
 }
+
+export const parseCookie = (cookie: string | undefined): string => {
+    return cookie?.split(';')
+    .find(cookie => cookie.trim().startsWith('session='))
+    ?.replace('session=', '')  ?? ''
+}

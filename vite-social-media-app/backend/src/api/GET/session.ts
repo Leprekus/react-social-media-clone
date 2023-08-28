@@ -1,5 +1,6 @@
 import { type Request, type Response } from 'express'
 import { Session } from '../../../../typings'
+import { parseCookie } from '../../utils/helpers';
 
 export default async function handler(req: Request, res: Response) {
     const isJSONString = (str: string) => {
@@ -10,13 +11,6 @@ export default async function handler(req: Request, res: Response) {
             return false;
         }
     }
-   
-    const parseCookie = (cookie: string | undefined): string => {
-        return cookie?.split(';')
-        .find(cookie => cookie.trim().startsWith('session='))
-        ?.replace('session=', '')  ?? ''
-    }
-
   
     const cookieSession:Session = isJSONString(parseCookie(req.headers.cookie)) ? 
     JSON.parse(req?.cookies?.session) : 

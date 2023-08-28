@@ -13,8 +13,8 @@ export default async function handler(req: Request, res: Response) {
     console.log({ refreshToken, expiredSession })
     
     if(!expiredSession) {
-        res.cookie('session', null)
-        return res.status(404).json({})
+        res.clearCookie('session')
+        return res.status(404).json({ message: 'session not found'})
     }
 
     await SessionTable.deleteOne().where('refreshToken').equals(refreshToken).run()
