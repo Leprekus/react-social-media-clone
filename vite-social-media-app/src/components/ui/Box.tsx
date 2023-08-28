@@ -18,14 +18,14 @@ export default function Box({ children, onClick, className }: BoxProps) {
   return (
     <div className='
     backdrop-blur-lg 
-    absolute 
+    fixed 
     min-h-screen 
     min-w-full 
     top-0 
     left-0 
     z-50
     bg-black/30
-    overflow-y-hidden
+    overflow-hidden
     '>
         <div className={twMerge(`
           sm:w-[400px]
