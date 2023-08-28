@@ -49,7 +49,7 @@ const { signIn, errorCode } = useAuth()
               <button 
               onClick={() => router.redirect('/login')}
               className='text-red-600 text-xs group w-fit mx-auto'>
-                {(errorCode && errorCode  !== 401) && 'Something click here to refresh'}
+                {(errorCode && errorCode  !== 401) && 'Something went wrong click to refresh'}
                 <span className="block max-w-full opacity-0 group-hover:opacity-100 transition-all duration-100 h-[1px] bg-red-600 mt-0.5"></span>
               </button>
             </div>
