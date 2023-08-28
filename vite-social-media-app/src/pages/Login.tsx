@@ -28,6 +28,7 @@ const { signIn, errorCode } = useAuth()
         <Layout>
 
           <div className='flex flex-col gap-8 mx-auto w-full px-10 sm:px-0 sm:pr-20 sm:w-96'>
+              <img src='/logo.svg' className='w-10 h-10 mx-auto'/>
             <div className='flex flex-col gap-2'>
               <Input placeholder='username' 
               value={formData.username}
