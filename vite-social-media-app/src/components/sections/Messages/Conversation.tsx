@@ -79,7 +79,7 @@ export default function Conversation() {
               <BsArrowLeftShort size={40} className='text-gray-400'/>
             </button>
         </div>
-        <div className='h-full min-h-[300px] flex flex-col gap-4'>
+        <div className='h-full min-h-[300px] flex flex-col gap-4 pt-10'>
           {conversation?.messages.map((message: ClientMessage) => <Message message={message}/>)}
         </div>
         <div 
