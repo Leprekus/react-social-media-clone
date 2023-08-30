@@ -6,6 +6,7 @@ import { tryCatchPost } from '../../../lib/fetch-helpers'
 import { ClientMessage, Conversation as IConversation } from '../../../../typings'
 import toast from 'react-hot-toast'
 import ChatInput from '../../ChatInput'
+import ChatInputSkeleton from '../../skeletons/ChatInputSkeleton'
 
 interface ConversationData {
     conversation: IConversation
@@ -82,7 +83,10 @@ export default function Conversation() {
             p-4
             w-full
         '>
-            <ChatInput endpoint=''/>
+            {conversation?.id ? 
+            <ChatInput endpoint={conversation.id}/> : 
+            <ChatInputSkeleton/>
+            }
         </div>
     </div>
   )
