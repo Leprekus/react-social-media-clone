@@ -1,21 +1,18 @@
-import { ChangeEvent , ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 import { IoIosClose } from 'react-icons/io'
-import { BiPaperPlane } from 'react-icons/bi'
+import {  } from 'react-icons/bi'
 import { Drawer } from 'vaul'
-import { IComment, ICommentData } from '../../typings'
+import { ICommentData } from '../../typings'
 
-import Textarea from './ui/Textarea'
-import Button from './ui/Button'
-import { useAuth } from '../hooks/useAuth'
-import { tryCatchPost } from '../lib/fetch-helpers'
-import toast from 'react-hot-toast'
+
 import Comment from './ui/Comment'
+import ChatInput from './ChatInput'
 //import { IPost } from '../../typings'
 
 interface CommentsProps { children : ReactNode, data: ICommentData[] | null, postId: string | null}
-interface CommentsFooterProps { postId: string | null}
+
 interface CommentsTriggerProps { children : ReactNode, }
-interface CommentData { comments: IComment[] }
+
 
 export const CommentsTrigger = ({ children }: CommentsTriggerProps) => 
               <Drawer.Trigger asChild >
@@ -23,65 +20,13 @@ export const CommentsTrigger = ({ children }: CommentsTriggerProps) =>
               </Drawer.Trigger>
 
 
-const Footer = ({ postId }: CommentsFooterProps) => {
-  const { session } = useAuth()
-  const [isDisabled, setIsDisabled] = useState(true)
-  const [body, setBody] = useState('') 
 
-  const handleChange = (e:ChangeEvent<HTMLTextAreaElement>) => {
-
-    e.currentTarget.value.length > 0 ? setIsDisabled(false) : setIsDisabled(true)
-
-    setBody(e.target.value)
-  }
-
-  const handleSubmit = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-
-    e.preventDefault()
-
-    if(!postId) return toast.error('No post selected')
-
-    const comment:IComment = {
-      id: '',
-      author: session?.user.username as string,
-      body: body,
-      created_at: 0,
-      likes: [],
-      like_count: 0,
-      replies: [],
-    }
-  
-      const [data, error] = await tryCatchPost<CommentData>({ 
-        endpoint: `${import.meta.env.VITE_BACKEND_URL}api/POST/${postId}/comments`, 
-        token: session?.accessToken, 
-        payload: { comment }
-      })
-
-      if(error || !data?.res.ok) toast.error('Could not post comment')
-      
-      if(data?.res.ok) toast.success('Comment Posted')
-
-  }
-  return (
-    <div className='p-4 bg-[#262930] border-t border-charcoal mt-auto'>
-      <div className='flex gap-6 items-end justify-end max-w-md mx-auto text-lg pb-2'
-      >
-        <Textarea 
-        onChange={handleChange}
-        placeholder='Comment' 
-        className={`resize-none rounded-[20px]  max-h-[60vh] sm:rounded-md sm:h-14 sm:pt-5`}/>
-        <Button 
-        disabled={isDisabled}
-        onClick={handleSubmit}
-        className={`${isDisabled ? 'bg-neutral-700 active:bg-neutral-700 border-transparent' : 'text-white'} w-fit `}>
-          <BiPaperPlane size={30} className={isDisabled ? 'text-gray-400' : 'text-white'}/>
-        </Button>
-      </div>
-    </div>
-)}
 
 
 export function Comments({ children, data, postId }: CommentsProps) {
+
+  const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/POST/${postId}/comments`
+
   return (
     <Drawer.Root>
         { children }
@@ -148,7 +93,7 @@ export function Comments({ children, data, postId }: CommentsProps) {
               </div>
             </div>
           </div>
-          <Footer postId={postId}/>
+          {postId && <ChatInput endpoint={endpoint}/> }
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
