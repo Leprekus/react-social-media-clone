@@ -79,7 +79,16 @@ export default function Conversation() {
               <BsArrowLeftShort size={40} className='text-gray-400'/>
             </button>
         </div>
-        <div className='h-full min-h-[300px] flex flex-col gap-4 pt-10'>
+        <div 
+        className='
+        h-full 
+        min-h-[300px] 
+        flex 
+        flex-col 
+        gap-4 
+        pt-10 
+        sm:pb-36
+        '>
           {conversation?.messages.map((message: ClientMessage) => <Message message={message}/>)}
         </div>
         <div 
@@ -90,6 +99,11 @@ export default function Conversation() {
             w-full
             pb-32
             sm:pb-4
+            fixed
+            sm:bottom-0
+            bottom-20
+            bg-black
+            h-32
         '>
             {conversation?.id ? 
             <ChatInput 
