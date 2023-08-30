@@ -91,8 +91,9 @@ export default function Conversation() {
             {conversation?.id ? 
             <ChatInput 
               className='bg-transparent border-transparent'
+              method='PUT'
               endpoint={
-                `${import.meta.env.VITE_BACKEND_URL}api/POST/messages?conversationId=${conversation.id}`
+                `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversation.id}`
               }/> : 
             <ChatInputSkeleton/>
             }

@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from 'react'
 import { BiPaperPlane } from 'react-icons/bi'
-import { IComment } from '../../typings'
 import Textarea from './ui/Textarea'
 import Button from './ui/Button'
 import { useAuth } from '../hooks/useAuth'
@@ -8,9 +7,9 @@ import { tryCatchPost } from '../lib/fetch-helpers'
 import toast from 'react-hot-toast'
 import { twMerge } from 'tailwind-merge'
 
-interface CommentsFooterProps { endpoint: string, className?: string }
+interface CommentsFooterProps { endpoint: string, className?: string, method?: 'POST' | 'PUT' }
 
-export default function ChatInput <T>({ endpoint, className }: CommentsFooterProps) {
+export default function ChatInput <T>({ endpoint, className, method='POST' }: CommentsFooterProps) {
     const { session } = useAuth()
     const [isDisabled, setIsDisabled] = useState(true)
     const [body, setBody] = useState('') 
@@ -28,20 +27,11 @@ export default function ChatInput <T>({ endpoint, className }: CommentsFooterPro
   
       if(!endpoint) return toast.error('No post selected')
   
-      const comment:IComment = {
-        id: '',
-        author: session?.user.username as string,
-        body: body,
-        created_at: 0,
-        likes: [],
-        like_count: 0,
-        replies: [],
-      }
-    
         const [data, error] = await tryCatchPost<T>({ 
           endpoint, 
+          method,
           token: session?.accessToken, 
-          payload: { comment }
+          payload: { body }
         })
   
         if(error || !data?.res.ok) toast.error('Could not post comment')

@@ -3,9 +3,9 @@ import { z } from 'zod'
 import { v4 as uid } from 'uuid'
 import { MessageBucket } from '../../Tables'
 import verifyToken from '../../utils/verifyToken'
-import { BackendConversation } from '../../../typings'
-import { Conversation } from '../../../../typings'
-import { getUser } from '../../utils/helpers'
+import { BackendMessage } from '../../../typings'
+import { parseCookie } from '../../utils/helpers'
+import { Session } from '../../../../typings'
 
 export default async function handler(req: Request, res: Response) {
 
@@ -15,57 +15,50 @@ export default async function handler(req: Request, res: Response) {
     
     if(!verifiedUser) return res.status(401).json({ message: 'failed to verify user' })
  
-    const { senderId, receiverId } = req.body
-
+    const conversationId = req.query.conversationId 
+    const { body } = req.body
     const MessageSchema = z.object({
-        receiverId: z.string(),
-        senderId: z.string(),
+        body: z.string()
     })
-    const result = MessageSchema.safeParse({ senderId, receiverId })
+  
+    const result = MessageSchema.safeParse({ body })
     if(!result.success)
         return res.status(422).json({ error: 'Form validation failed' })
 
-    let messageBucket 
+    let conversation 
 
     try {
-        messageBucket = await MessageBucket
+        conversation = await MessageBucket
             .getOne()
-            .where('userIds')
-            .includesAll([ result.data.senderId, result.data.receiverId ])
+            .where('id')
+            .equals(conversationId)
             .run()
 
-
     } catch(error) {
-        messageBucket = null
+        conversation = null
     }
 
-    const sender = await getUser(result.data.senderId)
-    const receiver = await getUser(result.data.receiverId)
 
-    if(messageBucket) {
-        const retrievedConversation = {
-            ...messageBucket,
-            users: [ sender, receiver ]
-        } as Conversation
-        return res.status(200).json({ conversation: retrievedConversation })
-    } 
-    
-    
-    const newConversation: BackendConversation  = {
-        id: uid(),
-        userIds: [ senderId, receiverId ],
+    if(!conversation)
+        return res.status(404).json({ message: 'Conversation not found' })
+
+    const session = JSON.parse(parseCookie(req.headers.cookie)) as Session
+
+    const newMessage:BackendMessage = {
+        userId: session.user.id,
+        body: result.data.body,
         created_at: Date.now(),
-        messages: []
+        status: 'delivered',
+        id: uid(),
     }
 
-    await MessageBucket.insert(newConversation)
+    await MessageBucket.updateOne({
+        messages: [ newMessage ],
 
+    })
+    .where('id').equals(conversationId)
+    .run()
     
-    const clientConvesation: Conversation = {
-        ...newConversation,
-        users: [ sender, receiver]
-    }
-
-    return res.status(200).json({ conversation: clientConvesation })
+    return res.status(200).json({ comment: newMessage })
   
 }

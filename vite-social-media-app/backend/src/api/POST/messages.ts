@@ -55,7 +55,11 @@ export default async function handler(req: Request, res: Response) {
         id: uid(),
         userIds: [ senderId, receiverId ],
         created_at: Date.now(),
-        messages: []
+        messages: [],
+        status : {
+            [`${sender.id}`] : { status: 'delivered' },
+            [`${receiver.id}`] : { status: 'delivered' }
+        }
     }
 
     await MessageBucket.insert(newConversation)

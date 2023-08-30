@@ -3,10 +3,8 @@ import { CommentBucket, PostsBucket } from '../../../Tables'
 import { v4 as uid } from 'uuid'
 import { IComment } from '../../../../../typings'
 import verifyToken from '../../../utils/verifyToken'
+import { parseCookie } from '../../../utils/helpers'
 
-interface CommentBody {
-    comment: IComment
-}
 export default async function handler(req: Request, res: Response) {
 
     const accessToken = req.headers.authorization?.split(' ')[1]
@@ -17,12 +15,17 @@ export default async function handler(req: Request, res: Response) {
     const reqSegments = req.path.split('/')
     const postId = reqSegments[reqSegments.length - 2]
 
-    let { comment }:CommentBody = req.body
-    
-    comment = {
-        ...comment,
+    const { body } = req.body
+    const session = JSON.parse(parseCookie(req.headers.cookie))
+
+    const comment: IComment = {
         id: uid(),
-        created_at: Date.now()
+        author: session?.user.username as string,
+        body: body,
+        created_at: Date.now(),
+        likes: [],
+        like_count: 0,
+        replies: [],
     }
 
 

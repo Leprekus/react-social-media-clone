@@ -78,12 +78,17 @@ export interface ClientMessage {
 
 
 
+
 export interface Conversation {
     id: string; // Unique identifier for the chat or conversation
     users: [ User, User ];
     userIds: string[]; 
     created_at: number; 
     messages: Message[];
+    status: {
+        [userOne: string] : { status: 'read' | 'delivered' | 'failed'; }
+        [userTwo: string] : { status: 'read' | 'delivered' | 'failed'; }
+    }
 }
 
 export interface Chat extends Omit<Conversation, 'messages'> {
