@@ -5,6 +5,7 @@ import { useAuth } from '../../../hooks/useAuth'
 import { tryCatchPost } from '../../../lib/fetch-helpers'
 import { ClientMessage, Conversation as IConversation } from '../../../../typings'
 import toast from 'react-hot-toast'
+import ChatInput from '../../ChatInput'
 
 interface ConversationData {
     conversation: IConversation
@@ -74,6 +75,15 @@ export default function Conversation() {
             </button>
         </div>
         {conversation?.messages.map((message: ClientMessage) => <div>{message.body}</div>)}
+        <div 
+        className='
+            border-b
+            border-zinc-600
+            p-4
+            w-full
+        '>
+            <ChatInput endpoint=''/>
+        </div>
     </div>
   )
 }
