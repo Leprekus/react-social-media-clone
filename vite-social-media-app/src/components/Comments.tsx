@@ -1,8 +1,7 @@
 import { ReactNode } from 'react'
 import { IoIosClose } from 'react-icons/io'
-import {  } from 'react-icons/bi'
 import { Drawer } from 'vaul'
-import { ICommentData } from '../../typings'
+import { IComment, ICommentData } from '../../typings'
 
 
 import Comment from './ui/Comment'
@@ -13,6 +12,7 @@ interface CommentsProps { children : ReactNode, data: ICommentData[] | null, pos
 
 interface CommentsTriggerProps { children : ReactNode, }
 
+interface CommentData { comments: IComment[] }
 
 export const CommentsTrigger = ({ children }: CommentsTriggerProps) => 
               <Drawer.Trigger asChild >
@@ -93,7 +93,7 @@ export function Comments({ children, data, postId }: CommentsProps) {
               </div>
             </div>
           </div>
-          {postId && <ChatInput endpoint={endpoint}/> }
+          {postId && <ChatInput<CommentData> endpoint={endpoint} /> }
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>

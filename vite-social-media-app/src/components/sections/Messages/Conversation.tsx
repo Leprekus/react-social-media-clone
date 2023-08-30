@@ -47,6 +47,9 @@ export default function Conversation() {
     bg-black
     w-full
     sm:static
+    flex
+    flex-col
+    justify-between
       '>
         <div 
         className='
@@ -78,15 +81,19 @@ export default function Conversation() {
         {conversation?.messages.map((message: ClientMessage) => <div>{message.body}</div>)}
         <div 
         className='
-            border-b
+            border-t
             border-zinc-600
             p-4
             w-full
+            pb-32
+            sm:pb-4
         '>
             {conversation?.id ? 
             <ChatInput 
               className='bg-transparent border-transparent'
-              endpoint={conversation.id}/> : 
+              endpoint={
+                `${import.meta.env.VITE_BACKEND_URL}api/POST/messages?conversationId=${conversation.id}`
+              }/> : 
             <ChatInputSkeleton/>
             }
         </div>

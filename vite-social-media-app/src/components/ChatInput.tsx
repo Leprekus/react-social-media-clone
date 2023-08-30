@@ -9,8 +9,8 @@ import toast from 'react-hot-toast'
 import { twMerge } from 'tailwind-merge'
 
 interface CommentsFooterProps { endpoint: string, className?: string }
-interface CommentData { comments: IComment[] }
-export default function ChatInput ({ endpoint, className }: CommentsFooterProps) {
+
+export default function ChatInput <T>({ endpoint, className }: CommentsFooterProps) {
     const { session } = useAuth()
     const [isDisabled, setIsDisabled] = useState(true)
     const [body, setBody] = useState('') 
@@ -38,7 +38,7 @@ export default function ChatInput ({ endpoint, className }: CommentsFooterProps)
         replies: [],
       }
     
-        const [data, error] = await tryCatchPost<CommentData>({ 
+        const [data, error] = await tryCatchPost<T>({ 
           endpoint, 
           token: session?.accessToken, 
           payload: { comment }
