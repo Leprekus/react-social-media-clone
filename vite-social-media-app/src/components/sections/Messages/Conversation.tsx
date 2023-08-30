@@ -84,7 +84,9 @@ export default function Conversation() {
             w-full
         '>
             {conversation?.id ? 
-            <ChatInput endpoint={conversation.id}/> : 
+            <ChatInput 
+              className='bg-transparent border-transparent'
+              endpoint={conversation.id}/> : 
             <ChatInputSkeleton/>
             }
         </div>

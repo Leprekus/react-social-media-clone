@@ -6,10 +6,11 @@ import Button from './ui/Button'
 import { useAuth } from '../hooks/useAuth'
 import { tryCatchPost } from '../lib/fetch-helpers'
 import toast from 'react-hot-toast'
+import { twMerge } from 'tailwind-merge'
 
-interface CommentsFooterProps { endpoint: string }
+interface CommentsFooterProps { endpoint: string, className?: string }
 interface CommentData { comments: IComment[] }
-export default function ChatInput ({ endpoint }: CommentsFooterProps) {
+export default function ChatInput ({ endpoint, className }: CommentsFooterProps) {
     const { session } = useAuth()
     const [isDisabled, setIsDisabled] = useState(true)
     const [body, setBody] = useState('') 
@@ -49,7 +50,7 @@ export default function ChatInput ({ endpoint }: CommentsFooterProps) {
   
     }
     return (
-      <div className='p-4 bg-[#262930] border-t border-charcoal mt-auto'>
+      <div className={twMerge(`p-4 bg-[#262930] border-t border-charcoal mt-auto`, className)}>
         <div className='flex gap-6 items-end justify-end max-w-md mx-auto text-lg pb-2'
         >
           <Textarea 
