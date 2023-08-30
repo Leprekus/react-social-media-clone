@@ -7,6 +7,7 @@ import { ClientMessage, Conversation as IConversation } from '../../../../typing
 import toast from 'react-hot-toast'
 import ChatInput from '../../ChatInput'
 import ChatInputSkeleton from '../../skeletons/ChatInputSkeleton'
+import Message from './Message'
 
 interface ConversationData {
     conversation: IConversation
@@ -78,7 +79,9 @@ export default function Conversation() {
               <BsArrowLeftShort size={40} className='text-gray-400'/>
             </button>
         </div>
-        {conversation?.messages.map((message: ClientMessage) => <div>{message.body}</div>)}
+        <div className='h-full min-h-[300px] flex flex-col gap-4'>
+          {conversation?.messages.map((message: ClientMessage) => <Message message={message}/>)}
+        </div>
         <div 
         className='
             border-t
