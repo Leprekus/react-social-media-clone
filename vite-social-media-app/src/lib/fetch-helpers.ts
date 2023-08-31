@@ -61,6 +61,7 @@ export async function tryCatchGet<T>({ endpoint, token }: TryCatchGetProps): Pro
             method: 'GET',
             headers,
             credentials: 'include',
+            cache: 'force-cache',
             mode: 'cors',
           })
         const contentType = res.headers.get('content-type');
