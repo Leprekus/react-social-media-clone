@@ -4,7 +4,7 @@ import Textarea from '../ui/Textarea';
 
 export default function ChatInputSkeleton() {
   return (
-    <div className='p-4 bg-[#262930] border-t border-charcoal mt-auto'>
+    <div className='p-4'>
     <div className='flex gap-6 items-end justify-end max-w-md mx-auto text-lg pb-2'>
       <Textarea
         className={`
