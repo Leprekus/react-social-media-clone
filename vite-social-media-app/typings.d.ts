@@ -7,7 +7,6 @@ export interface IPost {
     id: string;
     description: string;
     created_at: number;
-
     author: string;
     author_image: string;
 }

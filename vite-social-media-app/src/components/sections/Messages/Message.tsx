@@ -1,5 +1,5 @@
-import React from 'react'
-import { ClientMessage } from '../../../../typings'
+import React, { Suspense, useEffect, useState } from 'react'
+import { ClientMessage, IPost } from '../../../../typings'
 import { useAuth } from '../../../hooks/useAuth'
 
 interface MessageProps { message: ClientMessage}
@@ -19,7 +19,22 @@ export default function Message({ message }: MessageProps) {
         border
         border-blue-800
         `
-  return (
+
+  const [post, setPost] = useState<IPost | null>(null)
+  const fetchPost = async () => {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/GET/post?id=${message.body}`)
+    const data = await res.json()
+    setPost(data.post)
+  }
+  useEffect(() => {
+    if(message.type === 'Post')
+        fetchPost()
+  }, [])
+  const Post = React.lazy(() => import('../../Post'))
+    
+  
+  return message?.type === 'Text' ? 
+  (
     <div className='w-full relative h-10'>
         <div
             className={`
@@ -38,5 +53,11 @@ export default function Message({ message }: MessageProps) {
             <p>{ message.body }</p>
         </div>
     </div>
-  )
+  ) : 
+  (<>{
+    post && 
+  <Suspense>
+    <Post post={post}/>
+  </Suspense>}
+ </>)
 }
