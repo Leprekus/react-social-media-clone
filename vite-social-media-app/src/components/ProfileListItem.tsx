@@ -3,13 +3,14 @@ import Link from './Link'
 import FollowsButton from './ui/FollowsButton'
 import ShareButton from './ui/ShareButton'
 import MessageButton from './sections/Messages/MessageButton'
-import Avatar from './Avatar'
+import useFetchProfileImage from '../hooks/useFetchProfileImage'
+
 
 
 interface ProfileListItemProps { user: User, action?: 'share' | 'follow' | 'message' }
 export default function ProfileListItem({ user, action='follow' }:ProfileListItemProps) {
  
-  
+  const { Avatar } = useFetchProfileImage(user.username)
   return (
     <Link 
     href={`/${user.username}`}

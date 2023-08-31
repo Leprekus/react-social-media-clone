@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { BiSolidUser } from 'react-icons/bi'
 import { tryCatchGet } from '../lib/fetch-helpers'
 import { User } from '../../typings'
+import { twMerge } from 'tailwind-merge'
 
 interface ProfilePictureData {
     profileImage: string
@@ -31,14 +32,14 @@ const useFetchProfileImage = (username?: string, size?: number) => {
         if(username) fetchProfileImage()
     }, [ username, ])
 
-    const Img = (!isLoading && src) ? 
-    <img src={src} className='object-fill'/> :
-    <BiSolidUser size={size || 60} className='object-fill text-white'/>
+    const Img = ({ className }: { className?: string; }) => (!isLoading && src) ? 
+    <img src={src} className={twMerge('object-fill', className)}/> :
+    <BiSolidUser size={size || 60} className={twMerge('object-fill text-white', className)}/>
 
     const Avatar = ({ className, user }: { className?:string, user: User}) => (
-        <div className={className}>
+        <div className={twMerge('flex items-center gap-4',className)}>
         <div className='flex items-center justify-center overflow-hidden w-20 h-20 rounded-full'>
-            { Img }
+            <Img/>
         </div>
         <div className='flex flex-col gap-2'>
         <p className='font-semibold lg:text-xl'>{user.username}</p>

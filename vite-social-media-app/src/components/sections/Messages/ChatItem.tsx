@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Chat } from '../../../../typings'
 import Button from '../../ui/Button'
-
+import { BsChevronRight } from 'react-icons/bs'
 import { useAuth } from '../../../hooks/useAuth'
 import { useRouter } from '../../../hooks/useRouter'
 import useFetchProfileImage from '../../../hooks/useFetchProfileImage'
@@ -30,9 +30,14 @@ export default function ConversationItem({ chat }: ChatProps) {
 
         flex
         items-center
+        group
     '>
-      <Avatar user={user} className='flex flex-grow gap-4 items-center'/>
-      {dayjs(chat.created_at).fromNow()}
+      <Img className='hidden sm:block md:hidden w-10 h-10'/>
+      <Avatar user={user} className='flex flex-grow gap-4 items-center sm:hidden md:flex '/>
+      <div className='flex flex-col items-center sm:hidden md:block'>
+        <BsChevronRight className='group-hover:translate-x-2 transition group-hover:text-violet-600'/>
+        <span className='relative top-5 text-xs'>{dayjs(chat.created_at).fromNow()}</span>
+      </div>
     
     </Button>
   )

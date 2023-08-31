@@ -75,7 +75,7 @@ export default function ProfileBar() {
         justify-center
         bg-gray-400/10
         '>
-            {Img}
+            <Img/>
         </div>
         <div className='flex flex-col gap-4 pl-4 md:pl-6'>
             <div className='flex gap-4 items-center'>
