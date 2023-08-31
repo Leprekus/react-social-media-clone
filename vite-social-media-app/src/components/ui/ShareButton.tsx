@@ -1,41 +1,62 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { tryCatchPost } from '../../lib/fetch-helpers'
 import { useAuth } from '../../hooks/useAuth'
 import Button from './Button'
 import toast from 'react-hot-toast';
+import useUserListModal from '../../hooks/useUserListModal';
+import { Conversation } from '../../../typings';
 
+interface ConversationData {
+  conversation: Conversation
+}
 interface ShareButtonProps {
     id: string;
-    followers: string[]
 }
-export default function ShareButton({ id, followers }: ShareButtonProps) {
+export default function ShareButton({ id }: ShareButtonProps) {
 
     const { session } = useAuth()
-    const [follows, setFollows] = useState(
-        !!followers?.find(userId => userId === session?.user.id) ||
-        false
-    )
+    const { postId } = useUserListModal()
 
-    const handleFollow = async(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.stopPropagation()
-        e.preventDefault()
+    const createConversation = async (): Promise<Conversation | null> => {
+
+      const receiverId = id
+      const senderId = session?.user.id
+
+      const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/POST/messages`
+        const payload = { senderId, receiverId}
+        const [data, error] = await tryCatchPost<ConversationData>({
+            endpoint, 
+            payload,
+            token: session?.accessToken
+        })
+
+        if(!data?.res.ok || error) return null
+        if(data.json?.conversation) return data.json.conversation
+        return null
         
-        const queryString = (new URLSearchParams({ id: id })).toString()
+    }
+    const handleShare = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      e.stopPropagation()
+      e.preventDefault()
+      
+      const conversation = await createConversation()
+      if(!conversation) return toast.error('Something went wrong')
+
         const [data, error] = await tryCatchPost({
-          endpoint: `${import.meta.env.VITE_BACKEND_URL}api/PUT/follows?${queryString}`,
+          endpoint: `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversation.id}&type=Post`,
           token: session?.accessToken,
-          payload: { follows: !follows, userId: session?.user.id },
+          payload: { body: postId },
           method: 'PUT'
         })
 
         if(error || !data?.res.ok) toast.error('Something went wrong')
-        if(!error && data?.res.ok) setFollows(!follows)
+        if(!error && data?.res.ok) toast.success('Sent')
       }
   
   if(id === session?.user.id) return null
   return (
     <Button 
-      onClick={handleFollow}
+      onClick={handleShare}
       className='
         w-fit
         px-4
@@ -44,7 +65,7 @@ export default function ShareButton({ id, followers }: ShareButtonProps) {
         active:bg-transparent
       '
       >
-        {follows ? 'Share' : 'Share'}
+        Share
       </Button>
   )
 }

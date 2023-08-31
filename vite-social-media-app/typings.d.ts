@@ -73,6 +73,7 @@ export interface ClientMessage {
     body: string;
     created_at: number;
     status: 'read' | 'delivered' | 'failed';
+    type: 'Text' | 'Post'
     id: string;
 }
 

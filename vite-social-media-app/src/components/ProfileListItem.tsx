@@ -37,7 +37,7 @@ export default function ProfileListItem({ user, action='follow' }:ProfileListIte
       '>
       <Avatar user={user}/>
       {action === 'follow' && <FollowsButton id={user.id} followers={user.followers as string[]}/>}
-      {action === 'share' && <ShareButton id={user.id} followers={user.followers as string[]}/>}
+      {action === 'share' && <ShareButton id={user.id}/>}
       {action === 'message' && <MessageButton receiverId={user.id} />}
     </Link>
   )

@@ -25,6 +25,7 @@ export default function Post({ post }:PostProps) {
             const followers = await user.getFollowing()
             userListModal.setUsers(followers)
             userListModal.setAction('share')
+            userListModal.setPostId(post.id)
             userListModal.Open()
         }
     }

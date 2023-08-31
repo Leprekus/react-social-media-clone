@@ -16,6 +16,7 @@ export default async function handler(req: Request, res: Response) {
     if(!verifiedUser) return res.status(401).json({ message: 'failed to verify user' })
  
     const conversationId = req.query.conversationId 
+    const type = req.query.type as 'Text' | 'Post'
     const { body } = req.body
     const MessageSchema = z.object({
         body: z.string()
@@ -50,6 +51,7 @@ export default async function handler(req: Request, res: Response) {
         created_at: Date.now(),
         status: 'delivered',
         id: uid(),
+        type
     }
 
     await MessageBucket.updateOne({
