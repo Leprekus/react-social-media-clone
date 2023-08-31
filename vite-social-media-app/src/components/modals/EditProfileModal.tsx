@@ -99,7 +99,7 @@ export default function EditProfileModal() {
               src={src}
               /> 
               :
-              Img
+              <Img/>
             }
               <input
                 className="w-24 h-24 bg-gray-200 rounded-full absolute hover:cursor-pointer opacity-0"

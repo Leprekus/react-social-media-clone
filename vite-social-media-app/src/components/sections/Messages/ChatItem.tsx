@@ -13,7 +13,7 @@ dayjs.extend(relativeTime)
 export default function ConversationItem({ chat }: ChatProps) {
   const { session } = useAuth()
   const [ user ] = chat.users.filter(user => user.id !== session?.user.id)
-  const { Img, Avatar } = useFetchProfileImage()
+  const { Img, Avatar } = useFetchProfileImage(user.username)
   const router = useRouter()
   return (
     <Button 
@@ -36,7 +36,7 @@ export default function ConversationItem({ chat }: ChatProps) {
       <Avatar user={user} className='flex flex-grow gap-4 items-center sm:hidden md:flex '/>
       <div className='flex flex-col items-center sm:hidden md:block'>
         <BsChevronRight className='group-hover:translate-x-2 transition group-hover:text-violet-600'/>
-        <span className='relative top-5 text-xs'>{dayjs(chat.created_at).fromNow()}</span>
+        <span className='relative top-5 text-xs sm:hidden'>{dayjs(chat.created_at).fromNow()}</span>
       </div>
     
     </Button>
