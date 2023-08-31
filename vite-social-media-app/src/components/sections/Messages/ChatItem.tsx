@@ -15,7 +15,7 @@ export default function ConversationItem({ chat }: ChatProps) {
   const router = useRouter()
   return (
     <Button 
-      onClick={() => router.push(`/messages/${chat.id}`)}
+      onClick={() => router.push(`/messages/${user.id}`)}
       className='
         text-lg md:text-base
         w-full
