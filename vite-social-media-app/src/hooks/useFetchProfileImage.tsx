@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { BiSolidUser } from 'react-icons/bi'
 import { tryCatchGet } from '../lib/fetch-helpers'
+import { User } from '../../typings'
 
 interface ProfilePictureData {
     profileImage: string
@@ -34,9 +35,22 @@ const useFetchProfileImage = (username?: string, size?: number) => {
     <img src={src} className='object-fill'/> :
     <BiSolidUser size={size || 60} className='object-fill text-white'/>
 
+    const Avatar = ({ className, user }: { className?:string, user: User}) => (
+        <div className={className}>
+        <div className='flex items-center justify-center overflow-hidden w-20 h-20 rounded-full'>
+            { Img }
+        </div>
+        <div className='flex flex-col gap-2'>
+        <p className='font-semibold lg:text-xl'>{user.username}</p>
+        <p className='lg:text-lg'>{user.name}</p>
+        </div>
+        </div>
+      )
+
     return {
         error,
-        Img
+        Img,
+        Avatar
     }
 
 }

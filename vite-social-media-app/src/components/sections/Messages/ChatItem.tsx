@@ -3,15 +3,17 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Chat } from '../../../../typings'
 import Button from '../../ui/Button'
-import Avatar from '../../Avatar'
+
 import { useAuth } from '../../../hooks/useAuth'
 import { useRouter } from '../../../hooks/useRouter'
+import useFetchProfileImage from '../../../hooks/useFetchProfileImage'
 
 interface ChatProps { chat: Chat }
 dayjs.extend(relativeTime)
 export default function ConversationItem({ chat }: ChatProps) {
   const { session } = useAuth()
   const [ user ] = chat.users.filter(user => user.id !== session?.user.id)
+  const { Img, Avatar } = useFetchProfileImage()
   const router = useRouter()
   return (
     <Button 
