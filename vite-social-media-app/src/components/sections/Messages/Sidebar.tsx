@@ -34,6 +34,7 @@ export default function Sidebar({ chats, children  }: SidebarProps) {
             searchModal.Open()
         }
     }
+    console.log(chats)
   return (
     
       <div className='absolute top-0 w-full sm:flex sm:left-20 sm:w-[calc(100%_-_80px)]'>
@@ -76,7 +77,7 @@ export default function Sidebar({ chats, children  }: SidebarProps) {
             {!chats ? //render skeleton
             [0,0,0, 0, 0].map((chat, i) => <ChatsSkeleton key={`${chat}-${i}`}/>)
             :
-            chats.length < 1 ?
+            chats.length < 0 ?
             <p className='text-gray-400 font-semibold text-lg sm:hidden md:block'>Start chatting</p>: //handle no conversations
             chats.map(chat => (
                 <ConversationItem chat={chat}/>
