@@ -20,7 +20,7 @@ export default function Conversation() {
     const receiverId = pathname.includes('messages') && pathname[2] ?
     pathname[2] : null
     const [conversation, setConversation] = useState<IConversation | null>(null)
-    const ws = useWebSocket('ws//:localhost:80')
+    const ws = useWebSocket('ws://localhost:80')
 
     const fetchConversation = async () => {
         const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/POST/messages`

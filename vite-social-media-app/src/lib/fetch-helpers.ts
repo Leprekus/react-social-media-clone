@@ -18,7 +18,9 @@ export async function tryCatchPost<T>({ endpoint, payload, token, method = 'POST
     const credentials = btoa(`${import.meta.env.VITE_CLIENT_ID}:${import.meta.env.VITE_CLIENT_SECRET}`)
 
 
-    if(token) headers.Authorization = `Bearer: ${token}`
+    if(token) {
+        console.log({ token })
+        headers.Authorization = `Bearer: ${token}`}
     else headers.Authorization = `${credentials}`
 
     try {
@@ -55,7 +57,9 @@ interface ObjectLiteral {
 export async function tryCatchGet<T>({ endpoint, token }: TryCatchGetProps): Promise<Result<{ json: T | null, res: Response }, any>> {
     try {
  
-        if(token) headers.Authorization = `Bearer ${(token as string)}`
+        if(token){
+            console.log({ token })
+            headers.Authorization = `Bearer ${(token as string)}`}
 
         const res = await fetch(endpoint, {
             method: 'GET',
