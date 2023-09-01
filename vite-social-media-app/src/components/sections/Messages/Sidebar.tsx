@@ -83,7 +83,7 @@ export default function Sidebar({ chats, children  }: SidebarProps) {
             chats.length < 0 ?
             <p className='text-gray-400 font-semibold text-lg sm:hidden md:block'>Start chatting</p>: //handle no conversations
             chats.map(chat => (
-                <ConversationItem chat={chat}/>
+                <ConversationItem chat={chat} key={chat.id}/>
             )) //render conversations
             }
         </div>
