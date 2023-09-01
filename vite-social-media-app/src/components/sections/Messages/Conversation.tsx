@@ -94,7 +94,7 @@ export default function Conversation() {
           gap-4
           pb-40
           '>
-            {conversation?.messages.map((message: ClientMessage) => <Message message={message}/>)}
+            {conversation?.messages.map((message: ClientMessage) => <Message message={message} key={message.id}/>)}
           </div>
           <div
           className='
