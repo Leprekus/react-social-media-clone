@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import ChatInput from '../../ChatInput'
 import ChatInputSkeleton from '../../skeletons/ChatInputSkeleton'
 import Message from './Message'
+import useWebSocket from '../../../hooks/useWebSocket'
 
 interface ConversationData {
     conversation: IConversation
@@ -19,10 +20,12 @@ export default function Conversation() {
     const receiverId = pathname.includes('messages') && pathname[2] ?
     pathname[2] : null
     const [conversation, setConversation] = useState<IConversation | null>(null)
+    const ws = useWebSocket('ws//:localhost:80')
 
     const fetchConversation = async () => {
         const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/POST/messages`
         const payload = { senderId: session?.user.id, receiverId}
+        
         const [data, error] = await tryCatchPost<ConversationData>({
             endpoint, 
             payload,

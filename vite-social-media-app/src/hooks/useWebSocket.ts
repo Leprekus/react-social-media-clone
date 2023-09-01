@@ -1,27 +1,28 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 
-const useWebSocket = (url='ws//:localhost:80') => {
+const useWebSocket = (url: string) => {
 
-    const  ws = useRef<WebSocket | null>(null);
+    const [ws, setWs] = useState<WebSocket | null>(null)
 
     useEffect(() =>{
-        if(ws.current) {
-            ws.current.onopen = () => console.log('web socket opened')
-            ws.current.onclose = () => console.log('web socket closed')
+        if(ws) {
+            ws.onopen = () => console.log('web socket opened')
+            ws.onclose = () => console.log('web socket closed')
         }
            
-        if(!ws.current) {
-            ws.current = new WebSocket(url)
-        }
+        if(!ws) 
+            setWs(new WebSocket(url))
+            
+        
 
         return () => {
-            if(ws.current) {
-                ws.current.onerror = ws.current.onopen = ws.current.onclose = null;
-                ws.current.close()}
+            if(ws) {
+                setWs(ws.onerror = ws.onopen = ws.onclose = null)
+                ws.close()}
         }
     },[])
 
-    return ws.current
+    return ws
 }
 
 export default useWebSocket

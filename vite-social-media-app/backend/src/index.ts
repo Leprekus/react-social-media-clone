@@ -39,7 +39,7 @@ server.listen(ws_PORT, () => {
 app.use(cors({
     origin: ['https://react-social-media-clone-one.vercel.app', 'https://momento-client-leprekus.vercel.app', 'http://localhost:5173', ],
 
-    methods: ["GET,HEAD,OPTIONS,POST,PUT"],
+    methods: ["GET","HEAD","OPTIONS","POST","PUT"],
     optionsSuccessStatus: 200,
     allowedHeaders : [
     'Authorization', 
