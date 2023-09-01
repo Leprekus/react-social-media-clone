@@ -36,7 +36,6 @@ export const MyRouterContextProvider = ({ children }: { children: ReactNode }) =
 
 
     const push = (path:string) => {
-        console.log({ pushedPath: path })
         window.history.pushState({}, '', path);
         setCurrentPath(path);
     };
