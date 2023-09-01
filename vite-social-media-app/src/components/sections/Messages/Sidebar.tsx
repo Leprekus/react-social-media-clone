@@ -37,11 +37,14 @@ export default function Sidebar({ chats, children  }: SidebarProps) {
     console.log(chats)
   return (
     
-      <div className='absolute top-0 w-full sm:flex sm:left-20 sm:w-[calc(100%_-_80px)]'>
+      <div className='absolute top-0 w-full sm:flex sm:left-20 sm:w-[calc(100%_-_80px)] max-h-screen overflow-hidden'>
         <div
         className='
+            overflow-y-scroll
+            
             w-full
             min-h-screen
+            max-h-screen
             sm:w-20
             md:w-96
             sm:border-zinc-600
@@ -82,7 +85,6 @@ export default function Sidebar({ chats, children  }: SidebarProps) {
             chats.map(chat => (
                 <ConversationItem chat={chat}/>
             )) //render conversations
-        
             }
         </div>
           { children }

@@ -48,6 +48,8 @@ export default function Conversation() {
     bg-black
     w-full
     sm:static
+
+    overflow-y-scroll
       '>
         <div className='flex flex-col justify-between'>
           <div
@@ -82,6 +84,8 @@ export default function Conversation() {
           </div>
           <div
           className='
+        
+
           pt-24
           min-h-[300px]
           h-fit
