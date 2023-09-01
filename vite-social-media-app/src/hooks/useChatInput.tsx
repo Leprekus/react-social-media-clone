@@ -61,13 +61,18 @@ import Button from '../components/ui/Button'
 //   )}
 
 
-interface ChatInputProps { endpoint: string, className?: string, method?: 'POST' | 'PUT' }
+interface ChatInputProps { 
+  endpoint: string, 
+  className?: string,
+  method?: 'POST' | 'PUT', 
+  onSubmitHandler?: (item: any) => void;  
+}
 
-const useChatInput = <T,>(initialItems: T) => {
+const useChatInput = <T, >(initialItems: T) => {
 
   const [items, setItems] = useState<T>(initialItems)
   
-  const ChatInput = ({ endpoint, className, method = 'POST'}: ChatInputProps) => {
+  const ChatInput = ({ endpoint, className, method = 'POST', onSubmitHandler }: ChatInputProps) => {
         const { session } = useAuth()
         const [isDisabled, setIsDisabled] = useState(true)
         const [body, setBody] = useState('') 
@@ -82,7 +87,7 @@ const useChatInput = <T,>(initialItems: T) => {
         const handleSubmit = async (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       
           e.preventDefault()
-      
+
           if(!endpoint) return toast.error('No post selected')
       
             const [data, error] = await tryCatchPost<{[key: string]: any}>({ 
@@ -98,7 +103,7 @@ const useChatInput = <T,>(initialItems: T) => {
               setBody('')
               const [ key ] = Object.keys(data.json)
               
-              console.log(data.json[key], items)
+              onSubmitHandler && onSubmitHandler(data.json[key])
               setItems(prev => {
                 if(Array.isArray(prev))
                   return [ ...prev, data.json![key] ]

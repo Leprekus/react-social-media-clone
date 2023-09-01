@@ -28,6 +28,11 @@ export default function Conversation() {
     const [conversationId, setConversationId] = useState<string | null>(null)
     const ws = useWebSocket('ws://localhost:80')
     
+    
+    if(ws) ws.onmessage = ({ data }: { data: string}) => {
+      setConversation(prev => [...prev as ClientMessage[], JSON.parse(data)])
+    }
+    
 
     const fetchConversation = async () => {
         const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/POST/messages`
@@ -52,6 +57,8 @@ export default function Conversation() {
         if(receiverId)
             fetchConversation()
     },[receiverId])
+
+
 
 
   if(!receiverId) return null
@@ -127,10 +134,11 @@ export default function Conversation() {
               justify-center
           '>
               <div className='flex justify-center w-full relative sm:right-32'>
-                {conversationId ?
+                {conversationId && ws ?
                 <ChatInput
                   className='bg-transparent border-transparent w-fit'
                   method='PUT'
+                  onSubmitHandler={(message: ClientMessage) => ws.send(JSON.stringify(message))}
                   endpoint={
                     `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversationId}&type=Text`
                   }/> :

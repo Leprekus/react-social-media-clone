@@ -18,11 +18,12 @@ const wss = new WebSocket.Server({ server })
 
 wss.on('connection', (ws) => {
     ws.on('message', (data) => {
-         console.log('incoming', data)
+        
          wss.clients.forEach(client => {
             if(client !== ws && client.readyState === WebSocket.OPEN) {
                 //sender
-                client.send(data)
+                const stringified = data.toString()
+                client.send(stringified)
             }
          })
         })
