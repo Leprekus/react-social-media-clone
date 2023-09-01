@@ -8,7 +8,8 @@ import toast from 'react-hot-toast'
 import ChatInputSkeleton from '../../skeletons/ChatInputSkeleton'
 import Message from './Message'
 import useWebSocket from '../../../hooks/useWebSocket'
-import useChatInput from '../../ChatInput'
+import useChatInput from '../../../hooks/useChatInput'
+
 
 interface ConversationData {
     conversation: IConversation

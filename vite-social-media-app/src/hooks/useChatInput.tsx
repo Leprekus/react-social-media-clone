@@ -1,11 +1,11 @@
 import { ChangeEvent, useState } from 'react'
 import { BiPaperPlane } from 'react-icons/bi'
-import Textarea from './ui/Textarea'
-import Button from './ui/Button'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from './useAuth'
 import { tryCatchPost } from '../lib/fetch-helpers'
 import toast from 'react-hot-toast'
 import { twMerge } from 'tailwind-merge'
+import Textarea from '../components/ui/Textarea'
+import Button from '../components/ui/Button'
 
 //interface CommentsFooterProps { endpoint: string, className?: string, method?: 'POST' | 'PUT' }
 

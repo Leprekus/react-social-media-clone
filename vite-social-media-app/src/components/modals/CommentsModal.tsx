@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import useLoadComments from '../../hooks/useLoadComments';
 import { ICommentData } from '../../../typings';
 import Loading from '../Loading';
-import useChatInput from '../ChatInput';
+import useChatInput from '../../hooks/useChatInput';
 //import ChatInputSkeleton from '../skeletons/ChatInputSkeleton';
 interface CommentsModalProps {
   children: ReactNode;
