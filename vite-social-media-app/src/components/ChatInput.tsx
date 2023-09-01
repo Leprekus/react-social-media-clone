@@ -101,7 +101,7 @@ const useChatInput = <T,>(initialItems: T) => {
               console.log(data.json[key], items)
               setItems(prev => {
                 if(Array.isArray(prev))
-                  return [data.json![key]!, ...prev]
+                  return [ ...prev, data.json![key] ]
 
                 else return data.json![key]
               })

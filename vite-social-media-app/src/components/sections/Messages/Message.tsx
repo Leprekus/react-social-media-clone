@@ -33,7 +33,6 @@ export default function Message({ message }: MessageProps) {
   }, [])
   const Post = React.lazy(() => import('../../Post'))
     
-  
   return message?.type === 'Text' ? 
   (
     <div className={`w-full relative min-h-[40px] h-fit flex px-4 ${message.userId === session?.user.id ? 'justify-end pl-10' : 'justify-start pr-10'}` }>

@@ -34,7 +34,7 @@ export default function Sidebar({ chats, children  }: SidebarProps) {
             searchModal.Open()
         }
     }
-    console.log(chats)
+
   return (
     
       <div className='absolute top-0 w-full sm:flex sm:left-20 sm:w-[calc(100%_-_80px)] max-h-screen overflow-hidden'>

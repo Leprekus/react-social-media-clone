@@ -5,10 +5,10 @@ import { useAuth } from '../../../hooks/useAuth'
 import { tryCatchPost } from '../../../lib/fetch-helpers'
 import { ClientMessage, Conversation as IConversation } from '../../../../typings'
 import toast from 'react-hot-toast'
-import ChatInput from '../../ChatInput'
 import ChatInputSkeleton from '../../skeletons/ChatInputSkeleton'
 import Message from './Message'
 import useWebSocket from '../../../hooks/useWebSocket'
+import useChatInput from '../../ChatInput'
 
 interface ConversationData {
     conversation: IConversation
@@ -19,7 +19,12 @@ export default function Conversation() {
     const pathname = router.pathname.split('/')
     const receiverId = pathname.includes('messages') && pathname[2] ?
     pathname[2] : null
-    const [conversation, setConversation] = useState<IConversation | null>(null)
+    const { 
+      items: conversation, 
+      setItems: setConversation,
+      ChatInput
+    } = useChatInput<ClientMessage[] | null>(null)
+    const [conversationId, setConversationId] = useState<string | null>(null)
     const ws = useWebSocket('ws://localhost:80')
     
 
@@ -34,13 +39,19 @@ export default function Conversation() {
         })
 
         if(!data?.res.ok || error) toast.error('Failed to load conversation')
-        if(data?.json?.conversation) return setConversation(data.json.conversation)
+        if(data?.json?.conversation) {
+
+          setConversation(data.json.conversation.messages)
+          setConversationId(data.json.conversation.id)
+          return
+        }
         setConversation(null)
     }
     useEffect(() => {
         if(receiverId)
             fetchConversation()
     },[receiverId])
+
 
   if(!receiverId) return null
   return (
@@ -98,7 +109,8 @@ export default function Conversation() {
           gap-4
           pb-40
           '>
-            {conversation?.messages.map((message: ClientMessage) => <Message message={message} key={message.id}/>)}
+            {conversation?.map((message: ClientMessage) => 
+            <Message message={message} key={message.id}/>)}
           </div>
           <div
           className='
@@ -114,12 +126,12 @@ export default function Conversation() {
               justify-center
           '>
               <div className='flex justify-center w-full relative sm:right-32'>
-                {conversation?.id ?
+                {conversationId ?
                 <ChatInput
                   className='bg-transparent border-transparent w-fit'
                   method='PUT'
                   endpoint={
-                    `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversation.id}&type=Text`
+                    `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversationId}&type=Text`
                   }/> :
                 <ChatInputSkeleton/>
                 }
