@@ -1,18 +1,17 @@
 import { ReactNode } from 'react'
 import { IoIosClose } from 'react-icons/io'
 import { Drawer } from 'vaul'
-import { IComment, ICommentData } from '../../typings'
+import { ICommentData } from '../../typings'
 
 
 import Comment from './ui/Comment'
-import ChatInput from './ChatInput'
 //import { IPost } from '../../typings'
 
-interface CommentsProps { children : ReactNode, data: ICommentData[] | null, postId: string | null}
+interface CommentsProps { children : ReactNode, data: ICommentData[] | null, postId: string | null, ChatlElement: ReactNode}
 
 interface CommentsTriggerProps { children : ReactNode, }
 
-interface CommentData { comments: IComment[] }
+
 
 export const CommentsTrigger = ({ children }: CommentsTriggerProps) => 
               <Drawer.Trigger asChild >
@@ -23,10 +22,10 @@ export const CommentsTrigger = ({ children }: CommentsTriggerProps) =>
 
 
 
-export function Comments({ children, data, postId }: CommentsProps) {
+export function Comments({ children, data, postId, ChatlElement }: CommentsProps) {
 
-  const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/POST/${postId}/comments`
-
+  //const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/POST/${postId}/comments`
+    
   return (
     <Drawer.Root>
         { children }
@@ -93,10 +92,12 @@ export function Comments({ children, data, postId }: CommentsProps) {
               </div>
             </div>
           </div>
-          {postId && <ChatInput<CommentData> endpoint={endpoint} /> }
+          {postId && ChatlElement }
         </Drawer.Content>
       </Drawer.Portal>
     </Drawer.Root>
   )
 }
+
+
 
