@@ -83,7 +83,7 @@ export function Comments({ children, data, postId }: CommentsProps) {
             </div>
             <div className='max-w-md mx-auto'>
               <Drawer.Title className='font-medium mb-4'>
-                Comment Section
+                Comments
               </Drawer.Title>
               <div className='flex flex-col gap-2'>
                 {data && data?.length > 0 ?
