@@ -11,6 +11,7 @@ export default function Message({ message }: MessageProps) {
         to-violet-950/50
         border
         border-violet-800
+
         `
     const receiverStyle = `
         left-4
@@ -35,12 +36,11 @@ export default function Message({ message }: MessageProps) {
   
   return message?.type === 'Text' ? 
   (
-    <div className='w-full relative h-10'>
+    <div className={`w-full relative min-h-[40px] h-fit flex px-4 ${message.userId === session?.user.id ? 'justify-end pl-10' : 'justify-start pr-10'}` }>
         <div
             className={`
-            absolute
+            w-fit
             ${message.userId === session?.user.id ? senderStyle : receiverStyle}
-            
             bg-gradient-to-br
             py-1
             px-4

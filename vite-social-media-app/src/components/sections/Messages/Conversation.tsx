@@ -48,78 +48,75 @@ export default function Conversation() {
     bg-black
     w-full
     sm:static
-    flex
-    flex-col
-    justify-between
       '>
-        <div 
-        className='
-            border-b
-            border-zinc-600
-            p-4
-            w-full
-            fixed
-            bg-black
-            z-50
-        '>
-            <button
-            onClick={() => router.push('/messages')}
-            className=' 
-            h-10
-            w-10
-            bg-neutral-800
-            hover:bg-neutral-700/70
-            active:bg-neutral-700
-            rounded-md 
-            transition
-            flex
-            justify-center
-            items-center
-            opacity-100
-            z-50
-
-            '
-            >
-              <BsArrowLeftShort size={40} className='text-gray-400'/>
-            </button>
-        </div>
-        <div 
-        className='
-        pt-24
-        h-full 
-        min-h-[300px] 
-        flex 
-        flex-col 
-        gap-4  
-        sm:pb-36
-        '>
-          {conversation?.messages.map((message: ClientMessage) => <Message message={message}/>)}
-        </div>
-      
-        <div 
-        className='
-            border-t
-            border-zinc-600
-            p-4
-            w-full
-            bottom-0
-            fixed
-            bg-black
-            z-50
-            flex
-            justify-center
-        '>
-            <div className='flex justify-center w-full relative sm:right-32'>
-              {conversation?.id ?
-              <ChatInput
-                className='bg-transparent border-transparent w-fit'
-                method='PUT'
-                endpoint={
-                  `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversation.id}&type=Text`
-                }/> :
-              <ChatInputSkeleton/>
-              }
-            </div>
+        <div className='flex flex-col justify-between'>
+          <div
+          className='
+              border-b
+              border-zinc-600
+              p-4
+              w-full
+              fixed
+              bg-black
+              z-50
+          '>
+              <button
+              onClick={() => router.push('/messages')}
+              className='
+              h-10
+              w-10
+              bg-neutral-800
+              hover:bg-neutral-700/70
+              active:bg-neutral-700
+              rounded-md
+              transition
+              flex
+              justify-center
+              items-center
+              opacity-100
+              z-50
+              '
+              >
+                <BsArrowLeftShort size={40} className='text-gray-400'/>
+              </button>
+          </div>
+          <div
+          className='
+          pt-24
+          min-h-[300px]
+          h-fit
+          flex
+          flex-col
+          gap-4
+          pb-40
+          '>
+            {conversation?.messages.map((message: ClientMessage) => <Message message={message}/>)}
+          </div>
+          <div
+          className='
+              border-t
+              border-zinc-600
+              p-4
+              w-full
+              bottom-0
+              fixed
+              bg-black
+              z-50
+              flex
+              justify-center
+          '>
+              <div className='flex justify-center w-full relative sm:right-32'>
+                {conversation?.id ?
+                <ChatInput
+                  className='bg-transparent border-transparent w-fit'
+                  method='PUT'
+                  endpoint={
+                    `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversation.id}&type=Text`
+                  }/> :
+                <ChatInputSkeleton/>
+                }
+              </div>
+          </div>
         </div>
     </div>
   )
