@@ -52,6 +52,6 @@ export default async function handler(req: Request, res: Response) {
         comments: [ comment.id ]
     }).where('id').equals(postId).run()
 
-    return res.status(200).json({ message: 'comment posted successfully' })
+    return res.status(200).json({ comment: { postId, comment } })
   
 }

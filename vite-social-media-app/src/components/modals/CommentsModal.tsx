@@ -17,7 +17,7 @@ interface ICommentResponse {
 export function CommentsModal({ children }: CommentsModalProps) {
   const loadComments = useLoadComments();
   //const [comments, setComments] = useState<ICommentData[] | null>(null);
-  const { data, setData, ChatInput} = useChatInput<ICommentData[] | null>(null)
+  const { items, setItems, ChatInput} = useChatInput<ICommentData[] | null>(null)
   
   //handles post fetching
   useEffect(() => {
@@ -31,7 +31,7 @@ export function CommentsModal({ children }: CommentsModalProps) {
 
       if (error || !data?.res.ok) return toast.error('Failed to load comments');
 
-      setData(data.json?.comments as ICommentData[]);
+      setItems(data.json?.comments as ICommentData[]);
     };
     if (loadComments.id) fetchPost();
   }, [loadComments.id]);
@@ -54,7 +54,7 @@ export function CommentsModal({ children }: CommentsModalProps) {
     >
       <Suspense fallback={<Loading />}>
         <Comments 
-        data={data} 
+        data={items} 
         postId={loadComments.id} 
         ChatlElement={<ChatInput endpoint={endpoint}/>}>
         

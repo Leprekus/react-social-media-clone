@@ -63,9 +63,9 @@ import { twMerge } from 'tailwind-merge'
 
 interface ChatInputProps { endpoint: string, className?: string, method?: 'POST' | 'PUT' }
 
-const useChatInput = <T,>(initialData: T) => {
+const useChatInput = <T,>(initialItems: T) => {
 
-  const [data, setData] = useState<T>(initialData)
+  const [items, setItems] = useState<T>(initialItems)
   
   const ChatInput = ({ endpoint, className, method = 'POST'}: ChatInputProps) => {
         const { session } = useAuth()
@@ -98,12 +98,12 @@ const useChatInput = <T,>(initialData: T) => {
               setBody('')
               const [ key ] = Object.keys(data.json)
               
-              console.log({ newComment: data.json[key], data: data[0]})
-              setData(prev => {
+              console.log(data.json[key], items)
+              setItems(prev => {
                 if(Array.isArray(prev))
                   return [data.json![key]!, ...prev]
 
-                else return data.json![key] 
+                else return data.json![key]
               })
               toast.success('Comment Posted')
               
@@ -130,8 +130,8 @@ const useChatInput = <T,>(initialData: T) => {
   }
   return {
     ChatInput, 
-    data,
-    setData
+    items,
+    setItems
   }
 }
 

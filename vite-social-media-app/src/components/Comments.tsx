@@ -25,7 +25,7 @@ export const CommentsTrigger = ({ children }: CommentsTriggerProps) =>
 export function Comments({ children, data, postId, ChatlElement }: CommentsProps) {
 
   //const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/POST/${postId}/comments`
-    
+    console.log({data})
   return (
     <Drawer.Root>
         { children }
