@@ -88,7 +88,7 @@ export function Comments({ children, data, postId }: CommentsProps) {
               <div className='flex flex-col gap-2'>
                 {data && data?.length > 0 ?
                  data.map((child) => <Comment key={child.comment.id} data={child}/>)  :
-                 <p className='text-gray-400 font-semibold mx-auto w-fit'>No Comments yet</p>
+                 <p className='text-gray-400 font-semibold mx-auto w-fit'>Be the first one to comment</p>
                             }
               </div>
             </div>
