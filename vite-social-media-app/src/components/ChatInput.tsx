@@ -36,7 +36,10 @@ export default function ChatInput <T>({ endpoint, className, method='POST' }: Co
   
         if(error || !data?.res.ok) toast.error('Could not post comment')
         
-        if(data?.res.ok) toast.success('Comment Posted')
+        if(data?.res.ok) {
+          setBody('')
+          toast.success('Comment Posted')
+        }
   
     }
     return (
