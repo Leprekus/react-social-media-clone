@@ -3,11 +3,38 @@ import cors from 'cors'
 import body from './utils/parse-body'
 import handleRequest from './utils/request-handler'
 const app = express()
+import * as http from 'http'
 const cookieParser = require('cookie-parser')
+import WebSocket from 'ws'
 import { config } from 'dotenv'
 
 config()
 
+//WebSocket Server
+
+const ws_PORT = 80
+const server = http.createServer(express)
+const wss = new WebSocket.Server({ server })
+
+wss.on('connection', (ws) => {
+    ws.on('message', (data) => {
+         console.log('incoming', data)
+         wss.clients.forEach(client => {
+            if(client !== ws && client.readyState === WebSocket.OPEN) {
+                //sender
+                client.send(data)
+            }
+         })
+        })
+    
+
+})
+
+server.listen(ws_PORT, () => {
+    console.log(`Websocket listening on Port: ${ws_PORT}`)
+})
+
+//WebSocket Server
 
 app.use(cors({
     origin: ['https://react-social-media-clone-one.vercel.app', 'https://momento-client-leprekus.vercel.app', 'http://localhost:5173', ],
@@ -31,6 +58,7 @@ app.use(cors({
 
 
 }))
+
 
 app.use(cookieParser())
 
