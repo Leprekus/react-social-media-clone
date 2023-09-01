@@ -58,6 +58,9 @@ export default function Conversation() {
             border-zinc-600
             p-4
             w-full
+            fixed
+            bg-black
+            z-50
         '>
             <button
             onClick={() => router.push('/messages')}
@@ -74,6 +77,7 @@ export default function Conversation() {
             items-center
             opacity-100
             z-50
+
             '
             >
               <BsArrowLeftShort size={40} className='text-gray-400'/>
@@ -81,40 +85,41 @@ export default function Conversation() {
         </div>
         <div 
         className='
+        pt-24
         h-full 
         min-h-[300px] 
         flex 
         flex-col 
-        gap-4 
-        pt-10 
+        gap-4  
         sm:pb-36
         '>
           {conversation?.messages.map((message: ClientMessage) => <Message message={message}/>)}
         </div>
+      
         <div 
         className='
             border-t
             border-zinc-600
             p-4
             w-full
-            pb-32
-            sm:pb-4
-            sm:bottom-0
-            bottom-20
+            bottom-0
+            fixed
             bg-black
-            h-32
-  
-            
+            z-50
+            flex
+            justify-center
         '>
-            {conversation?.id ? 
-            <ChatInput 
-              className='bg-transparent border-transparent'
-              method='PUT'
-              endpoint={
-                `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversation.id}&type=Text`
-              }/> : 
-            <ChatInputSkeleton/>
-            }
+            <div className='flex justify-center w-full relative sm:right-32'>
+              {conversation?.id ?
+              <ChatInput
+                className='bg-transparent border-transparent w-fit'
+                method='PUT'
+                endpoint={
+                  `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversation.id}&type=Text`
+                }/> :
+              <ChatInputSkeleton/>
+              }
+            </div>
         </div>
     </div>
   )

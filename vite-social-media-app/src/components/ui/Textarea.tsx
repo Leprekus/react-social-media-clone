@@ -21,10 +21,10 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     w-full
     bg-charcoal
     resize-none
-    leading-3
     pt-3
     px-3
     scrollbar-hide
+    leading-5
     
     `, className)}
     {...props}
