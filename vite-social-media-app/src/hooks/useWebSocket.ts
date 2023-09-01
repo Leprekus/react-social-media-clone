@@ -20,7 +20,7 @@ const useWebSocket = (url: string) => {
                 setWs(ws.onerror = ws.onopen = ws.onclose = null)
                 ws.close()}
         }
-    },[])
+    },[ws])
 
     return ws
 }
