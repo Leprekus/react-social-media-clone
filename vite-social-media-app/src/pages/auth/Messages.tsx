@@ -39,7 +39,7 @@ export default function Messages() {
         webSocketStore.WebSocket.readyState > 1
         ) {
 
-          webSocketStore.Open('ws://localhost:80/')
+          webSocketStore.Open(import.meta.env.VITE_SOCKET_URL!)
 
         }
     }
