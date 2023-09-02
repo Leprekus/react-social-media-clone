@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 import { twMerge } from 'tailwind-merge'
 import Textarea from '../components/ui/Textarea'
 import Button from '../components/ui/Button'
-
+import _ from 'lodash'
 //interface CommentsFooterProps { endpoint: string, className?: string, method?: 'POST' | 'PUT' }
 
 // export default function ChatInput <T>({ endpoint, className, method='POST' }: CommentsFooterProps) {
@@ -104,17 +104,15 @@ const useChatInput = <T, >(initialItems: T) => {
               const [ key ] = Object.keys(data.json)
               
               onSubmitHandler && onSubmitHandler(data.json[key])
-              setItems(prev => {
-                if(Array.isArray(prev))
-                  return [ ...prev, data.json![key] ]
-
-                else return data.json![key]
-              })
+              const newItems = _.uniqBy([ ...items as T[], data.json[key] ], 'id')
+              
+              setItems(newItems as T)
               toast.success('Comment Posted')
               
             }
       
         }
+
         return (
           <div className={twMerge(`p-4 bg-[#262930] border-t border-charcoal mt-auto`, className)}>
             <div className='flex gap-6 items-end justify-end max-w-md mx-auto text-lg pb-2'

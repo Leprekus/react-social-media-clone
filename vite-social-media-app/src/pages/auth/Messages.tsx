@@ -5,6 +5,7 @@ import toast from 'react-hot-toast'
 import { Chat } from '../../../typings'
 import Sidebar from '../../components/sections/Messages/Sidebar'
 import Conversation from '../../components/sections/Messages/Conversation'
+import useWebSocketStore from '../../hooks/useWebSocket'
 
 
 interface ChatsData {
@@ -27,10 +28,29 @@ export default function Messages() {
     if(data?.json?.chats) setConversations(data.json.chats)
 
   }
+  const webSocketStore = useWebSocketStore()
   useEffect(() => {
-    if(session?.accessToken)
+    if(session?.accessToken) {
       fetchConversations()
 
+      if(
+        !webSocketStore.WebSocket || 
+        webSocketStore.WebSocket && 
+        webSocketStore.WebSocket.readyState > 1
+        ) {
+
+          webSocketStore.Open('ws://localhost:80/')
+
+        }
+    }
+
+      return () => { 
+        console.log('unmounting Messages.tsx') 
+            if(webSocketStore.WebSocket && webSocketStore.WebSocket.readyState === webSocketStore.WebSocket.OPEN)
+            {
+              webSocketStore.Close() 
+            }
+      }
   },[])
   return( 
     <Sidebar chats={chats}>

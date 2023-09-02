@@ -7,33 +7,32 @@ import { ClientMessage, Conversation as IConversation } from '../../../../typing
 import toast from 'react-hot-toast'
 import ChatInputSkeleton from '../../skeletons/ChatInputSkeleton'
 import Message from './Message'
-import useWebSocket from '../../../hooks/useWebSocket'
 import useChatInput from '../../../hooks/useChatInput'
-
+import useWebSocketStore from '../../../hooks/useWebSocket'
+import _ from 'lodash'
 
 interface ConversationData {
     conversation: IConversation
 }
 export default function Conversation() {
+
     const { session } = useAuth()
+
     const router = useRouter() 
+
     const pathname = router.pathname.split('/')
     const receiverId = pathname.includes('messages') && pathname[2] ?
     pathname[2] : null
+
     const { 
       items: conversation, 
       setItems: setConversation,
       ChatInput
     } = useChatInput<ClientMessage[] | null>(null)
-    const [conversationId, setConversationId] = useState<string | null>(null)
-    const ws = useWebSocket('ws://localhost:80')
-    
-    
-    if(ws) ws.onmessage = ({ data }: { data: string}) => {
-      setConversation(prev => [...prev as ClientMessage[], JSON.parse(data)])
-    }
-    
 
+    const [conversationId, setConversationId] = useState<string | null>(null)
+    
+    const webSocketStore = useWebSocketStore()
     const fetchConversation = async () => {
         const endpoint = `${import.meta.env.VITE_BACKEND_URL}api/POST/messages`
         const payload = { senderId: session?.user.id, receiverId}
@@ -55,11 +54,30 @@ export default function Conversation() {
     }
     useEffect(() => {
         if(receiverId)
-            fetchConversation()
+          fetchConversation()
     },[receiverId])
 
+    useEffect(() => {
 
+      if(webSocketStore.LatestMessage.length > 0) {
 
+        const newConversation = _.uniqBy(
+          [ 
+            ...conversation as ClientMessage[], 
+            ...webSocketStore.LatestMessage 
+          ], 'id')
+
+        setConversation(newConversation as ClientMessage[])
+
+        webSocketStore.ClearLatestMessage()
+
+      }
+
+      return () => { 
+        
+        console.log('unmounting Conversation.tsx') 
+      }
+    }, [webSocketStore.WebSocket, webSocketStore.LatestMessage.length])
 
   if(!receiverId) return null
   return (
@@ -134,11 +152,15 @@ export default function Conversation() {
               justify-center
           '>
               <div className='flex justify-center w-full relative sm:right-32'>
-                {conversationId && ws ?
+                {conversationId ?
                 <ChatInput
+                  onSubmitHandler={
+                    (data: ClientMessage) => {
+                      webSocketStore.Send(data) 
+                    }
+                  }
                   className='bg-transparent border-transparent w-fit'
                   method='PUT'
-                  onSubmitHandler={(message: ClientMessage) => ws.send(JSON.stringify(message))}
                   endpoint={
                     `${import.meta.env.VITE_BACKEND_URL}api/PUT/messages?conversationId=${conversationId}&type=Text`
                   }/> :

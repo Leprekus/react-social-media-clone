@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { Chat } from '../../../../typings'
 import { BiSearch } from 'react-icons/bi'
 import ConversationItem from './ChatItem'
@@ -35,6 +35,9 @@ export default function Sidebar({ chats, children  }: SidebarProps) {
         }
     }
 
+    useEffect(() => {
+      return () => { console.log('unmounting Sidebar.tsx') }
+    },[])
   return (
     
       <div className='absolute top-0 w-full sm:flex sm:left-20 sm:w-[calc(100%_-_80px)] max-h-screen overflow-hidden'>

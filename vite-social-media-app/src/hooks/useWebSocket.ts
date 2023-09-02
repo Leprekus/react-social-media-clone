@@ -1,37 +1,88 @@
-import { useEffect, useState } from 'react';
-
-const useWebSocket = (url: string) => {
-
-    const [ws, setWs] = useState<WebSocket | null>(null)
-
+/*
+  const [ws, setWs] = useState<WebSocket | null>(null)
     useEffect(() => {
-        // Create a new WebSocket only when it's not already created
-        if (!ws) {
-          const newWs = new WebSocket(url);
-    
-          newWs.onopen = () => {
-            console.log('WebSocket opened');
-          };
-    
-          newWs.onclose = () => {
-            console.log('WebSocket closed');
-            // Set the WebSocket to null when it's closed
-            setWs(null);
-          };
-    
-          // Set the newly created WebSocket
-          setWs(newWs);
-        }
-    
-        // Clean up the WebSocket when the component unmounts
-        return () => {
-          if (ws) {
-            ws.close();
-          }
-        };
-      }, []); // Only create a new WebSocket when the URL changes
+      if(!ws) 
+        setWs(new WebSocket('ws://localhost:80'))
+      
+      if(ws) {
+        ws.onopen = () => console.log('web socket opened')
+        ws.onclose = () => console.log('web socket closed')
 
-    return ws
+        ws.onmessage = ({ data }: { data: string }) => { setConversation(prev => [...prev as ClientMessage[], JSON.parse(data)]) }
+      }
+
+      return () => { 
+        if(ws) ws.close()
+      }
+    }, [ws])
+
+*/
+import { create } from 'zustand'
+
+interface WebSocketStoreStore {
+    Open: (url: string) => void;
+    Close: () => void;
+    Send: (data: unknown) => void;
+    ClearLatestMessage: () => void;
+    WebSocket: WebSocket | null;
+    LatestMessage: [] | unknown[];
+
+
+
 }
 
-export default useWebSocket
+
+const useWebSocketStore = create<WebSocketStoreStore>((set, get) => ({
+
+    Open: (url: string) => {
+      const currentWebSocket = get().WebSocket
+      if(currentWebSocket === null) {
+      
+        const ws = new WebSocket(url)
+       
+        ws.addEventListener('open', () => {
+          // WebSocket connection is open
+          console.log('web socket opened')
+          set({ WebSocket: ws });
+        });
+    
+        ws.addEventListener('close', (event) => {
+          // WebSocket connection is closed
+          console.log('web socket closed ', event)
+          set({ WebSocket: null });
+          
+        });
+    
+        ws.addEventListener('message', (event) => {
+          // Handle incoming messages here
+          const parsedData = JSON.parse(event.data);
+          set({ LatestMessage: [parsedData] });
+        });
+
+        ws.addEventListener('error', (event) => console.log('error :', event))
+      }
+    },
+    Close: () => {
+
+      const WebSocket = get().WebSocket
+
+      if(WebSocket && WebSocket.readyState === WebSocket.OPEN){
+          console.log('close method called')
+          WebSocket?.close()
+          set({ WebSocket: null })
+        }
+    },
+    Send: (data: unknown) => {
+
+      const WebSocket = get().WebSocket
+
+      if(WebSocket && WebSocket.readyState === WebSocket.OPEN) 
+        WebSocket.send(JSON.stringify(data))
+    },
+    ClearLatestMessage: () => set({ LatestMessage: [] }),
+    WebSocket: null,
+    LatestMessage: []
+
+}))
+export default useWebSocketStore
+

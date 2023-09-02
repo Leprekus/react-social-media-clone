@@ -19,7 +19,7 @@ export default function Router() {
 
 
     const Page = () =>  router.renderRoute(routes, <NotFound/>)
-
+    
   return (
     <Layout>
       <Page/>
